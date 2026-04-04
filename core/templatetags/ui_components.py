@@ -1,4 +1,9 @@
 from django import template
+import json
+from django.utils.translation import gettext_lazy as _
+
+from core.app_links import AppLinks
+from core.helpers import get_url_view
 
 register = template.Library()
 
@@ -9,6 +14,50 @@ register = template.Library()
   أو بيانات الطلب (Request) دون تمريرها يدوياً.
 """
 
+@register.inclusion_tag('core/components/ui_multi_tag_select.html')
+def ui_multi_tag_select(name, label=None, choices=None, placeholder=None, selected_values=None):
+
+    print(selected_values)
+    return {
+        'name': name,
+        'label': label,
+        'choices': choices or [],
+        'placeholder': placeholder or "ابحث واختر...",
+        'selected_values': selected_values or [], # للقيم المختارة مسبقاً في التعديل
+    }
+
+
+@register.inclusion_tag('core/components/back-button.html', takes_context=True)
+def back_button(context,label=None, url=None, extra_classes="",icon=None):
+
+    if url:
+        _url=get_url_view(url)
+
+    return {
+        'label': label or _("Back"),
+        'url': _url or 'javascript:history.back()',
+        'extra_classes': extra_classes ,
+        # 'icon': icon,
+        # 'content_color': content_color,
+        # 'bg_color': bg_color,
+        'LANGUAGE_BIDI': context.get('LANGUAGE_BIDI'),
+    }
+
+@register.inclusion_tag('core/components/profile_dropdown.html')
+def profile_dropdown(img_url=None, display_name="", initials=None, sub_text="", settings_url="#", support_url="#", logout_url=None):
+    _initials=""
+    if not initials and display_name and not img_url and len(display_name)>=1:
+        _initials = "".join([n for n in display_name[:1]]).upper()
+
+    return {
+        'img_url': img_url,
+        'display_name': display_name,
+        'initials': initials or _initials,
+        'sub_text': sub_text,
+        'settings_url': settings_url,
+        'support_url': support_url,
+        'logout_url': logout_url or AppLinks.Auth.LOGOUT,
+    }
 
 
 @register.inclusion_tag('core/components/user-card.html')
@@ -20,6 +69,146 @@ def user_card(name, email,user_id=None, image_url=None,redirect_link=None):
         'image': image_url if image_url else default_img,
         'id': user_id or '000',
         'redirect_link': redirect_link or '',
+    }
+
+
+
+@register.inclusion_tag('core/components/statistics-card.html')
+def statistics_card(title, amount=0, icon=None, badge_amount=None, badge_text=None, badge_icon=None, badge_type='brand', delay='0s', redirect_link=None):
+    # خريطة الألوان بناءً على ملف الـ CSS المدمج
+    color_map = {
+        'brand': {
+            'icon_bg': 'bg-brand-light',
+            'icon_text': 'text-brand',
+            'badge': 'bg-brand-light text-brand'
+        },
+        'amber': {
+            'icon_bg': 'bg-amber-light',
+            'icon_text': 'text-amber',
+            'badge': 'bg-amber-light text-amber'
+        },
+        'coral': {
+            'icon_bg': 'bg-coral-light',
+            'icon_text': 'text-coral',
+            'badge': 'bg-coral-light text-coral'
+        }
+    }
+
+    # اختيار التنسيق أو العودة للافتراضي (brand)
+    style = color_map.get(badge_type, color_map['brand'])
+
+    return {
+        'title': title,
+        'amount': amount,
+        'icon': icon or 'fa-chart-line',
+        'badge_amount': badge_amount,
+        'badge_text': badge_text,
+        'badge_icon': badge_icon,
+        'delay': delay,
+        'redirect_link': redirect_link,
+        # تمرير الكلاسات الجاهزة للقالب
+        'icon_bg': style['icon_bg'],
+        'icon_text': style['icon_text'],
+        'badge_class': style['badge'],
+    }
+
+
+@register.inclusion_tag('core/components/weekly-data-chart.html')
+def weekly_data_chart(title,data_dict):
+
+    return {
+        'title': title,
+        'weekly_data_json': data_dict
+    }
+@register.inclusion_tag('core/components/candidate-row.html')
+def candidate_row(candidate, is_last=False,redirect_link=None):
+    return {
+        'c': candidate,
+        'is_last': is_last,
+        'redirect_link': redirect_link,
+    }
+@register.inclusion_tag('core/components/link-button.html',name='link-button', takes_context=True)
+def link_button(context,url,label="",title="",icon=None,extra_classes=None):
+
+    return {
+        'url': url,
+        'label': label,
+        'title': title,
+        'icon': icon ,
+        'extra_classes': extra_classes ,
+        'LANGUAGE_BIDI': context.get('LANGUAGE_BIDI'),
+    }
+@register.inclusion_tag('core/components/job-post-card.html')
+def job_card(job, redirect_link=None):
+    # حساب نسبة التحويل مع التأكد من عدم القسمة على صفر
+    conversion_rate = 0
+    # if job.get('views', 0) > 0:
+    #     conversion_rate = (job.get('apps', 0) / job.get('views')) * 100
+
+    # تحديد ما إذا كانت الوظيفة نشطة (بناءً على حالة معينة)
+    # is_active = job.get('status') == 'نشط' or job.get('status') == 'Active'
+
+    return {
+        'j': job,
+        'redirect_link': redirect_link,
+        'conversion_rate': round(conversion_rate, 1),
+        'is_active': job.is_active
+    }
+
+
+# @register.inclusion_tag('core/components/job-post-card.html')
+# def job_card(job, redirect_link=None):
+#     # حساب نسبة التحويل مع التأكد من عدم القسمة على صفر
+#     conversion_rate = 0
+#     if job.get('views', 0) > 0:
+#         conversion_rate = (job.get('apps', 0) / job.get('views')) * 100
+#
+#     # تحديد ما إذا كانت الوظيفة نشطة (بناءً على حالة معينة)
+#     is_active = job.get('status') == 'نشط' or job.get('status') == 'Active'
+#
+#     return {
+#         'j': job,
+#         'redirect_link': redirect_link,
+#         'conversion_rate': round(conversion_rate, 1),
+#         'is_active': is_active
+#     }
+
+
+@register.inclusion_tag('core/components/interview-card.html')
+def interview_card(iv, is_last=False):
+    # خريطة الألوان بناءً على نوع المقابلة
+    color_map = {
+        'sky': 'bg-sky-light text-sky',
+        'brand': 'bg-brand-light text-brand',
+        'amber': 'bg-amber-light text-amber',
+    }
+
+    return {
+        'iv': iv,
+        'color_class': color_map.get(iv.get('typeColor'), 'bg-raised text-fg-muted'),
+        'is_last': is_last
+    }
+@register.inclusion_tag('core/components/funnel-step.html')
+def funnel_step(label, count, percentage, index=0):
+    # مصفوفة الألوان مرتبة حسب مراحل القمع
+    palette = [
+        '#0d7c5f',  # Brand / Emerald
+        '#2a8fc7',  # Sky Blue
+        '#c48a0a',  # Amber
+        '#e06040',  # Coral
+        '#7c5cbf',  # Purple
+        '#0d7c5f',  # التعيين (عودة للون البراند)
+    ]
+
+    # اختيار اللون بناءً على رقم الخطوة (Index)
+    # إذا تجاوزت الخطوات عدد الألوان، سيعود للون الأول باستخدام %
+    selected_color = palette[index % len(palette)]
+
+    return {
+        'label': label,
+        'count': count,
+        'percentage': percentage+10,
+        'color': selected_color,
     }
 
 @register.inclusion_tag('core/components/plan-card.html', takes_context=True)

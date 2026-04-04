@@ -17,18 +17,17 @@ urlpatterns = [
 
     # روابط تطبيق الحسابات المخصص
     path('accounts/', include('accounts.urls')),
-
-    # === [AUTO_GENERATED_URLS_START] ===
-    # محرك الأتمتة سيضيف روابط الأدوار هنا (مثل students, companies)
-    # === [AUTO_GENERATED_URLS_END] ===
-
     # روابط تطبيق core (يجب أن يكون في الأسفل غالباً لأنه يحتوي على الصفحة الرئيسية)
     path('', include('core.urls')),
 
-    path('students/', include('students.urls')),
-
     # أداة التحديث التلقائي للمتصفح أثناء التطوير
     path("__reload__/", include("django_browser_reload.urls")),
+
+    # === [AUTO_GENERATED_URLS_START] ===
+    path('companies/', include('companies.urls')),
+
+    path('members/', include('members.urls')),
+    # === [AUTO_GENERATED_URLS_END] ===
 ]
 
 # إعدادات الملفات الساكنة والوسائط في وضع التطوير

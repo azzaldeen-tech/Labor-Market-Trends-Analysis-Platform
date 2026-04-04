@@ -11,7 +11,12 @@ django 6.0.2 # django version
 ###  . إنشاء بيئة افتراضية وتفعيلها
 ```bash
      py -3.14 -m venv venv | python -m venv venv
-    venv\Scripts\activate   # active in Windows
+     
+     # Activate in Windows:
+      venv\Scripts\activate 
+     # Activate in Others :
+      source venv/bin/activate  
+   
 ```
 
 ### . تحديث pip  
@@ -41,25 +46,17 @@ config > settings.py
 
 ```
 
-Example:
-
 SITE_ROLES = [
 
     {
-        'code': 'user',
-        'name': 'user',
+        'code': 'identity_code', # student
+        'name': 'identity_name', # student
+        'app_name': 'identity_app_name', # students
         'is_identity': True,      # هل له بروفايل وهوية مستقلة؟
         'requires_approval': False, # هل يحتاج تفعيل من الإدارة؟
         'view_in_register': True,  # هل يظهر في خيارات التسجيل؟
     },
-    {
-        'code': 'emp__',
-        'name': 'emp__',
-        'is_identity': True,      # هل له بروفايل وهوية مستقلة؟
-        'requires_approval': True, # هل يحتاج تفعيل من الإدارة؟
-        'view_in_register': True,  # هل يظهر في خيارات التسجيل؟
-    },
-   
+    { .... }
 ]
 ```
 ### بناء قاعدة البيانات  
@@ -86,6 +83,7 @@ cd theme
 
 # Install UI components
 npm install daisyui
+npm install
 
 # Install Tailwind CSS 4 and PostCSS tooling
 npm install tailwindcss @tailwindcss/postcss postcss postcss-cli autoprefixer postcss-simple-vars postcss-nested
@@ -147,5 +145,13 @@ python manage.py runserver
 اذا اردت البدء بانشاء تطبيقات Apps  مثل accounts او core داخل مجلد المشروع استخدم الامر التالي
 ```bash
 python manage.py startapp  your_app_name
+```
+
+
+###  
+
+```bash
+pip install playwright playwright-stealth
+playwright install chromium
 ```
 

@@ -74,7 +74,11 @@ INSTALLED_APPS = [
     # 4. تطبيقاتك البرمجية الخاصة
     'accounts',
     'core',
-    'students',
+
+    # === [AUTO_GENERATED_APPS_START] ===
+    'members',
+    'companies',
+    # === [AUTO_GENERATED_APPS_END] ===
 
     # 2. تطبيقات Allauth (يجب أن تأتي بعد تطبيقات Django الأساسية)
     'allauth',
@@ -234,9 +238,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # << Auth Settings >>
 # =====================================================================================
 
-ACCOUNT_FORMS = {
-    'signup': 'accounts.forms.CustomSignupForm',
-}
+# ACCOUNT_FORMS = {
+#     'signup': 'accounts.forms.CustomSignupForm',
+# }
 
 LOGIN_URL = 'account_login'  # الرابط الذي يتم توجيه المستخدم إليه إذا حاول دخول صفحة محمية وهو غير مسجل
 AUTH_USER_MODEL = 'accounts.CustomUser' # تحديد الModel المعتمد لحساب المستخدم في المشروع
@@ -298,8 +302,10 @@ else:
 
 SITE_ROLES = [
     {
-        'code': 'student',
-        'name': 'student',
+        'code': 'member',
+        'name': 'member',
+        'app_name': 'members',
+        'domain': 'gmail',
         'is_identity': True ,
         'requires_approval': False,
         'view_in_register': True,
@@ -307,6 +313,8 @@ SITE_ROLES = [
     {
         'code': 'company',
         'name': 'company',
+        'app_name': 'companies',
+        'domain': 'company',
         'is_identity': True,
         'requires_approval': True,
         'view_in_register': True
@@ -316,12 +324,22 @@ SITE_ROLES = [
 #  Linking roles to their respective control panels
 
 ROLE_DASHBOARDS = {
-    role['code']: (
-        'admin:index' if role['code'] == 'admin'
-        else f"{role['code']}s:dashboard"
-    )
+    role['code']: f"{role['app_name']}:dashboard"
     for role in SITE_ROLES
+    if role.get('is_identity') and 'app_name' in role
 }
+
+# إضافة رابط الأدمن الافتراضي لـ Django
+ROLE_DASHBOARDS['admin'] = 'admin:index'
+
+
+# ROLE_DASHBOARDS = {
+#     role['code']: (
+#         'admin:index' if role['code'] == 'admin'
+#         else f"{role['code']}s:dashboard"
+#     )
+#     for role in SITE_ROLES
+# }
 
 # =====================================================================================
 # << Settings Crispy Forms >>

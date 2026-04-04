@@ -1,0 +1,262 @@
+{% extends 'members/base.html' %}
+{% block title %}
+{% trans "Dashboard" %}
+{% endblock %}
+{% block provider_content %}
+     <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">مرحباً بك، أحمد محمد</h2>
+                    <p class="text-gray-600">هذه نظرة عامة على حسابك ونشاطك الأخير</p>
+                </div>
+
+                <!-- Stats cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="card bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500">الوظائف المنشورة</p>
+                                <h3 class="text-2xl font-bold mt-2">12</h3>
+                            </div>
+                            <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+                                <i class="fas fa-briefcase text-blue-500 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-green-500">+2 هذا الشهر</span>
+                                <span class="text-gray-500">منذ 30 يوم</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500">طلبات التوظيف</p>
+                                <h3 class="text-2xl font-bold mt-2">84</h3>
+                            </div>
+                            <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                                <i class="fas fa-file-alt text-green-500 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-green-500">+15 هذا الشهر</span>
+                                <span class="text-gray-500">منذ 30 يوم</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500">المقابلات المجدولة</p>
+                                <h3 class="text-2xl font-bold mt-2">7</h3>
+                            </div>
+                            <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center">
+                                <i class="fas fa-calendar-check text-purple-500 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-green-500">+3 هذا الأسبوع</span>
+                                <span class="text-gray-500">منذ 7 أيام</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500">معدل النقر</p>
+                                <h3 class="text-2xl font-bold mt-2">24%</h3>
+                            </div>
+                            <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center">
+                                <i class="fas fa-chart-line text-yellow-500 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-green-500">+5% هذا الشهر</span>
+                                <span class="text-gray-500">منذ 30 يوم</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent activity and job posts -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2">
+                        <div class="bg-white rounded-lg shadow overflow-hidden">
+                            <div class="px-6 py-4 border-b border-gray-200">
+                                <h3 class="font-bold text-lg">الوظائف الأخيرة</h3>
+                            </div>
+                            <div class="divide-y divide-gray-200">
+                                <div class="p-6 hover:bg-gray-50 transition-colors">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <h4 class="font-semibold">مطور ويب (React.js)</h4>
+                                            <p class="text-sm text-gray-500 mt-1">نشرت في 15 يونيو 2023</p>
+                                        </div>
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">نشطة</span>
+                                            <span class="text-gray-500">24 طلب</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-6 hover:bg-gray-50 transition-colors">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <h4 class="font-semibold">مصمم جرافيك</h4>
+                                            <p class="text-sm text-gray-500 mt-1">نشرت في 10 يونيو 2023</p>
+                                        </div>
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">نشطة</span>
+                                            <span class="text-gray-500">18 طلب</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-6 hover:bg-gray-50 transition-colors">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <h4 class="font-semibold">مدير مشاريع</h4>
+                                            <p class="text-sm text-gray-500 mt-1">نشرت في 5 يونيو 2023</p>
+                                        </div>
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">قيد المراجعة</span>
+                                            <span class="text-gray-500">8 طلب</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-6 hover:bg-gray-50 transition-colors">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <h4 class="font-semibold">محاسب مالي</h4>
+                                            <p class="text-sm text-gray-500 mt-1">نشرت في 1 يونيو 2023</p>
+                                        </div>
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <span class="px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full">منتهية</span>
+                                            <span class="text-gray-500">32 طلب</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="px-6 py-4 border-t border-gray-200 text-center">
+                                <a href="#" class="text-blue-500 hover:text-blue-700 font-medium">عرض جميع الوظائف</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="bg-white rounded-lg shadow overflow-hidden mb-6">
+                            <div class="px-6 py-4 border-b border-gray-200">
+                                <h3 class="font-bold text-lg">النشاط الأخير</h3>
+                            </div>
+                            <div class="divide-y divide-gray-200">
+                                <div class="p-6">
+                                    <div class="flex items-start space-x-3 space-x-reverse">
+                                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-bell text-blue-500"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm">تمت الموافقة على إعلان وظيفة "مطور ويب"</p>
+                                            <p class="text-xs text-gray-500 mt-1">منذ ساعتين</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex items-start space-x-3 space-x-reverse">
+                                        <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-file-alt text-green-500"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm">5 طلبات جديدة على وظيفة "مصمم جرافيك"</p>
+                                            <p class="text-xs text-gray-500 mt-1">منذ 5 ساعات</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex items-start space-x-3 space-x-reverse">
+                                        <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-calendar-check text-purple-500"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm">تم جدولة مقابلة مع محمد علي</p>
+                                            <p class="text-xs text-gray-500 mt-1">منذ يوم واحد</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex items-start space-x-3 space-x-reverse">
+                                        <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-exclamation-triangle text-yellow-500"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm">إعلان وظيفة "مدير مشاريع" قيد المراجعة</p>
+                                            <p class="text-xs text-gray-500 mt-1">منذ يومين</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow overflow-hidden">
+                            <div class="px-6 py-4 border-b border-gray-200">
+                                <h3 class="font-bold text-lg">إكمال الملف الشخصي</h3>
+                            </div>
+                            <div class="p-6">
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <span class="text-sm font-medium">75% مكتمل</span>
+                                        <span class="text-xs text-gray-500">3/4 أقسام</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                        <div class="bg-blue-600 h-2.5 rounded-full" style="width: 75%"></div>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <i class="fas fa-check-circle text-green-500"></i>
+                                            <span>معلومات الشركة</span>
+                                        </div>
+                                        <span class="text-xs text-gray-500">مكتمل</span>
+                                    </div>
+
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <i class="fas fa-check-circle text-green-500"></i>
+                                            <span>معلومات الاتصال</span>
+                                        </div>
+                                        <span class="text-xs text-gray-500">مكتمل</span>
+                                    </div>
+
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <i class="fas fa-check-circle text-green-500"></i>
+                                            <span>الشعار والصور</span>
+                                        </div>
+                                        <span class="text-xs text-gray-500">مكتمل</span>
+                                    </div>
+
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <i class="fas fa-exclamation-circle text-yellow-500"></i>
+                                            <span>الوصف والتفاصيل</span>
+                                        </div>
+                                        <span class="text-xs text-gray-500">ناقص</span>
+                                    </div>
+                                </div>
+
+                                <button class="mt-6 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors">
+                                    إكمال الملف الشخصي
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+{% endblock %}
+
+

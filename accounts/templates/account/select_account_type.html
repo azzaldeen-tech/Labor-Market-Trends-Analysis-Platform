@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+    {% trans "Select Type Account" %}
+{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+
+    <div class="bg-surface  text-content w-full max-w-md p-8 rounded-2xl shadow-xl transition-all duration-300
+                 border border-transparent ">
+
+        <h2 class="text-xl font-bold text-center mb-8 text-content-muted">
+            {% trans "Type Account" %}
+        </h2>
+
+        <div class="flex flex-wrap justify-center gap-2 mt-5">
+            {% for role in identity_roles %}
+                {% with "accounts:signup_"|add:role.code as url_name %}
+                    <a href="{% url url_name %}" class="bg-base text-content-muted hover:text-content mx-4 px-4 py-2 rounded-lg font-medium transition-colors">
+                        {{ role.name }}
+                    </a>
+                {% endwith %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

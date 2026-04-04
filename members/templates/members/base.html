@@ -1,0 +1,257 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+  <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #1e40af;
+            --accent-color: #10b981;
+            --dark-color: #1f2937;
+            --light-color: #f9fafb;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f3f4f6;
+        }
+
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-item:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .sidebar-item.active {
+            background-color: rgba(59, 130, 246, 0.2);
+            border-right: 3px solid var(--primary-color);
+        }
+
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+        }
+/* هذا الكود يضمن أن القائمة في الحاسوب ستظهر "غصباً" عن أي كلاسات أخرى */
+@media (min-width: 768px) {
+    #sidebar {
+        /* إلغاء التثبيت ليصبح جزءاً من الصفحة */
+        position: static !important;
+        left:0px !important;
+        top:0px !important;
+        /* إلغاء أي إزاحة برمجية */
+        transform: none !important;
+        /* التأكد من الظهور */
+        display: block !important;
+    }
+
+    /* إخفاء زر التبديل (الهمبرجر) في الحاسوب */
+    #sidebarToggle {
+        display: none !important;
+    }
+}
+
+/* تنسيق الـ Overlay للجوال فقط */
+@media (max-width: 767px) {
+    .overlay.open {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 40;
+    }
+}
+        }
+    </style>
+
+  <div class="flex h-screen overflow-hidden">
+        <!-- Mobile sidebar overlay -->
+        <div id="overlay" class="overlay"></div>
+          <!-- Sidebar    /* الجوال: يكون Fixed ومزاح */
+                    fixed inset-y-0 h-screen
+                    {% if LANGUAGE_BIDI %} right-0 translate-x-full {% else %} left-0 -translate-x-full {% endif %}
+ -->
+<!--      <div id="sidebar" -->
+<!--     class="fixed inset-block-0 z-50 bg-white w-64 shadow-lg transition-transform duration-300 h-screen-->
+<!--            /* الجوال: إزاحة البداية (يمين في العربي، يسار في الإنجليزي) */-->
+<!--            is-start-0 [transform:translateX(100%)] rtl:[transform:translateX(100%)] ltr:[transform:translateX(-100%)]-->
+<!--            -->
+<!--            /* الحاسوب: إلغاء كل شيء والتحول لـ Block */-->
+<!--            md:static md:translate-x-0 md:flex md:flex-col md:shadow-none">-->
+        <div id="sidebar"
+             class="bg-white w-64 shadow-lg transition-transform duration-300 z-50
+
+                    /* الحاسوب: يتحول إلى عنصر عادي (Static/Block) */
+                    md:static md:translate-x-0 md:h-screen md:flex md:flex-col md:shadow-none">
+
+
+
+                    <div class="p-4 border-b border-gray-200">
+                        <div class="flex items-center space-x-3 ">
+                            <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+                                <i class="fas fa-user text-blue-500 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg">{{ user.display_name}}</h3>
+                                <p class="text-sm text-gray-500">شركة التقنية المحدودة</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4">
+                        <div class="mb-6">
+                            <h4 class="text-xs uppercase font-semibold text-gray-500 mb-3">القائمة الرئيسية</h4>
+                            <ul class="space-y-2">
+                                <li>
+                                    <a href="#" class="sidebar-item active flex items-center space-x-2  p-3 rounded-lg">
+                                        <i class="fas fa-home text-blue-500"></i>
+                                        <span>الرئيسية</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="sidebar-item flex items-center space-x-2  p-3 rounded-lg">
+                                        <i class="fas fa-briefcase text-blue-500"></i>
+                                        <span>إدارة الوظائف</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="sidebar-item flex items-center space-x-2  p-3 rounded-lg">
+                                        <i class="fas fa-file-alt text-blue-500"></i>
+                                        <span>طلبات التوظيف</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="sidebar-item flex items-center space-x-2  p-3 rounded-lg">
+                                        <i class="fas fa-chart-line text-blue-500"></i>
+                                        <span>الإحصائيات</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="sidebar-item flex items-center space-x-2  p-3 rounded-lg">
+                                        <i class="fas fa-building text-blue-500"></i>
+                                        <span>الشركة</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-6">
+                            <h4 class="text-xs uppercase font-semibold text-gray-500 mb-3">الإعدادات</h4>
+                            <ul class="space-y-2">
+                                <li>
+                                    <a href="#" class="sidebar-item flex items-center space-x-2  p-3 rounded-lg">
+                                        <i class="fas fa-user-cog text-blue-500"></i>
+                                        <span>الحساب</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="sidebar-item flex items-center space-x-2  p-3 rounded-lg">
+                                        <i class="fas fa-bell text-blue-500"></i>
+                                        <span>الإشعارات</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="sidebar-item flex items-center space-x-2  p-3 rounded-lg">
+                                        <i class="fas fa-lock text-blue-500"></i>
+                                        <span>كلمة المرور</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-8">
+                            <a href="#" class="flex items-center space-x-2  p-3 rounded-lg text-red-500 hover:bg-red-50">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>تسجيل الخروج</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            <!-- Main content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top navigation -->
+            <header class="bg-white shadow-sm">
+                <div class="flex items-center justify-between px-6 py-4">
+                    <div class="flex items-center">
+                        <button id="sidebarToggle" class="md:hidden text-gray-500 focus:outline-none">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+<!--                        <h1 class="text-xl font-bold text-gray-800 mr-4">لوحة التحكم</h1>-->
+                    </div>
+
+                    <div class="flex items-center space-x-4 ">
+                        <div class="relative">
+                            <button class="text-gray-500 focus:outline-none">
+                                <i class="fas fa-bell text-xl"></i>
+                                <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center">3</span>
+                            </button>
+                        </div>
+                        <div class="relative">
+                            <button class="text-gray-500 focus:outline-none">
+                                <i class="fas fa-envelope text-xl"></i>
+                                <span class="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full text-white text-xs flex items-center justify-center">5</span>
+                            </button>
+                        </div>
+                        <div class="relative">
+                            <button class="flex items-center space-x-2  focus:outline-none">
+                                <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                                    <i class="fas fa-user text-blue-500"></i>
+                                </div>
+                                <span class="hidden md:inline">أحمد محمد</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+              <!-- Main content area -->
+            <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
+                  {% block provider_content %}
+                  {% endblock %}
+            </main>
+        </div>
+</div>
+
+  <script>
+        // Toggle sidebar on mobile
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+           const getTransitionClass = () => {
+            return document.documentElement.dir === 'rtl' ? '-translate-x-full' : '-translate-x-full';
+        };
+
+        sidebarToggle.addEventListener('click', () => {
+            const isRTL = document.documentElement.dir === 'rtl';
+            const transitionClass = getTransitionClass();
+<!--            const directionClass = isRTL ? 'right-0' : 'left-0';-->
+<!--            sidebar.classList.add(directionClass);-->
+            sidebar.classList.toggle(transitionClass);
+            overlay.classList.toggle('open');
+        });
+
+        overlay.addEventListener('click', () => {
+            const transitionClass = getTransitionClass();
+            sidebar.classList.add(transitionClass);
+            overlay.classList.remove('open');
+        });
+
+        // Simulate loading data
+        document.addEventListener('DOMContentLoaded', () => {
+            // You can add AJAX calls here to load real data
+            console.log('Dashboard loaded');
+        });
+    </script>
+{% endblock %}
+
+

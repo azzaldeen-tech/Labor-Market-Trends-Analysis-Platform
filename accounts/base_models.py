@@ -27,11 +27,19 @@ class BaseRole(models.Model):
 
 class BaseCustomUser(AbstractUser):
 
-    first_name = models.CharField(_("first name"), max_length=150, blank=False)
-    last_name = models.CharField(_("last name"), max_length=150, blank=False)
+    class Status(models.TextChoices):
+        PENDING = 'PENDING', _('Pending Verification')  # قيد الانتظار (مثلاً للمراجعة القانونية للشركات)
+        ACTIVE = 'ACTIVE', _('Active')  # نشط
+        INACTIVE = 'INACTIVE', _('Inactive')  # غير نشط (معطل من المستخدم)
+        BANNED = 'BANNED', _('Banned')  # محظور (بسبب مخالفة القوانين)
+
     email = models.EmailField(_('email address'), unique=True)
-    phone_number = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("phone number"))
-    birth_date = models.DateField(null=True, blank=True, verbose_name=_("birth date"))
+    # إضافة الحقل للجدول
+    status = models.CharField(
+        max_length=20,
+        choices=Status.choices,
+        default=Status.PENDING,  # الحالة الافتراضية عند التسجيل
+    )
     # هذا السطر يخبر Django باستخدام البريد للدخول
     USERNAME_FIELD = 'email'
 
@@ -47,10 +55,15 @@ class BaseCustomUser(AbstractUser):
     last_ip = models.GenericIPAddressField(null=True, blank=True, verbose_name=_("last login IP"))
     # --- حقول الربط الديناميكي (The Magic Logic) ---
     # تخزين نوع جدول البروفايل (طالب، شركة، إلخ)
-    profile_type = models.ForeignKey(ContentType, on_delete=models.SET_NULL, null=True, blank=True, related_name="user_profiles")
-    # تخزين رقم المعرف داخل ذلك الجدول
+    # profile_type = models.ForeignKey(ContentType, on_delete=models.SET_NULL, null=True, blank=True,
+    #                                  related_name="user_profiles")
+    # # تخزين رقم المعرف داخل ذلك الجدول
+    # profile_id = models.PositiveIntegerField(null=True, blank=True)
+    # # الحقل الذي ستستخدمه في الكود للوصول لأي بروفايل
+    # profile = GenericForeignKey('profile_type', 'profile_id')
+
+    profile_type = models.ForeignKey(ContentType, on_delete=models.SET_NULL, null=True, blank=True)
     profile_id = models.PositiveIntegerField(null=True, blank=True)
-    # الحقل الذي ستستخدمه في الكود للوصول لأي بروفايل
     profile = GenericForeignKey('profile_type', 'profile_id')
 
 

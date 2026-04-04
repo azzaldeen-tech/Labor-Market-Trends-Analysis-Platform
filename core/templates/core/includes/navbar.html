@@ -1,5 +1,5 @@
 
-<nav class=" border-b border-gray-200   dark:border-slate-800 transition-colors duration-300">
+<nav class=" border-b border-gray-200  bg-surface dark:border-slate-800 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16 items-center">
         <div class="flex items-center gap-x-4">
@@ -10,9 +10,22 @@
                 <a href="{% url 'core:home' %}" class=" text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium">
                     {% trans "Home" %}
                 </a>
-                <a href="#" class=" text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium">
-                    {% trans "Services" %}
+
+                <a href="{% url 'core:live_jobs_view' %}" class=" text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium">
+                    {% trans "Fetch Jobs" %}
                 </a>
+
+                {% if user.is_authenticated %}
+                    {% if user.is_identity and user.get_dashboard_url %}
+                      <a href="{{ user.get_dashboard_url }}" class=" text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium">
+                            {% trans "Dashboard" %}
+                      </a>
+                    {% endif  %}
+                     <a href="{% url 'account_email' %}" class=" text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium">
+                            {% trans "Email" %}
+                     </a>
+                 {% endif  %}
+
             </div>
         </div>
             <div class="flex items-center gap-x-4 ">
@@ -32,21 +45,24 @@
                         </select>
                     </form>
                 </div>
-             <button onclick="toggleTheme()" class="btn btn-ghost">
-    <span class="block dark:hidden [html[data-theme='emerald']_&]:hidden">☀️</span>
-    <span class="hidden dark:block">🌙</span>
-<!--    <span class="hidden [html[data-theme='emerald']_&]:block">🌿</span>-->
-</button>
+
+                 <button onclick="toggleTheme()" class="btn btn-ghost">
+                    <span class="block dark:hidden [html[data-theme='emerald']_&]:hidden">☀️</span>
+                    <span class="hidden dark:block">🌙</span>
+                </button>
+
                 {% if user.is_authenticated %}
                     <div class="flex items-center space-x-3  border-l rtl:border-l-0 rtl:border-r border-gray-200 dark:border-slate-700 padding-inline-start-4 pl-4">
                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
                             {% trans "Online" %}
                         </span>
-                        <span class="text-gray-700 dark:text-gray-200 font-medium hidden sm:block">
-                            {{ user.username }}
-                        </span>
+                        {% if user.display_name %}
+                            <span class="text-gray-700 dark:text-gray-200 font-medium hidden sm:block">
+                                {{ user.display_name }}
+                            </span>
+                         {% endif %}
 
-                        <form action="{% url 'accounts:logout' %}" method="post" class="inline">
+                        <form action="{% url 'account_logout' %}" method="post" class="inline">
                             {% csrf_token %}
                             <button type="submit" class="btn text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 text-sm font-semibold">
                                 {% trans "Logout" %}
@@ -55,17 +71,12 @@
                     </div>
                 {% else %}
                     <div class="flex items-center space-x-2 ">
-<!--                        <a href="{% url 'accounts:login' %}" class="text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-800 px-4 py-2 rounded-lg font-medium">-->
-<!--                            {% trans "Login" %}-->
-<!--                        </a>-->
-<!--                        <a href="{% url 'accounts:register' %}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">-->
-<!--                            {% trans "Register Now" %}-->
-<!--                        </a>    -->
 
                         <a href="{% url 'account_login' %}" class="text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-800 px-4 py-2 rounded-lg font-medium">
                             {% trans "Login" %}
                         </a>
-                        <a href="{% url 'account_signup' %}" class="bg-brand  text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                        <a href="{% url 'accounts:select_account_type' %}"
+                           class="bg-brand  text-white px-4 py-2 rounded-lg font-medium transition-colors">
                             {% trans "Register Now" %}
                         </a>
                     </div>
