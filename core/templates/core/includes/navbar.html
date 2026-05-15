@@ -3,17 +3,27 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16 items-center">
         <div class="flex items-center gap-x-4">
-            <a href="{% url 'core:home' %}" class="text-2xl font-bold text-blue-600 dark:text-blue-400 ml-8 rtl:ml-0 rtl:mr-8">
-                LogoSpace
-            </a>
+<!--            <a href="{% url 'core:home' %}" class="text-2xl flex font-bold text-blue-600 dark:text-blue-400 ml-8 rtl:ml-0 rtl:mr-8">-->
+<!--               <i data-lucide="trending-up" class="w-6 h-6 mx-3 "></i>-->
+<!--                {% trans 'Labor Market Trends' %}-->
+<!--            </a>-->
+                    <a  href="{% url 'core:home' %}" >
+                        <h1 class="text-2xl flex font-bold gradient-text">
+<!--                            <i data-lucide="trending-up" class="w-6 h-6 mx-3 "></i>  -->
+                            {% trans 'Labor Market Trends' %}</h1>
+                        <p class="text-sm text-gray-500">{% trans 'Smart job and skills analytics' %}</p>
+                    </a>
             <div class="hidden md:flex gap-x-4">
                 <a href="{% url 'core:home' %}" class=" text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium">
                     {% trans "Home" %}
                 </a>
 
-                <a href="{% url 'core:live_jobs_view' %}" class=" text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium">
-                    {% trans "Fetch Jobs" %}
+                <a href="{% url 'core:labor_market_trends' %}" class=" text-gray-700 flex dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium">
+                     <i data-lucide="trending-up" class="w-6 h-6 mx-3 text-[5px] "></i>
+                    {% trans 'Labor Market Trends' %}
                 </a>
+
+
 
                 {% if user.is_authenticated %}
                     {% if user.is_identity and user.get_dashboard_url %}
@@ -29,27 +39,27 @@
             </div>
         </div>
             <div class="flex items-center gap-x-4 ">
-                <div class="language-switcher">
-                    <form action="{% url 'set_language' %}" method="post" class="flex items-center">
-                        {% csrf_token %}
-                        <input name="next" type="hidden" value="{{ request.get_full_path }}">
-                        <select name="language" onchange="this.form.submit()"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5 dark:bg-slate-800 dark:border-slate-700 dark:placeholder-gray-400 dark:text-white">
-                            {% get_current_language as LANGUAGE_CODE %}
-                            {% get_available_languages as LANGUAGES %}
-                            {% for lang in LANGUAGES %}
-                                <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %}selected{% endif %}>
-                                    {{ lang.1 }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </form>
-                </div>
+<!--                <div class="language-switcher">-->
+<!--                    <form action="{% url 'set_language' %}" method="post" class="flex items-center">-->
+<!--                        {% csrf_token %}-->
+<!--                        <input name="next" type="hidden" value="{{ request.get_full_path }}">-->
+<!--                        <select name="language" onchange="this.form.submit()"-->
+<!--                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5 dark:bg-slate-800 dark:border-slate-700 dark:placeholder-gray-400 dark:text-white">-->
+<!--                            {% get_current_language as LANGUAGE_CODE %}-->
+<!--                            {% get_available_languages as LANGUAGES %}-->
+<!--                            {% for lang in LANGUAGES %}-->
+<!--                                <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %}selected{% endif %}>-->
+<!--                                    {{ lang.1 }}-->
+<!--                                </option>-->
+<!--                            {% endfor %}-->
+<!--                        </select>-->
+<!--                    </form>-->
+<!--                </div>-->
 
-                 <button onclick="toggleTheme()" class="btn btn-ghost">
-                    <span class="block dark:hidden [html[data-theme='emerald']_&]:hidden">☀️</span>
-                    <span class="hidden dark:block">🌙</span>
-                </button>
+<!--                 <button onclick="toggleTheme()" class="btn btn-ghost">-->
+<!--                    <span class="block dark:hidden [html[data-theme='emerald']_&]:hidden">☀️</span>-->
+<!--                    <span class="hidden dark:block">🌙</span>-->
+<!--                </button>-->
 
                 {% if user.is_authenticated %}
                     <div class="flex items-center space-x-3  border-l rtl:border-l-0 rtl:border-r border-gray-200 dark:border-slate-700 padding-inline-start-4 pl-4">

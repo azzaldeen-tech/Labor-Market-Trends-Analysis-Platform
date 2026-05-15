@@ -1,262 +1,123 @@
+
+
 {% extends 'members/base.html' %}
 {% block title %}
 {% trans "Dashboard" %}
 {% endblock %}
 {% block provider_content %}
-     <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
-                <div class="mb-6">
-                    <h2 class="text-2xl font-bold text-gray-800">مرحباً بك، أحمد محمد</h2>
-                    <p class="text-gray-600">هذه نظرة عامة على حسابك ونشاطك الأخير</p>
-                </div>
 
-                <!-- Stats cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div class="card bg-white rounded-lg shadow p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-500">الوظائف المنشورة</p>
-                                <h3 class="text-2xl font-bold mt-2">12</h3>
-                            </div>
-                            <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
-                                <i class="fas fa-briefcase text-blue-500 text-xl"></i>
-                            </div>
-                        </div>
-                        <div class="mt-4">
-                            <div class="flex items-center justify-between text-sm">
-                                <span class="text-green-500">+2 هذا الشهر</span>
-                                <span class="text-gray-500">منذ 30 يوم</span>
-                            </div>
-                        </div>
-                    </div>
+    <!-- الترحيب -->
+    <section class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-7 animate-slide-up">
+        <div>
+            <h1 class="font-display text-[24px] lg:text-[28px] font-bold leading-tight mb-1.5">
+                مرحباً !! <span class="text-brand">{{user.display_name}}</span>
+            </h1>
+            <p class="text-fg-sub text-sm">لديك <strong class="text-fg">6 مقابلات</strong> هذا الأسبوع و <strong class="text-fg">24 متقدم جديد</strong> بانتظار المراجعة</p>
+        </div>
+<!--        <button onclick="showToast('جارٍ تصدير التقرير إلى PDF','ok')" class="flex items-center gap-2 bg-surface  text-fg-sub text-[12px] font-semibold px-4 py-2.5 rounded-xl hover:text-fg hover:border-fg-muted shadow-sm hover:shadow transition-all shrink-0">-->
+<!--            <i class="fas fa-download text-[11px]"></i>-->
+<!--            تقرير التوظيف-->
+<!--        </button>-->
+    </section>
 
-                    <div class="card bg-white rounded-lg shadow p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-500">طلبات التوظيف</p>
-                                <h3 class="text-2xl font-bold mt-2">84</h3>
-                            </div>
-                            <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
-                                <i class="fas fa-file-alt text-green-500 text-xl"></i>
-                            </div>
-                        </div>
-                        <div class="mt-4">
-                            <div class="flex items-center justify-between text-sm">
-                                <span class="text-green-500">+15 هذا الشهر</span>
-                                <span class="text-gray-500">منذ 30 يوم</span>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="card bg-white rounded-lg shadow p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-500">المقابلات المجدولة</p>
-                                <h3 class="text-2xl font-bold mt-2">7</h3>
-                            </div>
-                            <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center">
-                                <i class="fas fa-calendar-check text-purple-500 text-xl"></i>
-                            </div>
-                        </div>
-                        <div class="mt-4">
-                            <div class="flex items-center justify-between text-sm">
-                                <span class="text-green-500">+3 هذا الأسبوع</span>
-                                <span class="text-gray-500">منذ 7 أيام</span>
-                            </div>
-                        </div>
-                    </div>
+    <!-- بطاقات الإحصائيات -->
+    <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-7">
 
-                    <div class="card bg-white rounded-lg shadow p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-500">معدل النقر</p>
-                                <h3 class="text-2xl font-bold mt-2">24%</h3>
-                            </div>
-                            <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center">
-                                <i class="fas fa-chart-line text-yellow-500 text-xl"></i>
-                            </div>
-                        </div>
-                        <div class="mt-4">
-                            <div class="flex items-center justify-between text-sm">
-                                <span class="text-green-500">+5% هذا الشهر</span>
-                                <span class="text-gray-500">منذ 30 يوم</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        {% statistics_card title='الوظائف المعلنة'   amount=member_global_stats.jobs_count icon='' badge_type='brand' badge_amount='' badge_text=''  badge_icon='' %}
+        {% statistics_card title='الوظائف المعلنة'   amount=member_global_stats.jobs_count icon='' badge_type='brand' badge_amount='' badge_text=''  badge_icon='' %}
+        {% statistics_card title='الوظائف المعلنة'   amount=member_global_stats.jobs_count icon='' badge_type='brand' badge_amount='' badge_text=''  badge_icon='' %}
+        {% statistics_card title='الوظائف المعلنة'   amount=member_global_stats.jobs_count icon='' badge_type='brand' badge_amount='' badge_text=''  badge_icon='' %}
 
-                <!-- Recent activity and job posts -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="lg:col-span-2">
-                        <div class="bg-white rounded-lg shadow overflow-hidden">
-                            <div class="px-6 py-4 border-b border-gray-200">
-                                <h3 class="font-bold text-lg">الوظائف الأخيرة</h3>
-                            </div>
-                            <div class="divide-y divide-gray-200">
-                                <div class="p-6 hover:bg-gray-50 transition-colors">
-                                    <div class="flex items-start justify-between">
-                                        <div>
-                                            <h4 class="font-semibold">مطور ويب (React.js)</h4>
-                                            <p class="text-sm text-gray-500 mt-1">نشرت في 15 يونيو 2023</p>
-                                        </div>
-                                        <div class="flex items-center space-x-2 space-x-reverse">
-                                            <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">نشطة</span>
-                                            <span class="text-gray-500">24 طلب</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-6 hover:bg-gray-50 transition-colors">
-                                    <div class="flex items-start justify-between">
-                                        <div>
-                                            <h4 class="font-semibold">مصمم جرافيك</h4>
-                                            <p class="text-sm text-gray-500 mt-1">نشرت في 10 يونيو 2023</p>
-                                        </div>
-                                        <div class="flex items-center space-x-2 space-x-reverse">
-                                            <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">نشطة</span>
-                                            <span class="text-gray-500">18 طلب</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-6 hover:bg-gray-50 transition-colors">
-                                    <div class="flex items-start justify-between">
-                                        <div>
-                                            <h4 class="font-semibold">مدير مشاريع</h4>
-                                            <p class="text-sm text-gray-500 mt-1">نشرت في 5 يونيو 2023</p>
-                                        </div>
-                                        <div class="flex items-center space-x-2 space-x-reverse">
-                                            <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">قيد المراجعة</span>
-                                            <span class="text-gray-500">8 طلب</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-6 hover:bg-gray-50 transition-colors">
-                                    <div class="flex items-start justify-between">
-                                        <div>
-                                            <h4 class="font-semibold">محاسب مالي</h4>
-                                            <p class="text-sm text-gray-500 mt-1">نشرت في 1 يونيو 2023</p>
-                                        </div>
-                                        <div class="flex items-center space-x-2 space-x-reverse">
-                                            <span class="px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full">منتهية</span>
-                                            <span class="text-gray-500">32 طلب</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="px-6 py-4 border-t border-gray-200 text-center">
-                                <a href="#" class="text-blue-500 hover:text-blue-700 font-medium">عرض جميع الوظائف</a>
-                            </div>
-                        </div>
-                    </div>
+<!--        {% for card in stats_cards %}-->
+<!--            {% statistics_card title=card.title amount=card.amount icon=card.icon badge_type=card.badge_type badge_amount=card.badge_amount badge_text=card.badge_text badge_icon=card.badge_icon %}-->
+<!--        {% endfor %}-->
 
-                    <div>
-                        <div class="bg-white rounded-lg shadow overflow-hidden mb-6">
-                            <div class="px-6 py-4 border-b border-gray-200">
-                                <h3 class="font-bold text-lg">النشاط الأخير</h3>
-                            </div>
-                            <div class="divide-y divide-gray-200">
-                                <div class="p-6">
-                                    <div class="flex items-start space-x-3 space-x-reverse">
-                                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                                            <i class="fas fa-bell text-blue-500"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm">تمت الموافقة على إعلان وظيفة "مطور ويب"</p>
-                                            <p class="text-xs text-gray-500 mt-1">منذ ساعتين</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-6">
-                                    <div class="flex items-start space-x-3 space-x-reverse">
-                                        <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-                                            <i class="fas fa-file-alt text-green-500"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm">5 طلبات جديدة على وظيفة "مصمم جرافيك"</p>
-                                            <p class="text-xs text-gray-500 mt-1">منذ 5 ساعات</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-6">
-                                    <div class="flex items-start space-x-3 space-x-reverse">
-                                        <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
-                                            <i class="fas fa-calendar-check text-purple-500"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm">تم جدولة مقابلة مع محمد علي</p>
-                                            <p class="text-xs text-gray-500 mt-1">منذ يوم واحد</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-6">
-                                    <div class="flex items-start space-x-3 space-x-reverse">
-                                        <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center flex-shrink-0">
-                                            <i class="fas fa-exclamation-triangle text-yellow-500"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm">إعلان وظيفة "مدير مشاريع" قيد المراجعة</p>
-                                            <p class="text-xs text-gray-500 mt-1">منذ يومين</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="bg-white rounded-lg shadow overflow-hidden">
-                            <div class="px-6 py-4 border-b border-gray-200">
-                                <h3 class="font-bold text-lg">إكمال الملف الشخصي</h3>
-                            </div>
-                            <div class="p-6">
-                                <div class="mb-4">
-                                    <div class="flex items-center justify-between mb-1">
-                                        <span class="text-sm font-medium">75% مكتمل</span>
-                                        <span class="text-xs text-gray-500">3/4 أقسام</span>
-                                    </div>
-                                    <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                        <div class="bg-blue-600 h-2.5 rounded-full" style="width: 75%"></div>
-                                    </div>
-                                </div>
+    </section>
 
-                                <div class="space-y-4">
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center space-x-2 space-x-reverse">
-                                            <i class="fas fa-check-circle text-green-500"></i>
-                                            <span>معلومات الشركة</span>
-                                        </div>
-                                        <span class="text-xs text-gray-500">مكتمل</span>
-                                    </div>
+<!--    &lt;!&ndash; قمع التوظيف + المتقدمون الجدد &ndash;&gt;-->
+<!--    <section class="grid grid-cols-1 lg:grid-cols-5 gap-4 mb-7">-->
 
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center space-x-2 space-x-reverse">
-                                            <i class="fas fa-check-circle text-green-500"></i>
-                                            <span>معلومات الاتصال</span>
-                                        </div>
-                                        <span class="text-xs text-gray-500">مكتمل</span>
-                                    </div>
+<!--        &lt;!&ndash; قمع التوظيف &ndash;&gt;-->
+<!--        <div class="lg:col-span-3 bg-surface  rounded-2xl shadow-sm animate-slide-up" style="animation-delay:0.15s">-->
+<!--            <div class="flex items-center justify-between px-5 py-4 border-b border-line-sub">-->
+<!--                <h2 class="font-display text-[15px] font-semibold">قمع التوظيف</h2>-->
+<!--                <div class="flex gap-1 bg-raised rounded-lg p-0.5">-->
+<!--                    <button class="funnel-tab text-[11px] font-semibold px-3 py-1.5 rounded-md bg-surface text-fg shadow-sm" data-v="funnel" onclick="switchFunnelView(this)">القمع</button>-->
+<!--                    <button class="funnel-tab text-[11px] font-semibold px-3 py-1.5 rounded-md text-fg-muted" data-v="chart" onclick="switchFunnelView(this)">رسم بياني</button>-->
+<!--                </div>-->
+<!--            </div>-->
 
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center space-x-2 space-x-reverse">
-                                            <i class="fas fa-check-circle text-green-500"></i>
-                                            <span>الشعار والصور</span>
-                                        </div>
-                                        <span class="text-xs text-gray-500">مكتمل</span>
-                                    </div>
+<!--            <div id="funnelView" class="px-5 py-5">-->
+<!--                <div class="space-y-3" id="funnelBars">-->
+<!--                   {% for step in funnel_data %}-->
 
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center space-x-2 space-x-reverse">
-                                            <i class="fas fa-exclamation-circle text-yellow-500"></i>
-                                            <span>الوصف والتفاصيل</span>
-                                        </div>
-                                        <span class="text-xs text-gray-500">ناقص</span>
-                                    </div>
-                                </div>
+<!--                        {% funnel_step label=step.label count=step.count percentage=step.pct index=forloop.counter0 %}-->
 
-                                <button class="mt-6 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors">
-                                    إكمال الملف الشخصي
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
+<!--                    {% endfor %}-->
+<!--                </div>-->
+<!--                <div class="mt-5 pt-4 border-t border-line-sub flex items-center justify-between">-->
+<!--                    <div class="text-[12px] text-fg-sub">معدل التحويل الكلي</div>-->
+<!--                    <div class="font-display text-[20px] font-bold text-brand">2.15%</div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div id="chartView" class="px-5 py-4 hidden">-->
+<!--                {% weekly_data_chart title="الإحصائيات الأسبوعية" data_dict=weekly_data %}-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; المتقدمون الجدد &ndash;&gt;-->
+<!--        <div class="lg:col-span-2 bg-surface  rounded-2xl shadow-sm animate-slide-up" style="animation-delay:0.18s">-->
+<!--            <div class="flex items-center justify-between px-5 py-4 border-b border-line-sub">-->
+<!--                <h2 class="font-display text-[15px] font-semibold">المتقدمون الجدد</h2>-->
+<!--                <button onclick="showToast('عرض جميع المتقدمين','info')" class="text-[11px] text-fg-muted hover:text-fg transition-colors">عرض الكل</button>-->
+<!--            </div>-->
+<!--            <div class="px-5 py-2" id="candidatesList">-->
+<!--                {% for candidate in candidates %}-->
+<!--                    {% candidate_row candidate is_last=forloop.last redirect_link="#" %}-->
+<!--                {% empty %}-->
+<!--                    <p class="text-sm text-content-muted text-center py-6">لا يوجد مرشحون حالياً</p>-->
+<!--                {% endfor %}-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+
+<!--    &lt;!&ndash; الوظائف + المقابلات &ndash;&gt;-->
+<!--    <section class="grid grid-cols-1 lg:grid-cols-5 gap-4">-->
+
+<!--        &lt;!&ndash; أداء الوظائف &ndash;&gt;-->
+<!--        <div class="lg:col-span-3 bg-surface  rounded-2xl shadow-sm animate-slide-up" style="animation-delay:0.21s">-->
+<!--            <div class="flex items-center justify-between px-5 py-4 border-b border-line-sub">-->
+<!--                <h2 class="font-display text-[15px] font-semibold">أداء الوظائف المعلنة</h2>-->
+<!--                <button onclick="showToast('عرض جميع الوظائف','info')" class="text-[11px] text-fg-muted hover:text-fg transition-colors">عرض الكل</button>-->
+<!--            </div>-->
+<!--            <div class="px-5 py-4 space-y-3" id="jobPostsList">-->
+<!--                {% for job in job_posts %}-->
+<!--                    {% job_card job redirect_link="#" %}-->
+<!--                {% empty %}-->
+<!--                    <div class="text-center py-10 text-content-muted">-->
+<!--                        <i class="fas fa-briefcase text-3xl mb-3 opacity-20"></i>-->
+<!--                        <p>لا توجد وظائف منشورة حالياً</p>-->
+<!--                    </div>-->
+<!--                {% endfor %}-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; جدول المقابلات &ndash;&gt;-->
+<!--        <div class="lg:col-span-2 bg-surface  rounded-2xl shadow-sm animate-slide-up" style="animation-delay:0.24s">-->
+<!--            <div class="flex items-center justify-between px-5 py-4 border-b border-line-sub">-->
+<!--                <h2 class="font-display text-[15px] font-semibold">المقابلات القادمة</h2>-->
+<!--                <button onclick="showToast('عرض جميع المقابلات','info')" class="text-[11px] text-fg-muted hover:text-fg transition-colors">عرض الكل</button>-->
+<!--            </div>-->
+<!--            <div class="px-5 py-3" id="interviewsList">-->
+<!--                {% for interview in interviews %}-->
+<!--                    {% interview_card interview is_last=forloop.last %}-->
+<!--                {% empty %}-->
+<!--                    <p class="text-center p-5 text-fg-muted text-xs">لا توجد مقابلات مجدولة</p>-->
+<!--                {% endfor %}-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
 {% endblock %}
-
-

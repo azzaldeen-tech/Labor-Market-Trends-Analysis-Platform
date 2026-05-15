@@ -1,12 +1,17 @@
-<div class="max-w-5xl mx-auto px-4 py-8">
-<!--    <a href="{% url 'core:job_list' %}" class="flex items-center text-sm text-content-muted hover:text-brand mb-6 transition-colors">-->
+
+{% extends 'members/base.html' %}
+
+{% block provider_content %}
+
+<div class="max-w-5xl mx-auto px-4 py-0">
+<!--    <a href="{% url 'members:advertised_jobs' %}" class="flex items-center text-sm text-content-muted hover:text-brand mb-6 transition-colors">-->
 <!--        <i class="fas fa-arrow-right ml-2 text-[10px]"></i>-->
 <!--        العودة للوظائف-->
 <!--    </a>-->
 
   {% back_button  url='members:advertised_jobs' label='العودة للوظائف' %}
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 mt-3 lg:grid-cols-3 gap-8">
 
         <div class="lg:col-span-2 space-y-8">
 
@@ -35,14 +40,16 @@
 
             <section class="prose prose-sm max-w-none text-content">
                 <h3 class="text-lg font-bold mb-4">وصف الوظيفة</h3>
-                <div class="leading-relaxed">
+                <div class="leading-relaxed bg-surface-card border border-stroke-soft p-3 rounded-xl ">
                     {{ job.description|linebreaks }}
                 </div>
 
                 <h3 class="text-lg font-bold mt-8 mb-4">المتطلبات والمهارات</h3>
-                <ul class="list-disc pr-5 space-y-2">
+                <ul class="list-disc mt-2  bg-surface-card p-4 border border-stroke-soft rounded-xl pr-5 space-y-2">
                     {% for skill in job.required_skills.all %}
-                        <li>{{ skill.name }}</li>
+                      <span class="px-3 py-1 mx-2 bg-brand-light text-brand text-xm font-bold rounded-full">
+                        {{ skill.name }}
+                    </span>
                     {% endfor %}
                 </ul>
             </section>
@@ -53,7 +60,7 @@
                 <div class="mb-6">
                     <div class="text-sm text-content-muted mb-1">الراتب المتوقع</div>
                     <div class="text-xl font-bold text-content">
-                        {{ job.min_salary|default:"---" }} - {{ job.max_salary|default:"---" }}
+                            {{ job.min_salary|default:"---" }} - {{ job.max_salary|default:"---" }}
                         <span class="text-sm font-normal">ريال / شهرياً</span>
                     </div>
                 </div>
@@ -61,14 +68,16 @@
                 <div class="flex flex-col gap-3">
                     {% if user.is_authenticated %}
                         {% if has_applied %}
-                            <button disabled class="w-full py-3 bg-gray-100 text-gray-500 rounded-xl font-bold cursor-not-allowed">
-                                تم التقديم مسبقاً
-                            </button>
+                              <a href="{% url 'members:job_cancel' job.id %}"
+                                    class="w-full py-3 bg-error text-white text-center rounded-xl font-bold hover:bg-brand-dark transition-all shadow-lg shadow-brand/20">
+                                إلغاء التقديم
+                            </a>
                         {% else %}
-                            <button hx-post="{% url 'embers:job_join' job.id %}"
-                                    class="w-full py-3 bg-brand text-white rounded-xl font-bold hover:bg-brand-dark transition-all shadow-lg shadow-brand/20">
+                            <a href="{% url 'members:job_join' job.id %}"
+                                    class="w-full py-3 bg-brand text-white text-center rounded-xl font-bold hover:bg-brand-dark transition-all shadow-lg shadow-brand/20">
                                 تقديم الآن
-                            </button>
+                            </a>
+
                         {% endif %}
                     {% else %}
                         <a href="{% url 'account_login' %}" class="w-full py-3 bg-brand text-white text-center rounded-xl font-bold">
@@ -76,18 +85,18 @@
                         </a>
                     {% endif %}
 
-                    <button class="w-full py-3 bg-white border border-stroke text-content rounded-xl font-bold hover:bg-gray-50 transition-all">
+                    <button class="w-full py-3 bg-base border border-stroke text-content rounded-xl font-bold hover:bg-gray-50 transition-all">
                         <i class="far fa-bookmark ml-2"></i> حفظ الوظيفة
                     </button>
                 </div>
 
                 <div class="mt-8 pt-6 border-t border-stroke-soft space-y-4">
                     <div class="flex justify-between text-sm">
-                        <span class="text-content-muted">المستوى المطلوب:</span>
+                        <span class="text-content-muted">المستوى المطلوب</span>
                         <span class="font-bold">{{ job.get_experience_level_display }}</span>
                     </div>
                     <div class="flex justify-between text-sm">
-                        <span class="text-content-muted">عدد المتقدمين:</span>
+                        <span class="text-content-muted">عدد المتقدمين</span>
                         <span class="font-bold">{{ job.applications.count }}</span>
                     </div>
                 </div>
@@ -95,3 +104,6 @@
         </div>
     </div>
 </div>
+
+
+{% endblock  %}

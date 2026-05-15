@@ -1,11 +1,17 @@
+from pyexpat.errors import messages
+
+from companies.Utils.services import get_job_applications, get_job_simple_applications, get_filtered_applications, \
+    change_job_application_status
 from companies.decorators import company_required
 from companies.forms import JobForm
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, redirect,render
+from django.shortcuts import get_object_or_404,get_list_or_404, redirect,render
 from companies.models import Job, CompanyProfile, JobApplication, SimpleApplication
 from django.http import JsonResponse
 from datetime import datetime
 from django.db.models import Q
+from django.contrib import messages as django_messages
+from core.Utils import JobServices
 from core.models import Skill
 
 app_name = 'companies'
@@ -21,13 +27,15 @@ app_name = 'companies'
 def dashboard_view(request):
 
     job_posts = Job.objects.filter(company=request.user.profile)
-    job_apps = JobApplication.objects.filter(job__company=request.user.profile).select_related('job', 'member__user').order_by('-applied_at')
+    applied_jobs = JobApplication.objects.filter(job__company=request.user.profile)\
+        .select_related('job', 'member__user')\
+        .order_by('-applied_at') #'-match_score',
 
     # print("--- قائمة المتقدمين لشركتك ---")
-    # for app in job_apps:
+    # for app in applied_jobs:
     #     print(f"- المتقدم: {app.member.user.get_full_name()} | الوظيفة: {app.job.title}")
 
-    simplified_apps = [SimpleApplication(app) for app in job_apps]
+    simplified_apps = [SimpleApplication(app) for app in applied_jobs]
 
     weekly_data = {
         'labels': ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'],
@@ -37,7 +45,7 @@ def dashboard_view(request):
 
     # statistics = {
     #     'adv_jobs':job_posts.count,
-    #     'job_apps':job_applications.count,
+    #     'applied_jobs':job_applications.count,
     # }
     # print("statistics::")
     # print(statistics)
@@ -150,6 +158,25 @@ def dashboard_view(request):
 
 @company_required
 @login_required
+def delete_job(request, pk):
+    # print("delete_job:::8888888")
+    job = get_object_or_404(Job, pk=pk)
+    if job.company.user != request.user:
+        django_messages.error(request, "ليس لديك صلاحية لحذف هذه الوظيفة.")
+        return redirect(f'{app_name}:advertised_jobs')
+
+    if request.method == 'POST':
+        job.delete()
+        django_messages.success(request, "تم حذف الوظيفة بنجاح.")
+
+    return redirect(f'{app_name}:advertised_jobs')
+
+
+    # return render(request, f'{app_name}/jobs/confirm_delete.html', {'job': job})
+
+
+@company_required
+@login_required
 def manage_job(request, pk=None):
     # إذا كان هناك pk، فنحن في حالة "تعديل"، وإلا فنحن في حالة "إضافة"
     company=request.user.profile
@@ -171,7 +198,7 @@ def manage_job(request, pk=None):
             job.save()
             form.save_m2m()  # ضروري جداً لأنك تستخدم ManyToMany لـ required_skills
 
-            return redirect('companies:advertised_jobs')  # أو أي صفحة تريدها بعد النجاح
+            return redirect( f'{app_name}:advertised_jobs')  # أو أي صفحة تريدها بعد النجاح
     else:
         form = JobForm(instance=job_instance)
 
@@ -190,43 +217,64 @@ def manage_job(request, pk=None):
 @login_required
 def advertised_jobs(request):
     # print(f"<<<<advertised_jobs>>>>")
-    advertised_jobs = Job.objects.filter(company=request.user.profile)
+    advertised_jobs = Job.objects.filter(company=request.user.profile)\
+        .order_by('-created_at')
+
     return render(request, f'{app_name}/jobs/job_list.html', {'jobs': advertised_jobs})
 
 @company_required
 @login_required
-def jobs_applications(request):
-    # جلب الطلبات + بيانات الوظيفة + بيانات العضو + بيانات حساب العضو
-    job_apps = JobApplication.objects.filter(
-        job__company=request.user.profile
-    ).select_related('job', 'member__user').order_by('-applied_at')
+def job_applications(request):
+    company=request.user.profile
+    my_filter = {'job__company': company}
+    job_applications = get_filtered_applications(**my_filter)
+    simplified_apps = get_job_simple_applications(job_applications)
+    return render(request, f'{app_name}/jobs/job_applications.html',
+                  {'job_applications': simplified_apps})
 
-    # print("--- قائمة المتقدمين لشركتك ---")
-    # for app in job_apps:
-    #     print(f"- المتقدم: {app.member.user.get_full_name()} | الوظيفة: {app.job.title}")
-
-    simplified_apps = [SimpleApplication(app) for app in job_apps]
-    return render(request, f'{app_name}/jobs/job_apps.html', {'job_apps': simplified_apps})
-
-@company_required
 @login_required
-def search_skills(request):
-    query = request.GET.get('search', '').strip()
+@company_required
+def job_detail(request, pk):
+    is_owner = False
+    job = get_object_or_404(Job, pk=pk)
 
-    if query:
-        skills = Skill.objects.filter(
-            Q(name__icontains=query) |
-            Q(category__name__icontains=query)
-        ).distinct()[:20]  # تحديد العدد لسرعة الاستجابة
-    else:
-        skills = Skill.objects.all()[:20]
+    if request.user.is_authenticated and hasattr(request.user, 'profile'):
+        is_owner = (job.company == request.user.profile)
 
-    # إذا كان الطلب من Tom Select (AJAX)
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest' or 'json' in request.path:
-        # print("****************************")
-        results = [{'id': s.id, 'name': s.name} for s in skills]
 
-        return JsonResponse({'results': results})
+    job_applications=get_filtered_applications(job_id=pk)
 
-    # للاستخدامات الأخرى بـ HTMX التي تحتاج HTML
-    return render(request, f'{app_name}/partials/skill_list_results.html', {'skills': skills})
+    simplified_apps = get_job_simple_applications(job_applications)
+
+
+    return  render(request,f"{app_name}/jobs/detail.html",{
+        'job':job,
+        'is_owner':is_owner,
+        'job_applications':simplified_apps,
+    })
+
+@login_required
+@company_required
+def job_applicant_detail(request, pk):
+
+    job_apps=get_filtered_applications(id=pk)
+    simplified_job_apps = get_job_simple_applications(job_apps)
+    simplified_job_app = next(iter(simplified_job_apps), None)
+
+    return  render(request,f"{app_name}/jobs/job_applicant_detail.html",{
+        'job_application':simplified_job_app,
+    })
+
+@login_required
+@company_required
+def job_app_accept(request, pk):
+    change_job_application_status(pk,JobApplication.Status.ACCEPTED)
+    destination = request.META.get('HTTP_REFERER')
+    return redirect(destination)
+
+@login_required
+@company_required
+def job_app_reject(request, pk):
+    change_job_application_status(pk,JobApplication.Status.REJECTED)
+    destination = request.META.get('HTTP_REFERER')
+    return redirect(destination)

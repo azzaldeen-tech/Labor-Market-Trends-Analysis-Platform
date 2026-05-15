@@ -2,9 +2,12 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from config import settings
-from core.models import SkillCategory, Skill
-from members.models import MemberProfile
+
 from django.utils.timesince import timesince
+
+from core.models import SkillCategory, Skill, City
+from members.models import MemberProfile
+
 
 class CompanyProfile(models.Model):
     """ملف الشركة أو صاحب العمل"""
@@ -30,10 +33,14 @@ class CompanyProfile(models.Model):
         help_text=_("Preferably 512x512 pixels")
     )
 
+    class Meta:
+        verbose_name = _("Company")
+        verbose_name_plural = _("Companies")
+
     @property
     def adv_jobs_number(self):
         job_posts = Job.objects.filter(company=self.user.profile)
-        return job_posts.count or 0  \
+        return job_posts.count or 0
 
     @property
     def jobs_applications_number(self):
@@ -57,20 +64,21 @@ class CompanyProfile(models.Model):
         return self.name or self.user.username
 
 class Job(models.Model):
-    # خيارات نوع التوظيف ومستوى الخبرة
-    EMPLOYMENT_TYPE = [
-        ('full-time', 'دوام كامل'),
-        ('part-time', 'دوام جزئي'),
-        ('remote', 'عن بعد'),
-        ('contract', 'عقد')
-    ]
 
-    EXPERIENCE_CHOICES = [
-        ('entry', 'مبتدئ'),
-        ('mid', 'متوسط خبرة'),
-        ('senior', 'خبير')
-    ]
+    class EmploymentType(models.TextChoices):
+        FULL_TIME = 'full-time', _('دوام كامل')
+        PART_TIME = 'part-time', _('دوام جزئي')
+        REMOTE = 'remote', _('عن بعد')
+        CONTRACT = 'contract', _('عقد')
 
+    class ExperienceChoices(models.TextChoices):
+        ENTRY = 'entry', _('مبتدئ')
+        MID = 'mid', _('متوسط خبرة')
+        SENIOR = 'senior', _('خبير')
+
+
+
+    city = models.ForeignKey(City, on_delete=models.CASCADE, related_name="jobs", null=True, blank=True)
     company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE, related_name="jobs")
     category = models.ForeignKey(SkillCategory, on_delete=models.PROTECT, related_name="jobs",
                                  verbose_name="مجال الوظيفة")
@@ -85,8 +93,8 @@ class Job(models.Model):
 
     # بيانات التحليل المالي والجغرافي
     location = models.CharField(max_length=100,default="الرياض")
-    employment_type = models.CharField(max_length=50, choices=EMPLOYMENT_TYPE,default='full-time')
-    experience_level = models.CharField(max_length=20, choices=EXPERIENCE_CHOICES, default='mid')
+    employment_type = models.CharField(max_length=50, choices=EmploymentType,default='full-time')
+    experience_level = models.CharField(max_length=20, choices=ExperienceChoices, default='mid')
     min_salary = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     max_salary = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
@@ -99,25 +107,31 @@ class Job(models.Model):
         return self.title
 
 class JobApplication(models.Model):
+    class Status(models.TextChoices):
+        PENDING = 'pending', _('قيد المراجعة')
+        ACCEPTED = 'accepted', _('مقبول')
+        REJECTED = 'rejected', _('مرفوض')
 
-    STATUS_CHOICES = [
-        ('pending', 'قيد المراجعة'),
-        ('accepted', 'مقبول مبدئياً'),
-        ('rejected', 'مرفوض'),
+    # STATUS_CHOICES = [
+    #     (Status.PENDING, 'قيد المراجعة'),
+    #     (Status.ACCEPTED, 'ًمقبول مبدئيا'),
+    #     (Status.REJECTED, 'مرفوض'),
 
         # ('under_review', 'جاري المراجعة'),
         # ('shortlisted', 'قائمة الترشيح'),
         # ('withdrawn', 'تم سحب الطلب'),
 
-    ]
+    # ]
 
     job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name="applications")
     member = models.ForeignKey(MemberProfile, on_delete=models.CASCADE, related_name="applications")
     match_score = models.FloatField(default=0.0)
     applied_at = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    status = models.CharField(max_length=20, choices=Status, default=Status.PENDING)
 
     class Meta:
+        verbose_name = _("Job Application")
+        verbose_name_plural = _("Job Applications")
         unique_together = ('job', 'member')
 
 class SimpleApplication:
@@ -125,16 +139,21 @@ class SimpleApplication:
         # استخلاص البيانات "الجاهزة" من الكائن المعقد
         self.id = app_instance.id
         self.name = app_instance.member.user.get_full_name()
+        self.email = app_instance.member.user.email
+        self.user_skills = app_instance.member.skills.all
+        self.job_skills = app_instance.job.required_skills.all
         self.avater = app_instance.member.user.profile.avater
         self.role = app_instance.job.title
-        # self.role = app_instance.member.user.identity
+        self.job = app_instance.job
         self.match = app_instance.match_score
-        self.status = app_instance.get_status_display()
+        self.status = app_instance.status
+        self.status_display = app_instance.get_status_display()
         # self.time = app_instance.applied_at.strftime('%Y-%m-%d')
         self.time = f"منذ {timesince(app_instance.applied_at)}"
 
     def __str__(self):
-        return f"{self.name} -> {self.job_title}"
+        return f"{self.name}"
+
 
 
 

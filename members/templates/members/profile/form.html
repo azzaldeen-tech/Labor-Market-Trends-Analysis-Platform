@@ -1,7 +1,7 @@
-{% extends 'students/base.html' %}
+{% extends 'members/base.html' %}
 
 {% block title %}
-    {% trans "Complete Profile" %}
+    {% trans "Profile" %}
 {% endblock %}
 
 
@@ -36,44 +36,37 @@
                  border border-transparent ">
 
         <h2 class="text-3xl font-bold text-center mb-8 text-current">
-            {% trans "Complete Profile" %}
+            {% trans "Profile" %}
         </h2>
 
         <form method="post" enctype="multipart/form-data" novalidate class="space-y-6  ">
             {% csrf_token %}
         <div class="flex flex-wrap justify-content p-3">
             {% for field in form %}
-                {% if not field.is_hidden and field.name != 'skills' %}
 
-                    <div class="flex flex-col gap-1 mx-3 mt-4" style="width:45%">
-                    <label class="text-sm font-medium opacity-80">
-                        {{ field.label }}
-                    </label>
+                {% if  field.name != 'skills' %}
 
-                    {# هنا سيظهر الحقل بكلاس input-field تلقائياً من البايثون #}
-                    {{ field }}
+                <div class="w-[95%] md:w-[45%] mx-auto mt-4">
 
-                    {# أخطاء الحقول بتنسيق يتناسب مع الألوان #}
-                    {% if field.errors %}
-                        <p class="text-err text-xs mt-1">
-                            {{ field.errors.0 }}
-                        </p>
-                    {% endif %}
-                </div>
+                            <label class="text-sm font-medium opacity-80">
+                                {{ field.label }}
+                            </label>
+
+                            {{ field }}
+
+                            {% if field.errors %}
+                                <p class="text-err text-xs mt-1">
+                                    {{ field.errors.0 }}
+                                </p>
+                            {% endif %}
+                    </div>
 
                 {% else %}
-                <div class=" bg-base p-5 flex flex-col gap-1 w-full mx-3 my-5" >
 
-                    <label class="text-sm font-medium opacity-80">
-                        {{ field.label }}
-                    </label>
-                    {{ field }}
-                    {% if field.errors %}
-                        <p class="text-err text-xs mt-1">
-                            {{ field.errors.0 }}
-                        </p>
-                    {% endif %}
-                </div>
+                     <div class="my-5 w-full">
+                         {% ui_multi_tag_select  name="skills" label="المهارات" selected_values=field.value choices=skills_list %}
+                     </div>
+
                 {% endif %}
             {% endfor %}
         </div>
@@ -83,79 +76,7 @@
 
         </form>
 
-<script>
 
-document.addEventListener("DOMContentLoaded", function() {
-
-    // --- 1. تهيئة TomSelect للمهارات ---
-    const skillsElement = document.querySelector('.select2-enable');
-    if (skillsElement) {
-        new TomSelect(skillsElement, {
-            plugins: ['remove_button'],
-            maxItems: null,
-            valueField: 'id',
-            labelField: 'title',
-            searchField: 'title',
-            placeholder: "Search for a skill and add it...",
-            hidePlaceholder: true,
-            onItemAdd: function() {
-                this.setTextboxValue('');
-                this.refreshOptions();
-            }
-        });
-    }
-
-    // --- 2. منطق اختيار الجامعة والكلية والتخصص ---
-    const uniSelect = document.getElementById('id_university');
-    const collegeSelect = document.getElementById('id_college');
-    const majorSelect = document.getElementById('id_major');
-
-    // تفعيل الحقول إذا كانت تحتوي على قيم (في حالة التعديل)
-    if (uniSelect && uniSelect.value) {
-        collegeSelect?.removeAttribute('disabled');
-        majorSelect?.removeAttribute('disabled');
-    }
-
-    // عند تغيير الجامعة
-    uniSelect?.addEventListener('change', function() {
-        const universityId = this.value;
-        if (universityId) {
-            fetch(`/training_entities/ajax/load-colleges/?university_id=${universityId}`)
-                .then(response => response.json())
-                .then(data => {
-                    // تصفير الخيارات القديمة
-                    collegeSelect.innerHTML = '<option value="">{% trans "Select College" %}</option>';
-                    majorSelect.innerHTML = '<option value="">{% trans "Select Major" %}</option>';
-
-                    data.forEach(item => {
-                        collegeSelect.add(new Option(item.name, item.id));
-                    });
-
-                    collegeSelect.removeAttribute('disabled');
-                    majorSelect.setAttribute('disabled', 'disabled');
-                })
-                .catch(error => console.error('Error fetching colleges:', error));
-        }
-    });
-
-    // عند تغيير الكلية
-    collegeSelect?.addEventListener('change', function() {
-        const collegeId = this.value;
-        if (collegeId) {
-            fetch(`/training_entities/ajax/load-majors/?college_id=${collegeId}`)
-                .then(response => response.json())
-                .then(data => {
-                    majorSelect.innerHTML = '<option value="">{% trans "Select Major" %}</option>';
-                    data.forEach(item => {
-                        majorSelect.add(new Option(item.name, item.id));
-                    });
-                    majorSelect.removeAttribute('disabled');
-                })
-                .catch(error => console.error('Error fetching majors:', error));
-        }
-    });
-});
-</script>
     </div>
 </div>
 

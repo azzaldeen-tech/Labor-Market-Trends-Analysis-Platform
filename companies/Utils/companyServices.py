@@ -18,6 +18,7 @@ class CompanyService:
         apps_count = JobApplication.objects.filter(job__company_id=company_id).select_related('job', 'user').count()
         return apps_count or 0
 
+
     @classmethod
     def get_global_stats(cls,company_id):
         service=cls()

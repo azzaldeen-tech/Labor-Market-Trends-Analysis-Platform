@@ -1,24 +1,21 @@
 from companies.models import Job, JobApplication
 
 
-class CompanyService:
+class MemberService:
 
-    def get_jobs_count(self, company_id,active=True):
-        return Job.objects.filter(company_id=company_id, is_active=active).count()
-    def get_active_jobs_count(self, company_id):
-        return self.get_jobs_count(company_id,True)
-    def get_non_active_jobs_count(self, company_id):
-        return self.get_jobs_count(company_id,False)
 
-    def get_pending_applications(self, company_id):
-        return JobApplication.objects.filter(job__company_id=company_id,
-                                             status=JobApplication.Status.PENDING).count()
 
-    @staticmethod
-    def get_dashboard_stats(self,company_id):
+    def get_pending_applications(self, member_id):
+        return JobApplication.objects.filter(
+            job__member_id=member_id,
+            status=JobApplication.Status.PENDING
+        ).count()
+
+    @classmethod
+    def get_global_stats(self,member_id=0):
         service=self()
         return {
-            "jobs_count": service.get_active_jobs_count(company_id),
-            "apps_count": service.get_pending_applications(company_id),
+            "jobs_count": Job.objects.filter(is_active=True).count(),
+            # "apps_count": service.get_pending_applications(member_id),
             # "last_update": timezone.now()
         }

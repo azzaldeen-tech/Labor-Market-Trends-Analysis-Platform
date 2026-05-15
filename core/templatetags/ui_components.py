@@ -29,7 +29,7 @@ def ui_multi_tag_select(name, label=None, choices=None, placeholder=None, select
 
 @register.inclusion_tag('core/components/back-button.html', takes_context=True)
 def back_button(context,label=None, url=None, extra_classes="",icon=None):
-
+    _url=""
     if url:
         _url=get_url_view(url)
 
@@ -44,7 +44,7 @@ def back_button(context,label=None, url=None, extra_classes="",icon=None):
     }
 
 @register.inclusion_tag('core/components/profile_dropdown.html')
-def profile_dropdown(img_url=None, display_name="", initials=None, sub_text="", settings_url="#", support_url="#", logout_url=None):
+def profile_dropdown(img_url=None, display_name="", initials=None, sub_text="",profile_url="", settings_url="#", support_url="#", logout_url=None):
     _initials=""
     if not initials and display_name and not img_url and len(display_name)>=1:
         _initials = "".join([n for n in display_name[:1]]).upper()
@@ -54,6 +54,7 @@ def profile_dropdown(img_url=None, display_name="", initials=None, sub_text="", 
         'display_name': display_name,
         'initials': initials or _initials,
         'sub_text': sub_text,
+        'profile_url': profile_url,
         'settings_url': settings_url,
         'support_url': support_url,
         'logout_url': logout_url or AppLinks.Auth.LOGOUT,
@@ -127,6 +128,19 @@ def candidate_row(candidate, is_last=False,redirect_link=None):
         'is_last': is_last,
         'redirect_link': redirect_link,
     }
+
+@register.inclusion_tag('core/components/tag-card.html')
+def tag_card(label):
+    return {
+        'label': label,
+    }
+
+@register.inclusion_tag('core/components/job_applicant_detail.html')
+def job_applicant_detail(job_app):
+    return {
+        'job_app': job_app,
+        # 'redirect_link': redirect_link,
+    }
 @register.inclusion_tag('core/components/link-button.html',name='link-button', takes_context=True)
 def link_button(context,url,label="",title="",icon=None,extra_classes=None):
 
@@ -138,8 +152,28 @@ def link_button(context,url,label="",title="",icon=None,extra_classes=None):
         'extra_classes': extra_classes ,
         'LANGUAGE_BIDI': context.get('LANGUAGE_BIDI'),
     }
-@register.inclusion_tag('core/components/job-post-card.html')
-def job_card(job, redirect_link=None):
+
+
+@register.inclusion_tag('core/components/delete-button.html', takes_context=True)
+def delete_button(context, action_url, label=None, message=None, extra_classes=""):
+    return {
+        'url': action_url,
+        'label': label or '',
+        'message': message or _("هل أنت متأكد من رغبتك في حذف هذا العنصر؟"),
+        'extra_classes': extra_classes,
+        'LANGUAGE_BIDI': context.get('LANGUAGE_BIDI', False), # مهم لترتيب الأزرار
+    }
+
+@register.inclusion_tag('core/components/show-messages.html', takes_context=True)
+def show_messages(context, messages=[]):
+    return {
+        'messages': messages,
+    }
+
+
+
+@register.inclusion_tag('core/components/job-card.html')
+def job_card(job, redirect_link=None,is_manager=False):
     # حساب نسبة التحويل مع التأكد من عدم القسمة على صفر
     conversion_rate = 0
     # if job.get('views', 0) > 0:
@@ -152,10 +186,22 @@ def job_card(job, redirect_link=None):
         'j': job,
         'redirect_link': redirect_link,
         'conversion_rate': round(conversion_rate, 1),
-        'is_active': job.is_active
+        'is_active': job.is_active,
+        'is_manager': is_manager,
     }
 
+@register.inclusion_tag('core/components/job_search_item.html')
+def job_search_item(job, redirect_link=None,is_manager=False):
 
+    conversion_rate = 0
+
+    return {
+        'j': job,
+        'redirect_link': redirect_link,
+        'conversion_rate': round(conversion_rate, 1),
+        'is_active': job.is_active,
+        'is_manager': is_manager,
+    }
 # @register.inclusion_tag('core/components/job-post-card.html')
 # def job_card(job, redirect_link=None):
 #     # حساب نسبة التحويل مع التأكد من عدم القسمة على صفر

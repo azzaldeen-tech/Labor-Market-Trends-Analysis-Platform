@@ -60,23 +60,25 @@
                 <a href="{% url 'companies:advertised_jobs'%}" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200">
                     <i class="fas fa-file-alt w-5 text-center text-[13px]"></i>
                     <span>الوظائف المعلنة</span>
-                    <span class="mr-auto bg-brand text-white  text-[15px]  p-[6px] py-[4px] rounded-full leading-none">{{user.profile.adv_jobs_number}}</span>
+                    <span class="mr-auto bg-brand text-white  text-[15px]  p-[6px] py-[4px] rounded-full leading-none">
+                        {{ company_global_stats.active_jobs_count }}</span>
                 </a>
-                <a href="{% url 'companies:job_apps' %}" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">
+                <a href="{% url 'companies:job_applications' %}" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">
                     <i class="fas fa-user-friends w-5 text-center text-[13px]"></i>
                     <span>المتقدمون</span>
-                    <span class="mr-auto bg-coral text-white text-[15px]  px-[6px] py-[4px] rounded-full leading-none">{{user.profile.jobs_applications_number}}</span>
+                    <span class="mr-auto bg-coral text-white text-[15px]  px-[6px] py-[4px] rounded-full leading-none">
+                        {{ company_global_stats.apps_count }}</span>
                 </a>
 
                 <div class="px-5 mt-5 mb-2 text-[10px] font-semibold text-fg-muted uppercase tracking-wider">إدارة التوظيف</div>
-                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">
-                    <i class="fas fa-filter w-5 text-center text-[13px]"></i>
-                    <span>قمع التوظيف</span>
-                </a>
-                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">
-                    <i class="fas fa-calendar-check w-5 text-center text-[13px]"></i>
-                    <span>المقابلات</span>
-                </a>
+    <!--                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">-->
+    <!--                    <i class="fas fa-filter w-5 text-center text-[13px]"></i>-->
+    <!--                    <span>قمع التوظيف</span>-->
+    <!--                </a>-->
+<!--                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">-->
+<!--                    <i class="fas fa-calendar-check w-5 text-center text-[13px]"></i>-->
+<!--                    <span>المقابلات</span>-->
+<!--                </a>-->
                 <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">
                     <i class="fas fa-tasks w-5 text-center text-[13px]"></i>
                     <span>لوحة التقييم</span>
@@ -91,29 +93,29 @@
                     <i class="fas fa-building w-5 text-center text-[13px]"></i>
                     <span>ملف الشركة</span>
                 </a>
-                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">
-                    <i class="fas fa-users-cog w-5 text-center text-[13px]"></i>
-                    <span>فريق العمل</span>
-                </a>
-                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">
-                    <i class="fas fa-cog w-5 text-center text-[13px]"></i>
-                    <span>الإعدادات</span>
-                </a>
+<!--                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">-->
+<!--                    <i class="fas fa-users-cog w-5 text-center text-[13px]"></i>-->
+<!--                    <span>فريق العمل</span>-->
+<!--                </a>-->
+<!--                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">-->
+<!--                    <i class="fas fa-cog w-5 text-center text-[13px]"></i>-->
+<!--                    <span>الإعدادات</span>-->
+<!--                </a>-->
             </nav>
 
             <!-- باقة الاستضافة -->
             <div class="mx-3 mb-4 p-4 rounded-2xl bg-gradient-to-br from-brand/[0.06] to-coral/[0.03] ">
-                <div class="flex items-center justify-between mb-1.5">
-                    <span class="text-[12px] font-semibold">الخطة الاحترافية</span>
-                    <span class="text-[10px] font-semibold text-brand bg-brand-light px-2 py-0.5 rounded-md">نشطة</span>
-                </div>
-                <div class="text-[10px] text-fg-muted mb-2.5">متبقي 18 وظيفة من 25</div>
-                <div class="h-1.5 bg-line rounded-full overflow-hidden mb-3">
-                    <div class="h-full bg-brand rounded-full transition-all duration-1000" style="width:0%" id="planBar"></div>
-                </div>
-                <button onclick="showToast('سيتم التواصل معك لترقية الباقة','info')" class="w-full text-[11px] font-semibold text-brand border border-brand/20 bg-surface rounded-lg py-2 hover:bg-brand hover:text-white transition-all duration-200 cursor-pointer">
-                    ترقية الباقة
-                </button>
+<!--                <div class="flex items-center justify-between mb-1.5">-->
+<!--                    <span class="text-[12px] font-semibold">الخطة الاحترافية</span>-->
+<!--                    <span class="text-[10px] font-semibold text-brand bg-brand-light px-2 py-0.5 rounded-md">نشطة</span>-->
+<!--                </div>-->
+<!--                <div class="text-[10px] text-fg-muted mb-2.5">متبقي 18 وظيفة من 25</div>-->
+<!--                <div class="h-1.5 bg-line rounded-full overflow-hidden mb-3">-->
+<!--                    <div class="h-full bg-brand rounded-full transition-all duration-1000" style="width:0%" id="planBar"></div>-->
+<!--                </div>-->
+<!--                <button onclick="showToast('سيتم التواصل معك لترقية الباقة','info')" class="w-full text-[11px] font-semibold text-brand border border-brand/20 bg-surface rounded-lg py-2 hover:bg-brand hover:text-white transition-all duration-200 cursor-pointer">-->
+<!--                    ترقية الباقة-->
+<!--                </button>-->
             </div>
                <br>
                <br>
@@ -181,8 +183,8 @@
             </header>
 
                 <!-- محتوى الصفحة -->
-           <main class="flex-1 p-5 lg:p-7 overflow-y-auto custom-scrollbar">
-                <div class="max-w-7xl mx-auto space-y-8">
+           <main class="flex-1 p-5 lg:p-7 overflow-y-auto  custom-scrollbar">
+                <div class="max-w-7xl  mx-auto space-y-8">
                     {% block provider_content %} {% endblock %}
                        <br>
                 </div>
@@ -221,18 +223,18 @@
                         </select>
                     </div>
 
-                    <div class="mx-auto my-5 border border-gray-200 rounded">
-                        <input type="text"
-                               name="search"
-                               placeholder="ابحث عن المهارات المطلوبة للوظيفة..."
-                               hx-get="{% url 'companies:search_skills' %}"
-                               hx-trigger="keyup delay:500ms"
-                               hx-target="#search-results"
-                               hx-indicator="#loading-spinner"
-                               class="my-3 border border-gray-200 rounded p-2">
-                        <div id="loading-spinner" class="htmx-indicator">جاري البحث... </div>
-                        <div id="search-results"></div>
-                 </div>
+<!--                    <div class="mx-auto my-5 border border-gray-200 rounded">-->
+<!--                        <input type="text"-->
+<!--                               name="search"-->
+<!--                               placeholder="ابحث عن المهارات المطلوبة للوظيفة..."-->
+<!--                               hx-get="{% url 'core:search_skills' %}"-->
+<!--                               hx-trigger="keyup delay:500ms"-->
+<!--                               hx-target="#search-results"-->
+<!--                               hx-indicator="#loading-spinner"-->
+<!--                               class="my-3 border border-gray-200 rounded p-2">-->
+<!--                        <div id="loading-spinner" class="htmx-indicator">جاري البحث... </div>-->
+<!--                        <div id="search-results"></div>-->
+<!--                 </div>-->
 
                     <div>
                         <label class="block text-[12px] font-semibold text-fg-sub mb-1.5">نوع التوظيف</label>
@@ -587,39 +589,18 @@
         if (window.innerWidth < 1024) toggleSidebar();
     }
 
-    // ===================== القوائم المنسدلة =====================
-    function toggleDrop(id) {
-        const el = document.getElementById(id);
-        const isOpen = !el.classList.contains('pointer-events-none');
-        document.querySelectorAll('#notifDrop,#profileDrop').forEach(d => {
-            d.classList.add('opacity-0', '-translate-y-2', 'pointer-events-none');
-            d.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
-        });
-        if (!isOpen) {
-            el.classList.remove('opacity-0', '-translate-y-2', 'pointer-events-none');
-            el.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
-        }
-    }
 
-    document.addEventListener('click', e => {
-        if (!e.target.closest('[onclick*="toggleDrop"]') && !e.target.closest('#notifDrop') && !e.target.closest('#profileDrop')) {
-            document.querySelectorAll('#notifDrop,#profileDrop').forEach(d => {
-                d.classList.add('opacity-0', '-translate-y-2', 'pointer-events-none');
-                d.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
-            });
-        }
-    });
 
     // ===================== التحديث =====================
     function refreshData() {
-        const icon = document.getElementById('refreshIcon');
-        icon.classList.add('animate-spin-once');
-        setTimeout(() => {
-            icon.classList.remove('animate-spin-once');
-            showToast('تم تحديث البيانات بنجاح', 'ok');
-            animateCounters();
-        }, 600);
-    }
+            const icon = document.getElementById('refreshIcon');
+            icon.classList.add('animate-spin-once');
+
+            setTimeout(() => {
+                // نقوم بإعادة تحميل الصفحة بعد 600 مللي ثانية
+                location.reload();
+            }, 600);
+}
 
     // ===================== البحث =====================
     document.getElementById('searchInput').addEventListener('input', function() {

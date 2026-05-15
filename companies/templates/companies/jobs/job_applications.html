@@ -8,14 +8,15 @@
         {% back_button  url='companies:dashboard' %}
 
         <h2 class="text-xl font-bold text-center mb-8 text-content">
-              {% trans "Applied Jobs" %}
+              {% trans "Job Applications" %}
         </h2>
      </div>
        <div class="w-full space-y-5">
 
-               {% for app in applied_jobs  %}
+               {% for app in job_applications  %}
                  <div class="bg-surface-card rounded-xl">
-                     {% candidate_row  app %}
+                     {% url 'companies:job_applicant_detail'  app.id as app_url  %}
+                     {% candidate_row  app  redirect_link=app_url %}
                  </div>
                {% empty  %}
                     <b class="text-center mx-auto text-content-muted"> No Candidates </b>

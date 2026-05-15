@@ -157,6 +157,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
 
+                'companies.context_processors.stats_processor',
+                'members.context_processors.stats_processor',
+
             ],
 
             'libraries': {
@@ -199,16 +202,16 @@ DATABASES = {
 # =====================================================================================
 
 
-TIME_ZONE = 'UTC' # التوقيت العالمي
-USE_TZ = True
-
 # =====================================================================================
 # << Local Languages >>
 # =====================================================================================
 
-LANGUAGE_CODE = 'en-us' # اللغة الافتراضية
-USE_I18N = True
+LANGUAGE_CODE = 'ar' #'en-us' # اللغة الافتراضية
 
+TIME_ZONE = 'Asia/Riyadh' # أو التوقيت المحلي لليمن 'Asia/Aden'
+USE_I18N = True
+USE_L10N = True # لضمان تنسيق الأرقام والتواريخ محلياً
+USE_TZ = True
 # قائمة الغات  المتاحة لترجمة
 LANGUAGES = [
     ('ar', _('Arabic')),

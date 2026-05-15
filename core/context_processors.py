@@ -10,3 +10,5 @@ def global_user_prefs(request):
         'user_lang': 'ar',
         'user_avatar': None,
     }
+
+

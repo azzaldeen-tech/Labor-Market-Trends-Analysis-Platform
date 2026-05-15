@@ -24,6 +24,8 @@
     <!-- بطاقات الإحصائيات -->
     <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-7">
 
+
+
         {% for card in stats_cards %}
             {% statistics_card title=card.title amount=card.amount icon=card.icon badge_type=card.badge_type badge_amount=card.badge_amount badge_text=card.badge_text badge_icon=card.badge_icon %}
         {% endfor %}

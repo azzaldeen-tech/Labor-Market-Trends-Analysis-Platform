@@ -27,6 +27,114 @@ msgstr ""
 msgid "e.g., +966500000000"
 msgstr ""
 
+msgid "Country"
+msgstr "دولة"
+
+msgid "Countries"
+msgstr "الدول"
+
+msgid "Region"
+msgstr "منطقة"
+
+msgid "Regions"
+msgstr "المناطق"
+
+
+msgid "City"
+msgstr "مدينة"
+
+msgid "Cities"
+msgstr "المدن"
+
+msgid "Accounts"
+msgstr "الحسابات"
+
+msgid "Category"
+msgstr "قئة"
+
+msgid "New Job"
+msgstr "وظيفة جديدة"
+
+msgid "Smart job and skills analytics"
+msgstr "تحليلات ذكية للوظائف والمهارات"
+
+msgid "Labor Market Trends"
+msgstr "إتجاهات سوق العمل"
+
+
+msgid "Advertised Jobs"
+msgstr "الوظائف المعلن عنها"
+
+msgid "Job Applications"
+msgstr "طلبات التوظيف"
+
+
+msgid "Skill Categories"
+msgstr "فئات المهارات"
+
+
+msgid "Dashboard"
+msgstr "لوحة التحكم"
+
+msgid "Jobs"
+msgstr "الوظائف"
+
+msgid "Companies"
+msgstr "الشركات"
+
+msgid "Members"
+msgstr "الأعضاء"
+
+msgid "Applications"
+msgstr "الطلبات"
+
+
+msgid "Search"
+msgstr "بحث"
+
+msgid "Filter"
+msgstr "تصفية"
+
+msgid "Settings"
+msgstr "الإعدادات"
+
+msgid "Profile"
+msgstr "الملف الشخصي"
+
+msgid "Contact Us"
+msgstr "اتصل بنا"
+
+msgid "About Us"
+msgstr "من نحن"
+
+msgid "Status"
+msgstr "الحالة"
+
+msgid "Pending"
+msgstr "قيد المراجعة"
+
+msgid "Accepted"
+msgstr "تم القبول"
+
+msgid "Rejected"
+msgstr "مرفوض"
+
+msgid "Skills"
+msgstr "المهارات"
+
+msgid "Experience Level"
+msgstr "مستوى الخبرة"
+
+msgid "Full-time"
+msgstr "دوام كامل"
+
+msgid "Part-time"
+msgstr "دوام جزئي"
+
+msgid "Salary Range"
+msgstr "نطاق الراتب"
+
+
 #: .\accounts\forms.py:26
 msgid "Tell us a little about yourself..."
 msgstr ""

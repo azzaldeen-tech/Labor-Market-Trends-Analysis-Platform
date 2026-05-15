@@ -1,7 +1,10 @@
 {% if jobs %}
-    <div class="max-w-3xl mx-auto space-y-8 py-4"> {% for job in jobs %}
+    <div class="max-w-3xl mx-auto space-y-8 py-4">
+        {% for job in jobs %}
             <div class="google-result-item">
-                 {% job_search_item job  redirect_link='' %}
+
+                 {% url  'members:job_detail'  job.id as detail_url %}
+                 {% job_search_item job redirect_link=detail_url %}
             </div>
         {% endfor %}
     </div>

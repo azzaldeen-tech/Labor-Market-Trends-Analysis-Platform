@@ -14,10 +14,10 @@ def company_required(view_func):
     def _wrapped_view(request, *args, **kwargs):
 
         if not request.user.is_authenticated:
-            return redirect(AppLinks.LOGIN)
+            return redirect(AppLinks.Auth.LOGIN)
 
         if not request.user.is_company:
-            return redirect(AppLinks.HOME)
+            return redirect(AppLinks.Core.HOME)
 
         return view_func(request, *args, **kwargs)
 

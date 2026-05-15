@@ -1,6 +1,11 @@
 import os
 
 from config import settings
+from django.utils import timezone
+
+
+def get_current_date():
+    return timezone.now().date()
 
 def get_url_view(view_name, args_list=None):
     from django.urls import reverse, NoReverseMatch

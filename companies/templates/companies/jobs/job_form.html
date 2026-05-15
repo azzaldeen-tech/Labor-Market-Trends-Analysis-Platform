@@ -4,10 +4,13 @@
 <style>
 
 </style>
-<div class="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="bg-surface text-content w-full p-8 rounded-2xl border border-transparent">
+ {% back_button  %}
 
-        {% back_button  url='companies:dashboard' %}
+<div class="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+
+    <div class="bg-surface text-content w-full p-8 rounded-2xl border border-transparent">
+<!--         url='companies:dashboard'-->
+
 
         <h2 class="text-3xl font-bold text-center mb-8 text-current">
              {% if is_edit %} {% trans "Edit Job" %} {% else %} {% trans "New Job" %} {% endif %}
@@ -26,6 +29,10 @@
             {% if field.name == 'required_skills' %}
 
                 {% ui_multi_tag_select  name="required_skills" label="المهارات المطلوبة" selected_values=field.value choices=skills_list %}
+
+             {% elif field.name == 'location' %}
+
+<!--                {% ui_multi_tag_select  name="location" label="المدينة" selected_values=field.value choices=skills_list %}-->
 
             {% else %}
                 <label class="text-sm font-medium opacity-80">

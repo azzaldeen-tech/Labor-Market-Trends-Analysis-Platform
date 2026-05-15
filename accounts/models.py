@@ -114,7 +114,7 @@ class CustomUser(BaseCustomUser):
 
     @property
     def is_member(self):
-        return self.has_role('student')
+        return self.has_role('member')
 
     @property
     def is_fully_active(self):
@@ -169,7 +169,9 @@ class CustomUser(BaseCustomUser):
         if self.is_authenticated and self.is_identity:
             role_code = getattr(self.identity, 'code', None)
             if role_code:
-                return  get_identity_app_name(role_code)
+                app_name =  get_identity_app_name(role_code)
+                if app_name:
+                    return app_name
         return None
 
 
@@ -177,12 +179,13 @@ class CustomUser(BaseCustomUser):
     def get_dashboard_url(self):
         if self.is_authenticated and self.is_identity:
             role_code = getattr(self.identity, 'code', None)
-            app_name = self.get_app_name
-            if role_code and app_is_exists(app_name):
-                dashboards = get_identities_dashboards()
-                if dashboards:
-                    dashboard_url = dashboards.get(role_code, AppLinks.Core.HOME)
-                    return get_url_view(dashboard_url)
+            if role_code:
+                app_name = self.get_app_name
+                if role_code and app_is_exists(app_name):
+                    dashboards = get_identities_dashboards()
+                    if dashboards:
+                        dashboard_url = dashboards.get(role_code, AppLinks.Core.HOME)
+                        return get_url_view(dashboard_url)
 
         return None
 
