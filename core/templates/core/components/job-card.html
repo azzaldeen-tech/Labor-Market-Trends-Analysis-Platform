@@ -3,26 +3,36 @@
 <a href="{{ redirect_link }}" class="block no-underline">
 {% endif %}
 
-<div class="job-card   group rounded-xl p-4 cursor-pointer transition-all bg-surface-card hover:bg-surface-card border border-transparent hover:border-stroke-soft shadow-sm "
-     onclick="showToast('فتح تفاصيل الوظيفة : {{ j.title }}', 'info')">
+<div class="job-card   group rounded-xl p-4 cursor-pointer transition-all bg-surface-card hover:bg-surface-card border border-transparent hover:border-stroke-soft shadow-sm ">
 
-    <div class=" flex mb-2">
-        <div class=" mr-auto " style="width:35px">
-            {% url 'companies:job_edit' j.id as jop_edit_url %}
-            {% link-button   url=jop_edit_url extra_classes=""  icon='edit-3' %}
-        </div>
+
+    <div class="flex w-full justify-end   gap-2  mb-2">
+        {% if is_manager %}
+            <div class="mr-auto" style="width:35px">
+                {% url 'companies:job_edit' j.id as jop_edit_url %}
+                {% link-button  extra_classes=" bg-surface-card"  url=jop_edit_url   icon='edit-3' %}
+            </div>
+
+            <div class="mx-3" style="width:35px">
+                {% url 'companies:job_delete' j.id as delete_url   %}
+                {% delete_button   action_url=delete_url  message=_("هل تريد حذف العنصر الحالي ؟.") %}
+
+            </div>
+        {% endif %}
     </div>
+
 
     <div class="flex  flex-wrap items-start justify-between mb-3">
 
         <div class="flex-1 min-w-0">
             <!-- العنوان -->
-            <div class="text-[13px] font-semibold mb-1 truncate text-content">{{ j.title }}</div>
+            <div class="text-[13px]  font-semibold mb-1 truncate text-content">{{ j.title }}</div>
 
             <!-- القسم وعدد الأيام -->
-            <div class="flex items-center gap-2 text-[11px] text-content-muted">
+            <div class="flex mt-2 items-center gap-2 text-[11px] text-content-muted">
                 <span>{{ j.category.name }}</span>
                 <span class="w-1 h-1 rounded-full bg-stroke"></span>
+                    <i class="fas fa-calendar-alt"></i>
                 <span>منذ {{ j.created_at|timesince }} تقريبًا</span>
             </div>
         </div>
@@ -88,6 +98,8 @@
             <span>{{ j.location }}</span>
         </div>
 </div>
+
+
 
 </div>
 

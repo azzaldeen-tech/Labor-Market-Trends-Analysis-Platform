@@ -8,16 +8,16 @@
         {% back_button  url='companies:dashboard' %}
 
         <h2 class="text-xl font-bold text-center mb-8 text-content">
-              {% trans "Jobs Applications" %}
+              {% trans "Advertised Jobs" %}
         </h2>
      </div>
        <div class="w-full space-y-5">
-           {% if job_apps  %}
-               {% for row in job_apps  %}
-                 {% candidate_row  row %}
+           {% if jobs  %}
+               {% for job in jobs  %}
+                 {% job_card  job %}
                {% endfor  %}
            {% else  %}
-                <b class="text-center mx-auto text-content-muted"> No Candidates </b>
+                <b class="text-center mx-auto text-content-muted"> No advertised jobs</b>
            {% endif  %}
        </div>
     </div>

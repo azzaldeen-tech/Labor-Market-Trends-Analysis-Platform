@@ -1,0 +1,15 @@
+<div class="py-2">
+    {% for job in jobs %}
+    <a href="{% url 'job_detail' job.id %}" class="flex items-center px-4 py-3 hover:bg-gray-50 transition-colors border-b last:border-0 border-gray-50">
+        <div class="flex-1">
+            <div class="text-[14px] font-bold text-[#1a0dab] truncate">{{ job.title }}</div>
+            <div class="text-[11px] text-gray-500">{{ job.company.name }} • {{ job.location }}</div>
+        </div>
+        <div class="text-[12px] font-medium text-brand">
+            {{ job.match_score }}%
+        </div>
+    </a>
+    {% empty %}
+    <div class="p-4 text-center text-sm text-gray-500">لا توجد نتائج مطابقة</div>
+    {% endfor %}
+</div>
