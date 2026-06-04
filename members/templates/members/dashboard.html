@@ -12,7 +12,7 @@
             <h1 class="font-display text-[24px] lg:text-[28px] font-bold leading-tight mb-1.5">
                 مرحباً !! <span class="text-brand">{{user.display_name}}</span>
             </h1>
-            <p class="text-fg-sub text-sm">لديك <strong class="text-fg">6 مقابلات</strong> هذا الأسبوع و <strong class="text-fg">24 متقدم جديد</strong> بانتظار المراجعة</p>
+<!--            <p class="text-fg-sub text-sm">لديك <strong class="text-fg">6 مقابلات</strong> هذا الأسبوع و <strong class="text-fg">24 متقدم جديد</strong> بانتظار المراجعة</p>-->
         </div>
 <!--        <button onclick="showToast('جارٍ تصدير التقرير إلى PDF','ok')" class="flex items-center gap-2 bg-surface  text-fg-sub text-[12px] font-semibold px-4 py-2.5 rounded-xl hover:text-fg hover:border-fg-muted shadow-sm hover:shadow transition-all shrink-0">-->
 <!--            <i class="fas fa-download text-[11px]"></i>-->
@@ -24,10 +24,10 @@
     <!-- بطاقات الإحصائيات -->
     <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-7">
 
-        {% statistics_card title='الوظائف المعلنة'   amount=member_global_stats.jobs_count icon='' badge_type='brand' badge_amount='' badge_text=''  badge_icon='' %}
-        {% statistics_card title='الوظائف المعلنة'   amount=member_global_stats.jobs_count icon='' badge_type='brand' badge_amount='' badge_text=''  badge_icon='' %}
-        {% statistics_card title='الوظائف المعلنة'   amount=member_global_stats.jobs_count icon='' badge_type='brand' badge_amount='' badge_text=''  badge_icon='' %}
-        {% statistics_card title='الوظائف المعلنة'   amount=member_global_stats.jobs_count icon='' badge_type='brand' badge_amount='' badge_text=''  badge_icon='' %}
+        {% statistics_card title='إجمالي التقديمات'   amount=total_applications icon='briefcase' badge_type='brand'  %}
+        {% statistics_card title='طلبات مقبولة'   amount=accepted_applications icon='check-circle-2' badge_type='brand'  %}
+        {% statistics_card title='طلبات مستبعدة'   amount=pending_applications icon='clock' badge_type='brand'  %}
+        {% statistics_card title='المهارات الموثقة'   amount=total_skills_count icon='x-circle' badge_type='brand' %}
 
 <!--        {% for card in stats_cards %}-->
 <!--            {% statistics_card title=card.title amount=card.amount icon=card.icon badge_type=card.badge_type badge_amount=card.badge_amount badge_text=card.badge_text badge_icon=card.badge_icon %}-->

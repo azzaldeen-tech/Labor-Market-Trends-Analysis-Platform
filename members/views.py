@@ -14,6 +14,12 @@ from members.decorators import member_required
 from members.forms import MemberProfileForm
 from members.models import MemberProfile
 
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.db.models import Avg
+
+
+
 app_name = 'members'
 
 # @member_required
@@ -24,8 +30,102 @@ app_name = 'members'
 @member_required
 @login_required
 def dashboard_view(request):
+    user = request.user
+    member = user.profile
+    # 1. إحصائيات طلبات التوظيف
+    # تفترض البنية وجود علاقة Related Name أو استعلام مباشر من موديل الطلبات
+    # applied_jobs_queryset = JobApplication.objects.filter(member=member)
 
-    return render(request, f'{app_name}/dashboard.html')\
+    # محاكاة برمجية ذكية مبنية على قاعدة بياناتك:
+    total_applications = member.applications.count() if hasattr(member, 'applications') else 0
+    accepted_applications =   member.applications.filter(status=JobApplication.Status.ACCEPTED).count()
+    pending_applications =  member.applications.filter(status=JobApplication.Status.PENDING).count()
+    rejected_applications =  member.applications.filter(status=JobApplication.Status.REJECTED).count()
+
+    # 2. إحصائيات المهارات والتدريب (Labor-Market-Trend-Anyalysis Training)
+
+    total_skills_count = user.profile.skills.count() if hasattr(user, 'profile') else 0
+
+    # حساب نسبة اكتمال الملف الشخصي لرفع الجاهزية للموقع
+    # profile_completion_percentage = 85  # حساب ديناميكي بناءً على الحقول المكتملة
+
+    # 3. تجهيز قائمة بآخر الطلبات وحالتها لعرضها في جدول
+    # جلب آخر 10 طلبات تقديم تم إرسالها بواسطة العضو
+    recent_applications_list = JobApplication.objects.filter(member=member).order_by('-applied_at')[:10]
+
+    context = {
+        'total_applications': total_applications,
+        'accepted_applications': accepted_applications,
+        'pending_applications': pending_applications,
+        'rejected_applications': rejected_applications,
+        'total_skills_count': total_skills_count,
+        # 'profile_completion_percentage': profile_completion_percentage,
+        'recent_applications': recent_applications_list,
+    }
+
+    # return render(request, 'member_dashboard.html', context)
+    return render(request, f'{app_name}/dashboard.html',context)
+
+@member_required
+@login_required
+def member_dashboard_view(request):
+    # جلب ملف العضو المرتبط بالمستخدم الحالي
+        # (افترضنا أن العلاقة OneToOne بين المستخدم و MemberProfile تسمى member_profile)
+    member_profile = get_object_or_404(MemberProfile, user=request.user)
+
+    # 1. جلب كافة طلبات التقديم الخاصة بهذا العضو مع تحسين الأداء عبر select_related
+    applications = JobApplication.objects.filter(member=member_profile).select_related('job', 'job__company')
+
+    # 2. حساب الإحصائيات الحية ديناميكياً
+    total_applications = applications.count()
+    accepted_count = applications.filter(status=JobApplication.Status.ACCEPTED).count()
+    pending_count = applications.filter(status=JobApplication.Status.PENDING).count()
+    rejected_count = applications.filter(status=JobApplication.Status.REJECTED).count()
+
+    # 3. حساب متوسط نسبة المطابقة (Match Score) لمهارات العضو مع الوظائف التي قدم عليها
+    avg_match_score = applications.aggregate(Avg('match_score'))['match_score__avg'] or 0.0
+    # تحويلها لنسبة مئوية صحيحة (مثلاً 0.85 تصبح 85%) إذا كنت تخزنها ككسر، أو تركها كما هي
+    profile_match_percentage = round(avg_match_score if avg_match_score > 1 else avg_match_score * 100)
+
+    # 4. بناء مصفوفة الطلبات الأخيرة للجدول لتقرأ من موديلك مباشرة
+    recent_applications_list = []
+
+    # خريطة لربط الحالات بالألوان المتناسقة مع تصميمك
+    status_configs = {
+        JobApplication.Status.PENDING: {'text': 'قيد المراجعة', 'color': 'warning'},
+        JobApplication.Status.ACCEPTED: {'text': 'مقبول', 'color': 'success'},
+        JobApplication.Status.REJECTED: {'text': 'مرفوض', 'color': 'error'},
+    }
+
+    for app in applications.order_by('-applied_at')[:5]:  # آخر 5 طلبات
+        config = status_configs.get(app.status, {'text': app.get_status_display(), 'color': 'neutral'})
+
+        # استخراج اسم الشركة بأمان
+        company_name = "شركة مسجلة"
+        if app.job.company:
+            company_name = getattr(app.job.company, 'company_name',
+                                   getattr(app.job.company, 'name', str(app.job.company)))
+
+        recent_applications_list.append({
+            'job_title': app.job.title,
+            'company': company_name,
+            'date': app.applied_at.strftime('%Y-%m-%d'),
+            'match_score': round(app.match_score if app.match_score > 1 else app.match_score * 100),
+            'status_text': config['text'],
+            'status_color': config['color']
+        })
+
+    context = {
+        'total_applications': total_applications,
+        'accepted_count': accepted_count,
+        'pending_count': pending_count,
+        'rejected_count': rejected_count,
+        'profile_match_percentage': profile_match_percentage,
+        'recent_applications': recent_applications_list,
+    }
+
+    return render(request, 'member_dashboard.html', context)
+
 
 @member_required
 @login_required
@@ -110,11 +210,23 @@ def cancel_job_join(request, pk):
 def advertised_jobs(request):
     # current_date=get_current_date()
 
-    jobs = Job.objects.filter(is_active=True).order_by('-created_at')
+    exclude_job_id = 0
     applied_jobs_ids = []
+
     if request.user.is_authenticated and hasattr(request.user, 'profile'):
-        applied_jobs_ids = JobApplication.objects.filter(member=request.user.profile)\
+        member = request.user.profile
+        exclude_app=JobApplication.objects.select_related('job').filter(member=member,status=JobApplication.Status.ACCEPTED).first()
+        if exclude_app:
+            exclude_job_id=exclude_app.job.id
+
+        applied_jobs_ids = JobApplication.objects.filter(member=member) \
+            .exclude(status=JobApplication.Status.REJECTED)\
+            .exclude(status=JobApplication.Status.ACCEPTED)\
             .values_list('job_id', flat=True)
+
+    jobs = Job.objects.filter(is_active=True)\
+        .exclude(id=exclude_job_id)\
+        .order_by('-created_at')
 
     context = {
         'jobs': jobs,
@@ -134,6 +246,8 @@ def job_applications(request):
     simplified_apps = get_job_simple_applications(job_applications)
     return render(request, f'{app_name}/jobs/job_applications.html',
                   {'job_applications': simplified_apps})
+
+
 @login_required
 @member_required
 def applied_jobs(request):

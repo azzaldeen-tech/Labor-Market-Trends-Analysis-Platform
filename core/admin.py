@@ -1,18 +1,24 @@
 from django.contrib import admin
-
+from django.db import models
 from core.base_admin import BaseTabularInline, BaseModelAdmin
 from core.models import Skill, SkillCategory, City, Region, Country
+from django import forms
 
 
-# Register your models here.
+
 
 class RegionInline(BaseTabularInline):
     model = Region
     extra = 1
     fields = ('name', 'code')
+    can_delete = True
+    show_change_link = True
+
 class CityInline(BaseTabularInline):
     model = City
     extra = 1
+    can_delete = True
+    show_change_link = True
 
 @admin.register(Country)
 class CountryAdmin(BaseModelAdmin):
@@ -23,14 +29,14 @@ class CountryAdmin(BaseModelAdmin):
 @admin.register(Region)
 class RegionAdmin(BaseModelAdmin):
     list_display = ('name', 'code', 'country')
-    list_filter = ('country',) # يمكنك الفلترة حسب الدولة
+    list_filter = ('country',)
     search_fields = ('name',)
-    inlines = [CityInline] # إضافة المدن هنا لسهولة الإدخال
+    inlines = [CityInline]
 
 @admin.register(City)
 class CityAdmin(BaseModelAdmin):
     list_display = ('name', 'region')
-    list_filter = ('region__country', 'region') # فلترة هرمية (دولة ثم منطقة)
+    list_filter = ('region__country', 'region')
     search_fields = ('name',)
 
 
@@ -49,7 +55,8 @@ class SkillCategoryAdmin(BaseModelAdmin):
 
 
 @admin.register(Skill)
-class SkillAdmin(admin.ModelAdmin):
+class SkillAdmin(BaseModelAdmin):
     list_display = ('name','category','is_verified')
+        
     search_fields = ('name',)
     list_filter = ('category','is_verified')

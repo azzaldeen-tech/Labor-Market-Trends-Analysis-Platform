@@ -52,53 +52,75 @@
 
             <!-- التنقل -->
             <nav class="flex-1 overflow-y-auto custom-scrollbar py-4" aria-label="القائمة الرئيسية">
-                <div class="px-5 mb-2 text-[10px] font-semibold text-fg-muted uppercase tracking-wider">الرئيسية</div>
-                <a href="{% url 'companies:dashboard'%}" class="nav-link active flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">
-                    <i class="fas fa-th-large w-5 text-center text-[13px]"></i>
+<!--                <div class="px-5 mb-2 text-[10px] font-semibold text-fg-muted uppercase tracking-wider">الرئيسية</div>-->
+                <div class="px-5 mt-5 mb-2 text-[20px] font-semibold text-fg-muted uppercase tracking-wider">إدارة التوظيف</div>
+                <a href="{% url 'companies:dashboard'%}" class="nav-link active flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[17px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">
+                     <i data-lucide="layout-dashboard"  class="w-5 text-center text-[13px]"></i>
                     <span>لوحة التحكم</span>
                 </a>
-                <a href="{% url 'companies:advertised_jobs'%}" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200">
-                    <i class="fas fa-file-alt w-5 text-center text-[13px]"></i>
+                <a href="{% url 'companies:advertised_jobs'%}" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[17px] text-fg-sub hover:bg-elevated transition-all duration-200">
+                    <i data-lucide="folder-bookmark"  class="w-5 text-center text-[13px]"></i>
                     <span>الوظائف المعلنة</span>
                     <span class="mr-auto bg-brand text-white  text-[15px]  p-[6px] py-[4px] rounded-full leading-none">
                         {{ company_global_stats.active_jobs_count }}</span>
                 </a>
-                <a href="{% url 'companies:job_applications' %}" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">
-                    <i class="fas fa-user-friends w-5 text-center text-[13px]"></i>
+                <a href="{% url 'companies:job_applications' %}" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[17px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">
+                     <i data-lucide="users"  class="w-5 text-center text-[13px]"></i>
                     <span>المتقدمون</span>
                     <span class="mr-auto bg-coral text-white text-[15px]  px-[6px] py-[4px] rounded-full leading-none">
                         {{ company_global_stats.apps_count }}</span>
                 </a>
 
-                <div class="px-5 mt-5 mb-2 text-[10px] font-semibold text-fg-muted uppercase tracking-wider">إدارة التوظيف</div>
-    <!--                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">-->
-    <!--                    <i class="fas fa-filter w-5 text-center text-[13px]"></i>-->
+<!--                <div class="px-5 mt-5 mb-2 text-[20px] font-semibold text-fg-muted uppercase tracking-wider">إدارة التوظيف</div>-->
+    <!--                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[17px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">-->
+    <!--                    <i class="fas fa-filter w-5 text-center text-[17px]"></i>-->
     <!--                    <span>قمع التوظيف</span>-->
     <!--                </a>-->
-<!--                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">-->
-<!--                    <i class="fas fa-calendar-check w-5 text-center text-[13px]"></i>-->
+<!--                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[17px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">-->
+<!--                    <i class="fas fa-calendar-check w-5 text-center text-[17px]"></i>-->
 <!--                    <span>المقابلات</span>-->
 <!--                </a>-->
-                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">
-                    <i class="fas fa-tasks w-5 text-center text-[13px]"></i>
-                    <span>لوحة التقييم</span>
-                </a>
-                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">
-                    <i class="fas fa-handshake w-5 text-center text-[13px]"></i>
-                    <span>العروض المقدمة</span>
+<!--                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[17px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">-->
+<!--                    <i class="fas fa-tasks w-5 text-center text-[17px]"></i>-->
+<!--                    <span>لوحة التقييم</span>-->
+<!--                </a>-->
+<!--                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[17px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">-->
+<!--                    <i class="fas fa-handshake w-5 text-center text-[17px]"></i>-->
+<!--                    <span>العروض المقدمة</span>-->
+<!--                </a>-->
+
+                <div class="px-5 mt-5 mb-2 text-[20px] font-semibold text-fg-muted uppercase tracking-wider">الحساب</div>
+
+
+
+                <a href="{{ user.profile.get_url }}"
+                   class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[15px] text-fg-sub hover:bg-elevated transition-all duration-200"
+                   onclick="switchNav(this,event)">
+                     <i data-lucide="user"  class="w-5 text-center text-[13px]"></i>
+                    <span>الملف الشخصي</span>
                 </a>
 
-                <div class="px-5 mt-5 mb-2 text-[10px] font-semibold text-fg-muted uppercase tracking-wider">الحساب</div>
-                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">
-                    <i class="fas fa-building w-5 text-center text-[13px]"></i>
-                    <span>ملف الشركة</span>
-                </a>
-<!--                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">-->
-<!--                    <i class="fas fa-users-cog w-5 text-center text-[13px]"></i>-->
+                <a href="{% url 'account_email' %}"
+                    class="nav-link flex gap-3 mx-3 px-4 py-2.5 rounded-xl text-[15px] text-fg-sub hover:bg-elevated transition-all duration-200">
+
+                      <i data-lucide="mail"  class="w-5 text-center text-[13px]"></i>
+                      <span>{% trans "Email" %}</span>
+                 </a>
+
+
+                <div class="mt-2">
+                     <a href="{% url 'account_change_password' %}"
+                    class="nav-link flex gap-3 mx-3 px-4 py-2.5 rounded-xl text-[15px] text-fg-sub hover:bg-elevated transition-all duration-200">
+                    <i data-lucide="lock"  class="w-5 text-center text-[13px]"></i>
+                      <span>{% trans "Change Password" %}</span>
+                 </a>
+                </div>
+<!--                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[17px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">-->
+<!--                    <i class="fas fa-users-cog w-5 text-center text-[17px]"></i>-->
 <!--                    <span>فريق العمل</span>-->
 <!--                </a>-->
-<!--                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">-->
-<!--                    <i class="fas fa-cog w-5 text-center text-[13px]"></i>-->
+<!--                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[17px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">-->
+<!--                    <i class="fas fa-cog w-5 text-center text-[17px]"></i>-->
 <!--                    <span>الإعدادات</span>-->
 <!--                </a>-->
             </nav>
@@ -133,7 +155,7 @@
                 <div class="flex-1 max-w-md relative">
                     <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-fg-muted text-xs"></i>
                     <input id="searchInput" type="text" placeholder="ابحث عن متقدم، وظيفة، مقابلة..." aria-label="البحث"
-                        class="w-full bg-surface  rounded-xl py-2.5 pr-4 pl-10 text-[13px] text-fg placeholder:text-fg-muted outline-none focus:border-brand/40 transition-colors font-body shadow-sm">
+                        class="w-full bg-surface  rounded-xl py-2.5 pr-4 pl-10 text-[17px] text-fg placeholder:text-fg-muted outline-none focus:border-brand/40 transition-colors font-body shadow-sm">
                 </div>
 
                 <div class="flex items-center gap-2 mr-auto">
@@ -148,27 +170,34 @@
                     </a>
 
                     <button onclick="refreshData()" class="w-9 h-9 rounded-xl  bg-surface text-fg-sub flex items-center justify-center hover:text-fg hover:border-fg-muted transition-all shadow-sm cursor-pointer" aria-label="تحديث">
-                        <i class="fas fa-sync-alt text-xs" id="refreshIcon"></i>
+                         <i data-lucide="rotate-ccw"  class="w-5 text-center text-[15px]"></i>
                     </button>
 
                     <!-- الإشعارات -->
                     <div class="relative">
-                        <button onclick="toggleDrop('notifDrop')" class="w-9 h-9 rounded-xl  bg-surface text-fg-sub flex items-center justify-center hover:text-fg transition-all shadow-sm relative cursor-pointer" aria-label="الإشعارات">
-                            <i class="fas fa-bell text-xs"></i>
+                        <button onclick="toggleDrop('notifDrop')" class="w-9 h-9 rounded-xl  bg-surface text-fg-sub flex items-center justify-center hover:text-fg transition-all shadow-sm relative cursor-pointer"  aria-label="الإشعارات">
+                            <i data-lucide="bell"  class="w-5 text-center text-[15px]"></i>
                             <span class="absolute -top-0.5 -right-0.5 w-[9px] h-[9px] bg-coral rounded-full border-2 border-surface animate-pulse-soft"></span>
                         </button>
                         <div id="notifDrop" class="absolute top-full left-0 mt-2 w-72 bg-surface  rounded-2xl shadow-xl shadow-fg/[0.04] p-1.5 opacity-0 -translate-y-2 pointer-events-none transition-all duration-200 z-50">
-                            <div class="px-3 py-2 text-[13px] font-semibold border-b border-line-sub mb-1">الإشعارات</div>
+                            <div class="px-3 py-2 text-[17px] font-semibold border-b border-line-sub mb-1">الإشعارات</div>
                             <button onclick="showToast('تم الاطلاع على الإشعار','info')" class="w-full flex items-start gap-2.5 px-3 py-2.5 rounded-xl hover:bg-raised transition-colors text-right cursor-pointer">
-                                <div class="w-8 h-8 rounded-lg bg-brand-light text-brand flex items-center justify-center text-[11px] shrink-0 mt-0.5"><i class="fas fa-user-plus"></i></div>
+                                <div class="w-8 h-8 rounded-lg bg-brand-light text-brand flex items-center justify-center text-[11px] shrink-0 mt-0.5">
+                                    <i data-lucide="user-plus"  class="w-5 text-center text-[15px]"></i>
+                                </div>
                                 <div><div class="text-[12px]">متقدم جديد على وظيفة مطور Frontend</div><div class="text-[10px] text-fg-muted mt-0.5">منذ 5 دقائق</div></div>
                             </button>
                             <button onclick="showToast('تم الاطلاع على الإشعار','info')" class="w-full flex items-start gap-2.5 px-3 py-2.5 rounded-xl hover:bg-raised transition-colors text-right cursor-pointer">
-                                <div class="w-8 h-8 rounded-lg bg-amber-light text-amber flex items-center justify-center text-[11px] shrink-0 mt-0.5"><i class="fas fa-calendar"></i></div>
+                                <div class="w-8 h-8 rounded-lg bg-amber-light text-amber flex items-center justify-center text-[11px] shrink-0 mt-0.5">
+
+                                    <i data-lucide="calendar"  class="w-5 text-center text-[15px]"></i>
+                                </div>
                                 <div><div class="text-[12px]">مقابلة مع ليلى أحمد بعد ساعة</div><div class="text-[10px] text-fg-muted mt-0.5">منذ 15 دقيقة</div></div>
                             </button>
                             <button onclick="showToast('تم الاطلاع على الإشعار','info')" class="w-full flex items-start gap-2.5 px-3 py-2.5 rounded-xl hover:bg-raised transition-colors text-right cursor-pointer">
-                                <div class="w-8 h-8 rounded-lg bg-coral-light text-coral flex items-center justify-center text-[11px] shrink-0 mt-0.5"><i class="fas fa-star"></i></div>
+                                <div class="w-8 h-8 rounded-lg bg-coral-light text-coral flex items-center justify-center text-[11px] shrink-0 mt-0.5">
+                                     <i data-lucide="view"  class="w-5 text-center text-[15px]"></i>
+                                </div>
                                 <div><div class="text-[12px]">تقييم جديد 4.8 نجوم من متقدم</div><div class="text-[10px] text-fg-muted mt-0.5">منذ ساعة</div></div>
                             </button>
                         </div>
@@ -177,7 +206,7 @@
                     <!-- الملف الشخصي -->
 
 
-                    {% profile_dropdown img_url=user.profile.get_logo_url display_name=user.display_name sub_text=user.identity.name %}
+                    {% profile_dropdown img_url=user.profile.get_logo_url display_name=user.display_name sub_text=user.identity.name profile_url=user.profile.get_url%}
 
                 </div>
             </header>
@@ -206,13 +235,13 @@
                 <div>
                     <label class="block text-[12px] font-semibold text-fg-sub mb-1.5">المسمى الوظيفي</label>
                     <input type="text" required placeholder="مثال: مطور Full-Stack"
-                           class="w-full bg-raised  rounded-xl py-2.5 px-4 text-[13px] outline-none
+                           class="w-full bg-raised  rounded-xl py-2.5 px-4 text-[17px] outline-none
                            focus:border-brand/40 transition-colors">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-[12px] font-semibold text-fg-sub mb-1.5">القسم</label>
-                        <select required class="w-full bg-raised  rounded-xl py-2.5 px-4 text-[13px] outline-none focus:border-brand/40 transition-colors appearance-none cursor-pointer">
+                        <select required class="w-full bg-raised  rounded-xl py-2.5 px-4 text-[17px] outline-none focus:border-brand/40 transition-colors appearance-none cursor-pointer">
                             <option value="">اختر القسم</option>
                             <option>التقنية</option>
                             <option>التصميم</option>
@@ -238,7 +267,7 @@
 
                     <div>
                         <label class="block text-[12px] font-semibold text-fg-sub mb-1.5">نوع التوظيف</label>
-                        <select required class="w-full bg-raised  rounded-xl py-2.5 px-4 text-[13px] outline-none focus:border-brand/40 transition-colors appearance-none cursor-pointer">
+                        <select required class="w-full bg-raised  rounded-xl py-2.5 px-4 text-[17px] outline-none focus:border-brand/40 transition-colors appearance-none cursor-pointer">
                             <option value="">اختر النوع</option>
                             <option>دوام كامل</option>
                             <option>دوام جزئي</option>
@@ -250,20 +279,20 @@
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-[12px] font-semibold text-fg-sub mb-1.5">الموقع</label>
-                        <input type="text" required placeholder="مثال: الرياض" class="w-full bg-raised  rounded-xl py-2.5 px-4 text-[13px] outline-none focus:border-brand/40 transition-colors">
+                        <input type="text" required placeholder="مثال: الرياض" class="w-full bg-raised  rounded-xl py-2.5 px-4 text-[17px] outline-none focus:border-brand/40 transition-colors">
                     </div>
                     <div>
                         <label class="block text-[12px] font-semibold text-fg-sub mb-1.5">الراتب (ر.س)</label>
-                        <input type="text" placeholder="مثال: 8,000 - 12,000" class="w-full bg-raised  rounded-xl py-2.5 px-4 text-[13px] outline-none focus:border-brand/40 transition-colors">
+                        <input type="text" placeholder="مثال: 8,000 - 12,000" class="w-full bg-raised  rounded-xl py-2.5 px-4 text-[17px] outline-none focus:border-brand/40 transition-colors">
                     </div>
                 </div>
                 <div>
                     <label class="block text-[12px] font-semibold text-fg-sub mb-1.5">وصف الوظيفة</label>
-                    <textarea rows="3" required placeholder="اكتب وصفاً مختصراً للمهام والمتطلبات..." class="w-full bg-raised  rounded-xl py-2.5 px-4 text-[13px] outline-none focus:border-brand/40 transition-colors resize-none"></textarea>
+                    <textarea rows="3" required placeholder="اكتب وصفاً مختصراً للمهام والمتطلبات..." class="w-full bg-raised  rounded-xl py-2.5 px-4 text-[17px] outline-none focus:border-brand/40 transition-colors resize-none"></textarea>
                 </div>
                 <div class="flex gap-3 pt-2">
-                    <button type="submit" class="flex-1 bg-brand text-white text-[13px] font-semibold py-2.5 rounded-xl hover:bg-brand-dark transition-colors active:scale-[0.98] cursor-pointer">نشر الوظيفة</button>
-                    <button type="button" onclick="closeNewJobModal()" class="px-5 bg-raised  text-fg-sub text-[13px] font-semibold py-2.5 rounded-xl hover:text-fg hover:border-fg-muted transition-all cursor-pointer">إلغاء</button>
+                    <button type="submit" class="flex-1 bg-brand text-white text-[17px] font-semibold py-2.5 rounded-xl hover:bg-brand-dark transition-colors active:scale-[0.98] cursor-pointer">نشر الوظيفة</button>
+                    <button type="button" onclick="closeNewJobModal()" class="px-5 bg-raised  text-fg-sub text-[17px] font-semibold py-2.5 rounded-xl hover:text-fg hover:border-fg-muted transition-all cursor-pointer">إلغاء</button>
                 </div>
             </form>
         </div>
@@ -349,7 +378,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="w-14 text-left font-display text-[13px] font-bold text-fg-sub">${s.pct}%</div>
+                <div class="w-14 text-left font-display text-[17px] font-bold text-fg-sub">${s.pct}%</div>
             </div>`;
         }).join('');
 
@@ -367,7 +396,7 @@
             <div class="candidate-row flex items-center gap-3 py-3 rounded-xl px-2 cursor-pointer ${i < candidates.length - 1 ? 'border-b border-line-sub' : ''}" onclick="showToast('فتح ملف ${c.name}','info')">
                 <div class="w-9 h-9 rounded-full flex items-center justify-center text-white text-[11px] font-bold shrink-0" style="background:${c.color}">${c.avatar}</div>
                 <div class="flex-1 min-w-0">
-                    <div class="text-[13px] font-semibold truncate">${c.name}</div>
+                    <div class="text-[17px] font-semibold truncate">${c.name}</div>
                     <div class="text-[11px] text-fg-muted">${c.role}</div>
                 </div>
                 <div class="text-left shrink-0">
@@ -387,7 +416,7 @@
             <div class="job-card -sub rounded-xl p-4 cursor-pointer" onclick="showToast('فتح تفاصيل الوظيفة: ${j.title}','info')">
                 <div class="flex items-start justify-between mb-3">
                     <div class="flex-1 min-w-0">
-                        <div class="text-[13px] font-semibold mb-1 truncate">${j.title}</div>
+                        <div class="text-[17px] font-semibold mb-1 truncate">${j.title}</div>
                         <div class="flex items-center gap-2 text-[11px] text-fg-muted">
                             <span>${j.dept}</span>
                             <span class="w-1 h-1 rounded-full bg-line"></span>
@@ -423,11 +452,11 @@
         };
         document.getElementById('interviewsList').innerHTML = interviews.map((iv, i) => `
             <div class="interview-item flex items-start gap-3 py-3 rounded-xl px-2 cursor-pointer ${i < interviews.length - 1 ? 'border-b border-line-sub' : ''}" onclick="showToast('فتح تفاصيل مقابلة ${iv.candidate}','info')">
-                <div class="w-10 h-10 rounded-xl bg-raised flex items-center justify-center text-fg-sub text-[13px] shrink-0 mt-0.5">
+                <div class="w-10 h-10 rounded-xl bg-raised flex items-center justify-center text-fg-sub text-[17px] shrink-0 mt-0.5">
                     <i class="fas ${iv.typeIcon}"></i>
                 </div>
                 <div class="flex-1 min-w-0">
-                    <div class="text-[13px] font-semibold mb-0.5">${iv.candidate}</div>
+                    <div class="text-[17px] font-semibold mb-0.5">${iv.candidate}</div>
                     <div class="text-[11px] text-fg-muted mb-1.5">${iv.role}</div>
                     <div class="flex items-center gap-2">
                         <span class="text-[10px] font-medium px-2 py-0.5 rounded-md ${colorMap[iv.typeColor]}">${iv.type}</span>
@@ -626,7 +655,7 @@
         el.className = 'toast-in flex items-center gap-3 bg-surface  rounded-xl px-4 py-3 min-w-[280px] shadow-lg';
         el.innerHTML = `
             <i class="fas ${c.icon} ${c.cls} text-base shrink-0"></i>
-            <span class="text-[13px] flex-1">${msg}</span>
+            <span class="text-[17px] flex-1">${msg}</span>
             <i class="fas fa-times text-fg-muted text-[11px] cursor-pointer p-1 hover:text-fg transition-colors" onclick="removeToast(this.parentElement)"></i>
         `;
         box.appendChild(el);

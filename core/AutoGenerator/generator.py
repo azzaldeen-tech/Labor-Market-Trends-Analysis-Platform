@@ -57,7 +57,7 @@ class AutoGenerator:
             "{% block content %}\n"
             "<div class='p-8 bg-white shadow rounded-lg'>\n"
             f"    <h1 class='text-3xl font-bold text-indigo-600'>{app_name.capitalize()} Dashboard</h1>\n"
-            "    <p class='text-gray-500 mt-2'>Automated interface for SkillMatch Platform.</p>\n"
+            "    <p class='text-gray-500 mt-2'>Automated interface for Labor-Market-Trend-Anyalysis Platform.</p>\n"
             "</div>\n"
             "{% endblock %}"
         )

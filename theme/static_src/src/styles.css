@@ -107,10 +107,10 @@
     --bg-field-2: #F1F5F9;
     --text-1: #0F172A;
     --text-2: #64748B;
-    --brand: #0d7c5f;
+    --brand: #155dfc;
     --border-1: #E2E8F0;
     --border-2: #F1F5F9;
-    --button: #4F46E5;
+    --button: #155dfc;
     --button-text: #FFFFFF;
     --text-error: #EF4444;
     --text-error-soft: #FEE2E2;
@@ -143,9 +143,9 @@
     --bg-field-2: #064E3B;
     --text-1: #ECFDF5;
     --text-2: #A7F3D0;
-    --brand: #10B981;
+    --brand: #9333EA;
     --border-1: #065F46;
-    --button: #10B981;
+    --button: #9333EA;
     --button-text: #FFFFFF;
     --text-error: #fb7185;
     --text-error-soft: #4c1d1d;
@@ -237,8 +237,12 @@
   /* الأزرار */
 
   .bg-btn {
-    background-color: var(--color-btn);
+   /* background: var(--color-btn); */
+
+    @apply bg-linear-to-l from-blue-600 to-indigo-700;
   }
+
+
 
   .btn-text {
     color: var(--color-btn-text);
@@ -260,10 +264,12 @@
   /* العلامة التجارية */
 
   .bg-brand {
-    background-color: var(--color-brand);
+     /* background: var(--color-brand); */
+     @apply bg-linear-to-l from-blue-600 to-indigo-700;
   }
 
   .text-brand {
+
     color: var(--color-brand);
   }
 

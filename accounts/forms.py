@@ -3,7 +3,7 @@ from email._header_value_parser import ContentType
 
 from django import forms
 from setuptools.config._validate_pyproject import ValidationError
-
+from django.utils.translation import gettext_lazy as _
 from companies.models import CompanyProfile
 from core.helpers import get_identity_domain
 from members.models import MemberProfile
@@ -12,19 +12,25 @@ from allauth.account.forms import SignupForm
 from django.utils.text import slugify
 from django.contrib.auth import get_user_model
 
-# 1. كلاس التنسيق (نظيف تماماً من أي وراثة ModelForm)
-class BaseStyledForm:
-    tailwind_fields_classes = (
-        " bg-base text-content border border-stroke-soft px-4 py-2 mt-1 rounded-lg "
-        "focus:ring-2 transition duration-200 outline-none w-full"
+class BaseStyledForm(forms.Form):  # وراثة مباشرة من forms.Form
+    base_classes = (
+        "bg-base text-content border border-stroke-soft px-4 py-2 mt-1 rounded-lg "
+        "focus:ring-2 transition duration-200 outline-none w-full shadow-sm"
     )
+    error_classes = "border-red-500 focus:ring-red-500 text-red-600"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.apply_tailwind_styles()
 
     def apply_tailwind_styles(self):
-        for field in self.fields.values():
-            existing_classes = field.widget.attrs.get('class', '')
-            field.widget.attrs.update({
-                'class': f"{existing_classes} {self.tailwind_fields_classes}".strip()
-            })
+        for field_name, field in self.fields.items():
+            existing = field.widget.attrs.get('class', '')
+            current_classes = self.base_classes
+            if self.errors.get(field_name):
+                current_classes += f" {self.error_classes}"
+            field.widget.attrs['class'] = f"{existing} {current_classes}".strip()
+
 
 
 class BaseAccountSignupForm(SignupForm, BaseStyledForm):
@@ -93,12 +99,12 @@ class MemberSignupForm(BaseAccountSignupForm):
 
     role_code = "member"
 
-    first_name = forms.CharField(max_length=50, label='First Name',
-                                 widget=forms.TextInput(attrs={'placeholder': 'Enter first name'}))
-    last_name = forms.CharField(max_length=50, label='Last Name',
-                                widget=forms.TextInput(attrs={'placeholder': 'Enter last name'}))
+    first_name = forms.CharField(max_length=50, label=_('First Name'),
+                                 widget=forms.TextInput(attrs={'placeholder': _('Enter first name')}))
+    last_name = forms.CharField(max_length=50, label=_('Last Name'),
+                                widget=forms.TextInput(attrs={'placeholder': _('Enter last name')}))
 
-    birth_date = forms.DateField(label="Birth Date",widget=forms.DateInput(attrs={"type":"date"}))
+    birth_date = forms.DateField(label=_("Birth Date"),widget=forms.DateInput(attrs={"type":"date"}))
 
     field_order = ['first_name', 'last_name','birth_date', 'email', 'password1', 'password2']
 
@@ -154,27 +160,28 @@ class MemberSignupForm(BaseAccountSignupForm):
 class CompanySignupForm(BaseAccountSignupForm):
     role_code = "company"
 
-    name = forms.CharField(max_length=150, label='Company Name',
-                           widget=forms.TextInput(attrs={'placeholder': 'Enter company name'}))
+    name = forms.CharField(max_length=150, label=_('Company Name'),
+                           widget=forms.TextInput(attrs={'placeholder': _('Enter company name')}))
     bio = forms.CharField(
-        label='About the Company',
-        widget=forms.Textarea(attrs={'placeholder': 'Brief description of your company...', 'rows': 3}),
+        label=_('About the Company'),
+        widget=forms.Textarea(attrs={'placeholder': _('Brief description of your company...'),
+                                     'rows': 3}),
         required=False
     )
     location = forms.CharField(
         max_length=100,
-        label='Location',
-        widget=forms.TextInput(attrs={'placeholder': 'City, Country'})
+        label=_('Location'),
+        widget=forms.TextInput(attrs={'placeholder':f"{ _('City')} , {_('Country')}"})
     )
 
 
     field_order = ['name', 'location', 'bio', 'email', 'password1', 'password2']
 
-    # class Meta:
-    #     # model = CustomUser
-    #     widgets = {
-    #         'email': forms.DateInput(attrs={'type': 'email'}),
-    #     }
+    class Meta:
+        model = CustomUser
+        # widgets = {
+        #     'email': forms.DateInput(attrs={'type': 'email'}),
+        # }
 
     def save(self, request):
         self.cleaned_data['username'] = self.clean_username()

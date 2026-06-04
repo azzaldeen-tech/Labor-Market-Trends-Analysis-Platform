@@ -106,7 +106,7 @@ python manage.py tailwind start
 ```Bash
 python manage.py makemessages -l ar
 ````
-التفعيل: تحويل الترجمات إلى صيغة ثنائية سريعة:
+التفعيل: تحويل الترجمات إلى صيغة ثنائية سريعة وعند تحديث ملف الترجمة :
 
 ```Bash
 python manage.py compilemessages

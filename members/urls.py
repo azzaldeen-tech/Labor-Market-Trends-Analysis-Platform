@@ -14,5 +14,6 @@ urlpatterns = [
     path('job/join/<int:pk>', views.job_join, name='job_join'),
     path('job/detail/<int:pk>', views.job_detail, name='job_detail'),
     path('job/cancel/<int:pk>/', views.cancel_job_join, name='job_app_cancel'),
+    path('job/cancel/<int:pk>/', views.cancel_job_join, name='job_cancel'),
     path('job/resignation/<int:pk>/', views.cancel_job_join, name='job_resignation'),
 ]

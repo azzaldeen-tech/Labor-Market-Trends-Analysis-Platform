@@ -5,6 +5,7 @@ app_name = 'companies'
 
 urlpatterns = [
     path('dashboard/', views.dashboard_view, name='dashboard'),
+    path('profile/', views.profile_view, name='profile'),
 
     path('job/add/', views.manage_job, name='job_add'),
     path('job/edit/<int:pk>/', views.manage_job, name='job_edit'),

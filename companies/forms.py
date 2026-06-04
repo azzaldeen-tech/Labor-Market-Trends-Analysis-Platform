@@ -1,10 +1,102 @@
+from datetime import date
+from accounts.forms import BaseStyledForm
 from core.forms import BaseModelForm
-
+from django.utils.translation import gettext_lazy as _
 from django import forms
-from .models import Job
+from .models import Job, CompanyProfile
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
 
 
-class JobForm(forms.ModelForm):
+class CompanyProfileForm(BaseModelForm):
+
+
+    class Meta:
+        model= CompanyProfile
+
+        fields=('name', 'bio','location', 'website', 'logo')
+
+        labels = {
+            'name': 'الاسم',
+            'bio': 'النبذة',
+            'location': ' الموقع',
+            'website': 'رابط الموقع',
+            'logo': 'الصورة الشخصية',
+        }
+        # exclude = ['is_available']
+
+
+        error_messages = {
+
+            'logo': {
+                'image_too_large': _("Image file too large (Max 1MB)"),
+                'invalid_image_format': _("Unsupported file extension. Use JPG or PNG."),
+            }
+
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # if self.instance and self.instance.pk:
+            # --- منطق التخصصات (كودك الحالي) ---
+        #     selected_major = self.instance.major
+        #     if selected_major:
+        #         college = selected_major.college
+        #         university = college.university
+        #         self.initial['university'] = university
+        #         self.initial['college'] = college
+        #         self.initial['major'] = selected_major
+        #         self.fields['college'].queryset = College.objects.filter(university=university)
+        #         self.fields['major'].queryset = Major.objects.filter(college=college)
+        #         self.fields['college'].widget.attrs.pop('disabled', None)
+        #
+        #
+        # # إجبار المستخدم على اختيار التخصص في الواجهة
+        # self.fields['major'].required = True
+        # self.fields['major'].empty_label = _("Choose your academic major")
+
+        # for field_name, field in self.fields.items():
+        #     # 1. الحفاظ على أي كلاسات تمت إضافتها يدوياً في الـ widgets
+        #     existing = field.widget.attrs.get('class', '')
+        #     # 3. دمج الكلاسات وتحديث الحقل
+        #     if field_name!='skills':
+        #         field.widget.attrs['class'] = f"{existing}   ".strip()
+
+
+    def clean_logo(self):
+        picture = self.cleaned_data.get('logo')
+        if picture:
+            # 1. التحقق من الحجم (مثلاً: حد أقصى 1 ميجابايت)
+            if picture.size > 1 * 1024 * 1024:
+                raise forms.ValidationError(
+                    self.fields['logo'].error_messages['image_too_large'],
+                    code='image_too_large'
+                )
+
+            # 2. التحقق من الامتداد (اختياري لأن ImageField يفعل ذلك جزئياً)
+            extension = picture.name.split('.')[-1].lower()
+            if extension not in ['jpg', 'jpeg', 'png']:
+                raise forms.ValidationError(
+                    self.fields['logo'].error_messages['invalid_image_format'],
+                    code='invalid_image_format' )
+        return picture
+
+
+
+    def clean_website(self):
+        url = self.cleaned_data.get('website')
+        if url:
+            validate = URLValidator()
+            try:
+                validate(url)
+            except ValidationError:
+                raise forms.ValidationError("Please enter a valid web address (example: https://example.com)")
+
+        return url
+
+
+class JobForm(BaseModelForm):
     class Meta:
         model = Job
         # نحدد الحقول التي نريد للشركة تعبئتها (استبعدنا الحقول التلقائية مثل created_at)
@@ -13,7 +105,7 @@ class JobForm(forms.ModelForm):
             'title',
             'description',
             'required_skills',
-            'location',
+            'city',
             'employment_type',
             'experience_level',
             'min_salary',
@@ -30,6 +122,7 @@ class JobForm(forms.ModelForm):
             'description': 'وصف الوظيفة',
             'requirements': 'المتطلبات الإضافية',
             'required_skills': 'المهارات المطلوبة',
+            'city': 'المدينة',
             'location': 'موقع الوظيفة',
             'employment_type': 'نوع الدوام',
             'experience_level': 'مستوى الخبرة',

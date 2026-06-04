@@ -46,11 +46,25 @@ msgstr "مدينة"
 msgid "Cities"
 msgstr "المدن"
 
+msgid "Add"
+msgstr "إضافة"
+
 msgid "Accounts"
 msgstr "الحسابات"
 
-msgid "Category"
-msgstr "قئة"
+
+
+msgid "Job"
+msgstr "وظيفة"
+
+msgid "job"
+msgstr "وظيفة"
+
+msgid "Skill Category"
+msgstr "فئة مهارات"
+
+msgid "Code"
+msgstr "الكود"
 
 msgid "New Job"
 msgstr "وظيفة جديدة"
@@ -79,14 +93,54 @@ msgstr "لوحة التحكم"
 msgid "Jobs"
 msgstr "الوظائف"
 
+msgid "jobs"
+msgstr "الوظائف"
+
 msgid "Companies"
 msgstr "الشركات"
+
+msgid "Company"
+msgstr "شركة"
 
 msgid "Members"
 msgstr "الأعضاء"
 
+msgid "First Name"
+msgstr "الاسم الاول"
+
+msgid "Last Name"
+msgstr "الاسم الأخير"
+
+msgid "Enter first name"
+msgstr "أدخل الاسم الاول"
+
+msgid "Enter last name"
+msgstr "أدخل الاسم الأخير"
+
+msgid "Company Name"
+msgstr "إسم الشركة"
+
+msgid "Enter company name"
+msgstr "إدخل إسم الشركة"
+
+msgid "Location"
+msgstr "الموقع"
+
+
+msgid "Enter your email"
+msgstr "عنوان بريدك الإلكتروني"
+
+msgid "Birth Date"
+msgstr "تأريخ الميلاد"
+
 msgid "Applications"
 msgstr "الطلبات"
+
+msgid "About the Company"
+msgstr "نبذة عن الشركة"
+
+msgid "Brief description of your company..."
+msgstr "نبذة مختصرة عن شركتكم..."
 
 
 msgid "Search"
@@ -122,6 +176,23 @@ msgstr "مرفوض"
 msgid "Skills"
 msgstr "المهارات"
 
+msgid "Name"
+msgstr "الأسم"
+
+msgid "Category"
+msgstr "الفئة"
+
+
+msgid "Core"
+msgstr "أساسي"
+
+
+msgid "Member"
+msgstr "شخصي"
+
+msgid "Skill"
+msgstr "مهارة"
+
 msgid "Experience Level"
 msgstr "مستوى الخبرة"
 
@@ -134,6 +205,27 @@ msgstr "دوام جزئي"
 msgid "Salary Range"
 msgstr "نطاق الراتب"
 
+msgid "Join Our Community"
+msgstr "انضم إلى مجتمعنا"
+
+msgid "Specializations"
+msgstr "التخصصات"
+
+msgid "Type to search"
+msgstr "اكتب للبحث"
+
+
+msgid "Select the account type that best fits your needs to get started."
+msgstr "اختر نوع الحساب الذي يناسب احتياجاتك للبدء."
+
+msgid "Discover jobs and track market trends."
+msgstr "اكتشف الوظائف وتتبع اتجاهات السوق."
+
+msgid "Hire top talents and manage your team."
+msgstr "وظّف أفضل المواهب وأدر فريقك."
+
+msgid "Get Started"
+msgstr "ابدأ الآن"
 
 #: .\accounts\forms.py:26
 msgid "Tell us a little about yourself..."

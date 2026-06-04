@@ -1,17 +1,15 @@
-from pyexpat.errors import messages
+from datetime import datetime
 
-from companies.Utils.services import get_job_applications, get_job_simple_applications, get_filtered_applications, \
+from django.contrib import messages as django_messages
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect, render
+
+from companies.Utils.services import get_job_simple_applications, get_filtered_applications, \
     change_job_application_status
 from companies.decorators import company_required
-from companies.forms import JobForm
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404,get_list_or_404, redirect,render
+from companies.forms import JobForm, CompanyProfileForm
 from companies.models import Job, CompanyProfile, JobApplication, SimpleApplication
-from django.http import JsonResponse
-from datetime import datetime
-from django.db.models import Q
-from django.contrib import messages as django_messages
-from core.Utils import JobServices
+from core.app_links import AppLinks
 from core.models import Skill
 
 app_name = 'companies'
@@ -31,10 +29,6 @@ def dashboard_view(request):
         .select_related('job', 'member__user')\
         .order_by('-applied_at') #'-match_score',
 
-    # print("--- قائمة المتقدمين لشركتك ---")
-    # for app in applied_jobs:
-    #     print(f"- المتقدم: {app.member.user.get_full_name()} | الوظيفة: {app.job.title}")
-
     simplified_apps = [SimpleApplication(app) for app in applied_jobs]
 
     weekly_data = {
@@ -43,18 +37,11 @@ def dashboard_view(request):
         'hires':[0, 0, 0, 1, 0, 1, 0]
     }
 
-    # statistics = {
-    #     'adv_jobs':job_posts.count,
-    #     'applied_jobs':job_applications.count,
-    # }
-    # print("statistics::")
-    # print(statistics)
     stats_cards = [
-
         {
             'title': "الوظائف",
             'amount': job_posts.count,
-            'icon': "fa-bullhorn",
+            'icon': "megaphone",  # بديل احترافي لـ fa-bullhorn في Lucide
             'badge_type': "brand",
             'badge_amount': "+2",
             'badge_text': "هذا الأسبوع",
@@ -63,7 +50,7 @@ def dashboard_view(request):
         {
             'title': "إجمالي المتقدمين",
             'amount': request.user.profile.jobs_applications_number,
-            'icon': "fa-inbox",
+            'icon': "inbox",  # متوفرة بنفس الاسم في Lucide
             'badge_type': "brand",
             'badge_amount': "24+",
             'badge_text': "هذا الأسبوع",
@@ -72,19 +59,19 @@ def dashboard_view(request):
         {
             'title': "المقابلات",
             'amount': 6,
-            'icon': "fa-video",
+            'icon': "video",  # متوفرة بنفس الاسم في Lucide للمقابلات المرئية
             'badge_type': "amber",
             'badge_amount': "3",
             'badge_text': "اليوم",
-            'badge_icon': "fa-arrow-up",
+            'badge_icon': "arrow-up",  # تغيير fa-arrow-up إلى نمط Lucide
             'delay': "0.3s"
         },
         {
             'title': "تم التعيين هذا الشهر",
             'amount': 0,
-            'icon': "fa-user-check",
+            'icon': "user-check",  # متوفرة بنفس الاسم في Lucide
             'badge_type': "brand",
-            'badge_icon': "fa-arrow-up",
+            'badge_icon': "arrow-up",  # تغيير fa-arrow-up إلى نمط Lucide
             'badge_amount': "33%",
             'badge_text': "عن الشهر السابق",
             'delay': "0.4s"
@@ -159,7 +146,7 @@ def dashboard_view(request):
 @company_required
 @login_required
 def delete_job(request, pk):
-    # print("delete_job:::8888888")
+
     job = get_object_or_404(Job, pk=pk)
     if job.company.user != request.user:
         django_messages.error(request, "ليس لديك صلاحية لحذف هذه الوظيفة.")
@@ -180,7 +167,6 @@ def delete_job(request, pk):
 def manage_job(request, pk=None):
     # إذا كان هناك pk، فنحن في حالة "تعديل"، وإلا فنحن في حالة "إضافة"
     company=request.user.profile
-
     job_instance = get_object_or_404(Job, pk=pk) if pk else None
     skills_list = Skill.objects.all().values('id', 'name')
     # selected_skill_ids = list(job_instance.required_skills.values_list('id', flat=True))
@@ -212,6 +198,26 @@ def manage_job(request, pk=None):
 
     return render(request, f'{app_name}/jobs/job_form.html',context)
 
+@company_required
+@login_required
+def profile_view(request):
+
+    profile, created = CompanyProfile.objects.get_or_create(user=request.user)
+    skills_list = Skill.objects.all().values('id', 'name')
+
+    if request.method == "POST":
+        form = CompanyProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect(AppLinks.Dashboards.COMPANY)
+    else:
+        form = CompanyProfileForm(instance=profile)
+
+    return render(request, f'{app_name}/profile/form.html',{
+        'skills_list': skills_list,
+        'form':form,
+    })
+
 
 @company_required
 @login_required
@@ -241,11 +247,8 @@ def job_detail(request, pk):
     if request.user.is_authenticated and hasattr(request.user, 'profile'):
         is_owner = (job.company == request.user.profile)
 
-
     job_applications=get_filtered_applications(job_id=pk)
-
     simplified_apps = get_job_simple_applications(job_applications)
-
 
     return  render(request,f"{app_name}/jobs/detail.html",{
         'job':job,

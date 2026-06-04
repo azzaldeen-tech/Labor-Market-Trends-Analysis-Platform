@@ -42,13 +42,13 @@
                             </div>
                             <div class="flex-1 relative">
                                 <i data-lucide="map-pin" class="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
-                                <select class="w-full pr-12 pl-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent appearance-none cursor-pointer">
+                                <select name="city" class="w-full pr-12 pl-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent appearance-none cursor-pointer">
                                     <option>جميع المدن</option>
-                                    <option>الرياض</option>
-                                    <option>جدة</option>
-                                    <option>الدمام</option>
-                                    <option>أبوظبي</option>
-                                    <option>دبي</option>
+
+                                    {% for city in cities%}
+                                         <option>{{city}}</option>
+                                    {% endfor %}
+
                                 </select>
                                 <i data-lucide="chevron-down" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none"></i>
                             </div>
@@ -62,15 +62,15 @@
                     <!-- Stats -->
                     <div class="flex flex-wrap justify-center lg:justify-start gap-8">
                         <div class="text-center">
-                            <div class="text-3xl font-bold text-gray-900 counter" data-target="50000">0</div>
+                            <div class="text-3xl font-bold text-gray-900 counter" data-target="{{active_jobs_count}}">{{active_jobs_count}}</div>
                             <div class="text-sm text-gray-500">وظيفة متاحة</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-3xl font-bold text-gray-900 counter" data-target="12000">0</div>
+                            <div class="text-3xl font-bold text-gray-900 counter" data-target="{{total_companies}}">{{total_companies}}</div>
                             <div class="text-sm text-gray-500">شركة مشاركة</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-3xl font-bold text-gray-900 counter" data-target="250000">0</div>
+                            <div class="text-3xl font-bold text-gray-900 counter" data-target="{{total_members}}">{{total_members}}</div>
                             <div class="text-sm text-gray-500">باحث عن عمل</div>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                                     </div>
                                     <div>
                                         <div class="text-sm text-gray-500">نمو الوظائف</div>
-                                        <div class="text-lg font-bold text-green-600">+24%</div>
+                                        <div class="text-lg font-bold text-green-600">{{remote_percentage}}%</div>
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +103,7 @@
                                     </div>
                                     <div>
                                         <div class="text-sm text-gray-500">توظيف هذا الشهر</div>
-                                        <div class="text-lg font-bold text-primary-600">3,847</div>
+                                        <div class="text-lg font-bold text-primary-600">{{total_applications_this_month}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -202,7 +202,7 @@
                             </div>
                             <div>
                                 <h4 class="font-semibold text-lg mb-1">مؤشرات سوق العمل</h4>
-                                <p class="text-gray-400">تتبع معدلات التوظيف، البطالة، والطلب على المهارات في مختلف القطاعات</p>
+                                <p class="text-gray-800">تتبع معدلات التوظيف، البطالة، والطلب على المهارات في مختلف القطاعات</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
@@ -211,7 +211,7 @@
                             </div>
                             <div>
                                 <h4 class="font-semibold text-lg mb-1">توزيع الرواتب</h4>
-                                <p class="text-gray-400">مقارنة الرواتب حسب المسمى الوظيفي، الخبرة، والموقع الجغرافي</p>
+                                <p class="text-gray-800">مقارنة الرواتب حسب المسمى الوظيفي، الخبرة، والموقع الجغرافي</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
@@ -220,34 +220,35 @@
                             </div>
                             <div>
                                 <h4 class="font-semibold text-lg mb-1">توقعات المستقبل</h4>
-                                <p class="text-gray-400">تنبؤات مدعومة بالذكاء الاصطناعي لاتجاهات سوق العمل القادمة</p>
+                                <p class="text-gray-800">تنبؤات مدعومة بالذكاء الاصطناعي لاتجاهات سوق العمل القادمة</p>
                             </div>
                         </div>
                     </div>
 
-                    <button class="mt-10 bg-white text-primary-900 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-colors flex items-center gap-2">
-                        استكشف التحليلات
+                    <a href="{% url 'core:labor_market_trends' %}" class="mt-10 bg-white w-2/4  text-gray-900 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-colors flex items-center gap-2 text-center">
+                        <span class="pr-8">استكشف التحليلات</span>
                         <i data-lucide="arrow-left" class="w-5 h-5"></i>
-                    </button>
+                    </a>
                 </div>
                 {% load static %}
                 <div class="relative">
                     <div class="bg-white/10 backdrop-blur-xl rounded-3xl p-6 border border-white/20">
-                        <img src="{% static 'img/anylisis_image.png' %}" alt="Analytics Dashboard" class="rounded-2xl w-full">
+                        <img src="{% static 'img/anylisis_image.png' %}" alt="Analytics Dashboard"
+                             class="rounded-2xl w-full">
 
                         <!-- Stats Overlay -->
                         <div class="grid grid-cols-3 gap-4 mt-6">
                             <div class="bg-white/10 rounded-xl p-4 text-center">
-                                <div class="text-2xl font-bold text-secondary-400">+18%</div>
-                                <div class="text-sm text-gray-400">نمو التوظيف</div>
+                                <div class="text-2xl font-bold text-secondary-400">{{remote_percentage}} %</div>
+                                <div class="text-sm text-gray-800">نمو التوظيف</div>
                             </div>
                             <div class="bg-white/10 rounded-xl p-4 text-center">
-                                <div class="text-2xl font-bold text-secondary-400">12.5K</div>
-                                <div class="text-sm text-gray-400">وظيفة جديدة</div>
+                                <div class="text-2xl font-bold text-secondary-400">{{active_jobs_count}}</div>
+                                <div class="text-sm text-gray-800">وظيفة جديدة</div>
                             </div>
                             <div class="bg-white/10 rounded-xl p-4 text-center">
-                                <div class="text-2xl font-bold text-secondary-400">4.2K</div>
-                                <div class="text-sm text-gray-400">شركة نشطة</div>
+                                <div class="text-2xl font-bold text-secondary-400">{{total_companies}}</div>
+                                <div class="text-sm text-gray-800">شركة نشطة</div>
                             </div>
                         </div>
                     </div>
@@ -264,7 +265,7 @@
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">أحدث الوظائف</h2>
                     <p class="text-lg text-gray-600">فرص عمل مميزة من شركات رائدة في المنطقة</p>
                 </div>
-                <a href="#" class="text-primary-600 font-semibold flex items-center gap-2 hover:gap-3 transition-all mt-4 md:mt-0">
+                <a href="{% url 'core:jobs_explore' %}" class="text-primary-600 font-semibold flex items-center gap-2 hover:gap-3 transition-all mt-4 md:mt-0">
                     عرض جميع الوظائف
                     <i data-lucide="arrow-left" class="w-5 h-5"></i>
                 </a>
@@ -272,172 +273,174 @@
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Job Card 1 -->
-                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group">
+                {% for job in get_jobs %}
+                 <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group">
                     <div class="flex items-start justify-between mb-4">
                         <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center">
                             <i data-lucide="building-2" class="w-7 h-7 text-blue-600"></i>
                         </div>
-                        <span class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm font-medium">دوام كامل</span>
+                        <span class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm font-medium">{{job.get_employment_type_display}}</span>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">مهندس برمجيات أول</h3>
-                    <p class="text-gray-500 text-sm mb-4">شركة التقنية المتقدمة</p>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">{{job.title}}</h3>
+                    <p class="text-gray-500 text-sm mb-4">{{ job.company}}</p>
                     <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
-                        <span class="flex items-center gap-1">
+                        <span class="flex items-center text-gray-400 gap-1">
                             <i data-lucide="map-pin" class="w-4 h-4"></i>
-                            الرياض
+                            {{ job.city }}
                         </span>
                         <span class="flex items-center gap-1">
                             <i data-lucide="clock" class="w-4 h-4"></i>
-                            منذ يومين
+                           منذ {{ job.created_at|timesince }}
                         </span>
                     </div>
                     <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <span class="text-primary-600 font-bold">25,000 - 35,000 ر.س</span>
+                        <span class="text-primary-600 font-bold"> {{job.min_salary}} -  {{job.max_salary}} ر.س</span>
                         <button class="text-gray-400 hover:text-primary-600 transition-colors">
                             <i data-lucide="bookmark" class="w-5 h-5"></i>
                         </button>
                     </div>
                 </div>
+                {% endfor %}
 
-                <!-- Job Card 2 -->
-                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center">
-                            <i data-lucide="palette" class="w-7 h-7 text-purple-600"></i>
-                        </div>
-                        <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">عن بعد</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">مصمم UX/UI</h3>
-                    <p class="text-gray-500 text-sm mb-4">استوديو الإبداع الرقمي</p>
-                    <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
-                        <span class="flex items-center gap-1">
-                            <i data-lucide="map-pin" class="w-4 h-4"></i>
-                            دبي
-                        </span>
-                        <span class="flex items-center gap-1">
-                            <i data-lucide="clock" class="w-4 h-4"></i>
-                            منذ 3 أيام
-                        </span>
-                    </div>
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <span class="text-primary-600 font-bold">18,000 - 25,000 ر.س</span>
-                        <button class="text-gray-400 hover:text-primary-600 transition-colors">
-                            <i data-lucide="bookmark" class="w-5 h-5"></i>
-                        </button>
-                    </div>
-                </div>
+<!--                &lt;!&ndash; Job Card 2 &ndash;&gt;-->
+<!--                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group">-->
+<!--                    <div class="flex items-start justify-between mb-4">-->
+<!--                        <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center">-->
+<!--                            <i data-lucide="palette" class="w-7 h-7 text-purple-600"></i>-->
+<!--                        </div>-->
+<!--                        <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">عن بعد</span>-->
+<!--                    </div>-->
+<!--                    <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">مصمم UX/UI</h3>-->
+<!--                    <p class="text-gray-500 text-sm mb-4">استوديو الإبداع الرقمي</p>-->
+<!--                    <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">-->
+<!--                        <span class="flex items-center gap-1">-->
+<!--                            <i data-lucide="map-pin" class="w-4 h-4"></i>-->
+<!--                            دبي-->
+<!--                        </span>-->
+<!--                        <span class="flex items-center gap-1">-->
+<!--                            <i data-lucide="clock" class="w-4 h-4"></i>-->
+<!--                            منذ 3 أيام-->
+<!--                        </span>-->
+<!--                    </div>-->
+<!--                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">-->
+<!--                        <span class="text-primary-600 font-bold">18,000 - 25,000 ر.س</span>-->
+<!--                        <button class="text-gray-400 hover:text-primary-600 transition-colors">-->
+<!--                            <i data-lucide="bookmark" class="w-5 h-5"></i>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <!-- Job Card 3 -->
-                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center">
-                            <i data-lucide="trending-up" class="w-7 h-7 text-green-600"></i>
-                        </div>
-                        <span class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm font-medium">دوام كامل</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">مدير تسويق رقمي</h3>
-                    <p class="text-gray-500 text-sm mb-4">مجموعة الأعمال المتكاملة</p>
-                    <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
-                        <span class="flex items-center gap-1">
-                            <i data-lucide="map-pin" class="w-4 h-4"></i>
-                            جدة
-                        </span>
-                        <span class="flex items-center gap-1">
-                            <i data-lucide="clock" class="w-4 h-4"></i>
-                            منذ أسبوع
-                        </span>
-                    </div>
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <span class="text-primary-600 font-bold">20,000 - 30,000 ر.س</span>
-                        <button class="text-gray-400 hover:text-primary-600 transition-colors">
-                            <i data-lucide="bookmark" class="w-5 h-5"></i>
-                        </button>
-                    </div>
-                </div>
+<!--                &lt;!&ndash; Job Card 3 &ndash;&gt;-->
+<!--                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group">-->
+<!--                    <div class="flex items-start justify-between mb-4">-->
+<!--                        <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center">-->
+<!--                            <i data-lucide="trending-up" class="w-7 h-7 text-green-600"></i>-->
+<!--                        </div>-->
+<!--                        <span class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm font-medium">دوام كامل</span>-->
+<!--                    </div>-->
+<!--                    <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">مدير تسويق رقمي</h3>-->
+<!--                    <p class="text-gray-500 text-sm mb-4">مجموعة الأعمال المتكاملة</p>-->
+<!--                    <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">-->
+<!--                        <span class="flex items-center gap-1">-->
+<!--                            <i data-lucide="map-pin" class="w-4 h-4"></i>-->
+<!--                            جدة-->
+<!--                        </span>-->
+<!--                        <span class="flex items-center gap-1">-->
+<!--                            <i data-lucide="clock" class="w-4 h-4"></i>-->
+<!--                            منذ أسبوع-->
+<!--                        </span>-->
+<!--                    </div>-->
+<!--                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">-->
+<!--                        <span class="text-primary-600 font-bold">20,000 - 30,000 ر.س</span>-->
+<!--                        <button class="text-gray-400 hover:text-primary-600 transition-colors">-->
+<!--                            <i data-lucide="bookmark" class="w-5 h-5"></i>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <!-- Job Card 4 -->
-                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center">
-                            <i data-lucide="database" class="w-7 h-7 text-orange-600"></i>
-                        </div>
-                        <span class="bg-purple-50 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">عقد</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">محلل بيانات كبير</h3>
-                    <p class="text-gray-500 text-sm mb-4">البنك الدولي</p>
-                    <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
-                        <span class="flex items-center gap-1">
-                            <i data-lucide="map-pin" class="w-4 h-4"></i>
-                            أبوظبي
-                        </span>
-                        <span class="flex items-center gap-1">
-                            <i data-lucide="clock" class="w-4 h-4"></i>
-                            منذ 5 أيام
-                        </span>
-                    </div>
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <span class="text-primary-600 font-bold">35,000 - 50,000 ر.س</span>
-                        <button class="text-gray-400 hover:text-primary-600 transition-colors">
-                            <i data-lucide="bookmark" class="w-5 h-5"></i>
-                        </button>
-                    </div>
-                </div>
+<!--                &lt;!&ndash; Job Card 4 &ndash;&gt;-->
+<!--                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group">-->
+<!--                    <div class="flex items-start justify-between mb-4">-->
+<!--                        <div class="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center">-->
+<!--                            <i data-lucide="database" class="w-7 h-7 text-orange-600"></i>-->
+<!--                        </div>-->
+<!--                        <span class="bg-purple-50 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">عقد</span>-->
+<!--                    </div>-->
+<!--                    <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">محلل بيانات كبير</h3>-->
+<!--                    <p class="text-gray-500 text-sm mb-4">البنك الدولي</p>-->
+<!--                    <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">-->
+<!--                        <span class="flex items-center gap-1">-->
+<!--                            <i data-lucide="map-pin" class="w-4 h-4"></i>-->
+<!--                            أبوظبي-->
+<!--                        </span>-->
+<!--                        <span class="flex items-center gap-1">-->
+<!--                            <i data-lucide="clock" class="w-4 h-4"></i>-->
+<!--                            منذ 5 أيام-->
+<!--                        </span>-->
+<!--                    </div>-->
+<!--                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">-->
+<!--                        <span class="text-primary-600 font-bold">35,000 - 50,000 ر.س</span>-->
+<!--                        <button class="text-gray-400 hover:text-primary-600 transition-colors">-->
+<!--                            <i data-lucide="bookmark" class="w-5 h-5"></i>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <!-- Job Card 5 -->
-                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-14 h-14 bg-pink-100 rounded-xl flex items-center justify-center">
-                            <i data-lucide="heart-pulse" class="w-7 h-7 text-pink-600"></i>
-                        </div>
-                        <span class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm font-medium">دوام كامل</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">مدير موارد بشرية</h3>
-                    <p class="text-gray-500 text-sm mb-4">المركز الطبي المتخصص</p>
-                    <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
-                        <span class="flex items-center gap-1">
-                            <i data-lucide="map-pin" class="w-4 h-4"></i>
-                            الدمام
-                        </span>
-                        <span class="flex items-center gap-1">
-                            <i data-lucide="clock" class="w-4 h-4"></i>
-                            منذ أسبوعين
-                        </span>
-                    </div>
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <span class="text-primary-600 font-bold">22,000 - 28,000 ر.س</span>
-                        <button class="text-gray-400 hover:text-primary-600 transition-colors">
-                            <i data-lucide="bookmark" class="w-5 h-5"></i>
-                        </button>
-                    </div>
-                </div>
+<!--                &lt;!&ndash; Job Card 5 &ndash;&gt;-->
+<!--                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group">-->
+<!--                    <div class="flex items-start justify-between mb-4">-->
+<!--                        <div class="w-14 h-14 bg-pink-100 rounded-xl flex items-center justify-center">-->
+<!--                            <i data-lucide="heart-pulse" class="w-7 h-7 text-pink-600"></i>-->
+<!--                        </div>-->
+<!--                        <span class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm font-medium">دوام كامل</span>-->
+<!--                    </div>-->
+<!--                    <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">مدير موارد بشرية</h3>-->
+<!--                    <p class="text-gray-500 text-sm mb-4">المركز الطبي المتخصص</p>-->
+<!--                    <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">-->
+<!--                        <span class="flex items-center gap-1">-->
+<!--                            <i data-lucide="map-pin" class="w-4 h-4"></i>-->
+<!--                            الدمام-->
+<!--                        </span>-->
+<!--                        <span class="flex items-center gap-1">-->
+<!--                            <i data-lucide="clock" class="w-4 h-4"></i>-->
+<!--                            منذ أسبوعين-->
+<!--                        </span>-->
+<!--                    </div>-->
+<!--                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">-->
+<!--                        <span class="text-primary-600 font-bold">22,000 - 28,000 ر.س</span>-->
+<!--                        <button class="text-gray-400 hover:text-primary-600 transition-colors">-->
+<!--                            <i data-lucide="bookmark" class="w-5 h-5"></i>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <!-- Job Card 6 -->
-                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-14 h-14 bg-cyan-100 rounded-xl flex items-center justify-center">
-                            <i data-lucide="cpu" class="w-7 h-7 text-cyan-600"></i>
-                        </div>
-                        <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">عن بعد</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">مهندس ذكاء اصطناعي</h3>
-                    <p class="text-gray-500 text-sm mb-4">مختبرات الابتكار التقني</p>
-                    <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
-                        <span class="flex items-center gap-1">
-                            <i data-lucide="map-pin" class="w-4 h-4"></i>
-                            الكويت
-                        </span>
-                        <span class="flex items-center gap-1">
-                            <i data-lucide="clock" class="w-4 h-4"></i>
-                            منذ 3 أيام
-                        </span>
-                    </div>
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <span class="text-primary-600 font-bold">40,000 - 60,000 ر.س</span>
-                        <button class="text-gray-400 hover:text-primary-600 transition-colors">
-                            <i data-lucide="bookmark" class="w-5 h-5"></i>
-                        </button>
-                    </div>
-                </div>
+<!--                &lt;!&ndash; Job Card 6 &ndash;&gt;-->
+<!--                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group">-->
+<!--                    <div class="flex items-start justify-between mb-4">-->
+<!--                        <div class="w-14 h-14 bg-cyan-100 rounded-xl flex items-center justify-center">-->
+<!--                            <i data-lucide="cpu" class="w-7 h-7 text-cyan-600"></i>-->
+<!--                        </div>-->
+<!--                        <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">عن بعد</span>-->
+<!--                    </div>-->
+<!--                    <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">مهندس ذكاء اصطناعي</h3>-->
+<!--                    <p class="text-gray-500 text-sm mb-4">مختبرات الابتكار التقني</p>-->
+<!--                    <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">-->
+<!--                        <span class="flex items-center gap-1">-->
+<!--                            <i data-lucide="map-pin" class="w-4 h-4"></i>-->
+<!--                            الكويت-->
+<!--                        </span>-->
+<!--                        <span class="flex items-center gap-1">-->
+<!--                            <i data-lucide="clock" class="w-4 h-4"></i>-->
+<!--                            منذ 3 أيام-->
+<!--                        </span>-->
+<!--                    </div>-->
+<!--                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">-->
+<!--                        <span class="text-primary-600 font-bold">40,000 - 60,000 ر.س</span>-->
+<!--                        <button class="text-gray-400 hover:text-primary-600 transition-colors">-->
+<!--                            <i data-lucide="bookmark" class="w-5 h-5"></i>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
         </div>
     </section>
@@ -451,55 +454,63 @@
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
-                <div class="flex flex-col items-center group cursor-pointer">
-                    <div class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center mb-3 group-hover:shadow-lg transition-all group-hover:-translate-y-1">
-                        <i data-lucide="building" class="w-10 h-10 text-gray-400 group-hover:text-primary-600 transition-colors"></i>
+
+                {% for company in get_companies %}
+                    <div class="flex flex-col items-center group cursor-pointer">
+                        <div class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center mb-3 group-hover:shadow-lg transition-all group-hover:-translate-y-1">
+                            {% if company.get_logo_url %}
+                                <img src="{{ company.get_logo_url }}" class="w-10 h-10" />
+                            {% else  %}
+                                 <i data-lucide="building" class="w-10 h-10 text-gray-400 group-hover:text-primary-600 transition-colors"></i>
+                            {% endif  %}
+                        </div>
+                        <span class="text-sm font-medium text-gray-600 group-hover:text-primary-600 transition-colors">{{company.name}}</span>
+                        <span class="text-xs text-gray-400">120+ وظيفة</span>
                     </div>
-                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary-600 transition-colors">أرامكو</span>
-                    <span class="text-xs text-gray-400">120+ وظيفة</span>
-                </div>
-                <div class="flex flex-col items-center group cursor-pointer">
-                    <div class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center mb-3 group-hover:shadow-lg transition-all group-hover:-translate-y-1">
-                        <i data-lucide="landmark" class="w-10 h-10 text-gray-400 group-hover:text-primary-600 transition-colors"></i>
-                    </div>
-                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary-600 transition-colors">سابك</span>
-                    <span class="text-xs text-gray-400">85+ وظيفة</span>
-                </div>
-                <div class="flex flex-col items-center group cursor-pointer">
-                    <div class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center mb-3 group-hover:shadow-lg transition-all group-hover:-translate-y-1">
-                        <i data-lucide="smartphone" class="w-10 h-10 text-gray-400 group-hover:text-primary-600 transition-colors"></i>
-                    </div>
-                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary-600 transition-colors">STC</span>
-                    <span class="text-xs text-gray-400">95+ وظيفة</span>
-                </div>
-                <div class="flex flex-col items-center group cursor-pointer">
-                    <div class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center mb-3 group-hover:shadow-lg transition-all group-hover:-translate-y-1">
-                        <i data-lucide="plane" class="w-10 h-10 text-gray-400 group-hover:text-primary-600 transition-colors"></i>
-                    </div>
-                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary-600 transition-colors">الخطوط السعودية</span>
-                    <span class="text-xs text-gray-400">60+ وظيفة</span>
-                </div>
-                <div class="flex flex-col items-center group cursor-pointer">
-                    <div class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center mb-3 group-hover:shadow-lg transition-all group-hover:-translate-y-1">
-                        <i data-lucide="shopping-bag" class="w-10 h-10 text-gray-400 group-hover:text-primary-600 transition-colors"></i>
-                    </div>
-                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary-600 transition-colors">المراعي</span>
-                    <span class="text-xs text-gray-400">45+ وظيفة</span>
-                </div>
-                <div class="flex flex-col items-center group cursor-pointer">
-                    <div class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center mb-3 group-hover:shadow-lg transition-all group-hover:-translate-y-1">
-                        <i data-lucide="zap" class="w-10 h-10 text-gray-400 group-hover:text-primary-600 transition-colors"></i>
-                    </div>
-                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary-600 transition-colors">ACWA Power</span>
-                    <span class="text-xs text-gray-400">70+ وظيفة</span>
-                </div>
+                {% endfor %}
+
+<!--                <div class="flex flex-col items-center group cursor-pointer">-->
+<!--                    <div class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center mb-3 group-hover:shadow-lg transition-all group-hover:-translate-y-1">-->
+<!--                        <i data-lucide="landmark" class="w-10 h-10 text-gray-400 group-hover:text-primary-600 transition-colors"></i>-->
+<!--                    </div>-->
+<!--                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary-600 transition-colors">سابك</span>-->
+<!--                    <span class="text-xs text-gray-400">85+ وظيفة</span>-->
+<!--                </div>-->
+<!--                <div class="flex flex-col items-center group cursor-pointer">-->
+<!--                    <div class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center mb-3 group-hover:shadow-lg transition-all group-hover:-translate-y-1">-->
+<!--                        <i data-lucide="smartphone" class="w-10 h-10 text-gray-400 group-hover:text-primary-600 transition-colors"></i>-->
+<!--                    </div>-->
+<!--                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary-600 transition-colors">STC</span>-->
+<!--                    <span class="text-xs text-gray-400">95+ وظيفة</span>-->
+<!--                </div>-->
+<!--                <div class="flex flex-col items-center group cursor-pointer">-->
+<!--                    <div class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center mb-3 group-hover:shadow-lg transition-all group-hover:-translate-y-1">-->
+<!--                        <i data-lucide="plane" class="w-10 h-10 text-gray-400 group-hover:text-primary-600 transition-colors"></i>-->
+<!--                    </div>-->
+<!--                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary-600 transition-colors">الخطوط السعودية</span>-->
+<!--                    <span class="text-xs text-gray-400">60+ وظيفة</span>-->
+<!--                </div>-->
+<!--                <div class="flex flex-col items-center group cursor-pointer">-->
+<!--                    <div class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center mb-3 group-hover:shadow-lg transition-all group-hover:-translate-y-1">-->
+<!--                        <i data-lucide="shopping-bag" class="w-10 h-10 text-gray-400 group-hover:text-primary-600 transition-colors"></i>-->
+<!--                    </div>-->
+<!--                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary-600 transition-colors">المراعي</span>-->
+<!--                    <span class="text-xs text-gray-400">45+ وظيفة</span>-->
+<!--                </div>-->
+<!--                <div class="flex flex-col items-center group cursor-pointer">-->
+<!--                    <div class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center mb-3 group-hover:shadow-lg transition-all group-hover:-translate-y-1">-->
+<!--                        <i data-lucide="zap" class="w-10 h-10 text-gray-400 group-hover:text-primary-600 transition-colors"></i>-->
+<!--                    </div>-->
+<!--                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary-600 transition-colors">ACWA Power</span>-->
+<!--                    <span class="text-xs text-gray-400">70+ وظيفة</span>-->
+<!--                </div>-->
             </div>
 
             <div class="mt-16 text-center">
-                <button class="bg-gray-900 text-white px-8 py-4 rounded-xl font-semibold hover:bg-gray-800 transition-colors inline-flex items-center gap-2">
+                <a href="{% url 'core:companies_explore' %}" class="bg-brand text-white px-8 py-4 rounded-xl font-semibold hover:bg-gray-800 transition-colors inline-flex items-center gap-2">
                     عرض جميع الشركات
                     <i data-lucide="arrow-left" class="w-5 h-5"></i>
-                </button>
+                </a>
             </div>
         </div>
     </section>
@@ -512,15 +523,17 @@
         </div>
 
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">ابدأ رحلتك المهنية اليوم</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-content mb-6">ابدأ رحلتك المهنية اليوم</h2>
             <p class="text-xl text-primary-100 mb-10 max-w-2xl mx-auto">
-                انضم لأكثر من 250,000 باحث عن عمل واستفد من تحليلاتنا الذكية للوصول إلى فرصتك المثالية
+                انضم لأكثر من {{total_members }} باحث عن عمل واستفد من تحليلاتنا الذكية للوصول إلى فرصتك المثالية
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button class="bg-white text-primary-700 px-8 py-4 rounded-xl font-bold hover:bg-gray-100 transition-colors flex items-center justify-center gap-2">
-                    إنشاء حساب مجاني
-                    <i data-lucide="user-plus" class="w-5 h-5"></i>
-                </button>
+                {% if not user.is_authenticated %}
+                    <a href="{% url 'accounts:select_account_type'%}" class="bg-brand text-white px-8 py-4 rounded-xl font-bold hover:bg-gray-100 transition-colors flex items-center justify-center gap-2">
+                        إنشاء حساب مجاني
+                        <i data-lucide="user-plus" class="w-5 h-5"></i>
+                    </a>
+                {% endif %}
                 <button class="bg-primary-500 text-white px-8 py-4 rounded-xl font-bold hover:bg-primary-400 transition-colors border border-primary-400 flex items-center justify-center gap-2">
                     للشركات - انشر وظيفة
                     <i data-lucide="briefcase" class="w-5 h-5"></i>

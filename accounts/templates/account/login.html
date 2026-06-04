@@ -35,7 +35,7 @@
 
 
 
-<div class=" bg-base flex flex-column items-center justify-center  py-12 px-4 sm:px-6 lg:px-8">
+<div class="  flex flex-column items-center justify-center  py-12 px-4 sm:px-6 lg:px-8">
 <!--    {% input-text label=_("Email") name="email" type="email" required=True error=""  placeholder=_("email address") %}-->
       <div class="bg-surface text-content login-container w-full max-w-md p-8 rounded-2xl shadow-xl transition-all duration-300
                  border border-transparent">
@@ -62,7 +62,7 @@
         </form>
         <p style="text-align: center; margin-top: 20px;">
             {% trans "Don't have an account?" %}
-            <a href="{% url 'account_signup' %}" style="color: #4361ee;">{% trans "Register here" %}</a>
+            <a href="{% url 'accounts:select_account_type' %}" style="color: #4361ee;">{% trans "Register here" %}</a>
         </p>
     </div>
 </div>

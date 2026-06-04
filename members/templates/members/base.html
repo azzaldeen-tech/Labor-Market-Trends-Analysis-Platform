@@ -13,7 +13,9 @@
     </div>
 
     <!-- حاوية الإشعارات — أعلى طبقة دائماً -->
-    <div id="toastBox" class="fixed top-5 left-5 z-[9999] flex flex-col gap-2.5" aria-live="polite"></div>
+    <div id="toastBox" class="fixed top-5 left-5 z-[9999] flex flex-col gap-2.5" aria-live="polite">
+
+    </div>
 
     <!-- غطاء موبايل — يظهر فقط على الشاشات الصغيرة -->
     <div id="mobileOverlay"
@@ -32,13 +34,7 @@
             <!-- الشعار -->
             <div class="px-5 p-2 border-b border-gray-300">
                 <div class="flex items-center gap-3 mb-1">
-<!--                    <div class="w-10 h-10 rounded-xl bg-brand flex items-center justify-center shrink-0">-->
-<!--                        <i class="fas fa-briefcase text-white text-sm"></i>-->
-<!--                    </div>-->
-<!--                    <div>-->
-<!--                        <div class="font-display font-bold text-[15px]">توظيف+</div>-->
-<!--                        <div class="text-[10px] text-fg-muted">بوابة التوظيف الذكية</div>-->
-<!--                    </div>-->
+
                 </div>
 <!--                <div class="flex items-center gap-2.5 bg-raised rounded-xl px-3 py-2.5">-->
 <!--                    <div class="w-8 h-8 rounded-lg bg-brand/10 flex items-center justify-center text-brand font-bold text-xs">سا</div>-->
@@ -54,83 +50,100 @@
             <nav class="flex-1 overflow-y-auto custom-scrollbar py-4" aria-label="القائمة الرئيسية">
                 <div class="px-5 mb-2 text-[10px] font-semibold text-fg-muted uppercase tracking-wider">الرئيسية</div>
 
-                <a href="{% url 'members:dashboard'%}" class="nav-link active flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">
-                    <i class="fas fa-th-large w-5 text-center text-[13px]"></i>
+                <a href="{% url 'members:dashboard'%}" class="nav-link active flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[15px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">
+                   <i data-lucide="layout-dashboard"  class="w-5 text-center text-[13px]"></i>
+
                     <span>لوحة التحكم</span>
                 </a>
 
-                <a href="{% url 'members:advertised_jobs'%}" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200">
-                    <i class="fas fa-file-alt w-5 text-center text-[13px]"></i>
+                <a href="{% url 'members:advertised_jobs'%}" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[15px] text-fg-sub hover:bg-elevated transition-all duration-200">
+                     <i data-lucide="folder-bookmark"  class="w-5 text-center text-[13px]"></i>
                     <span>الوظائف المعلنة</span>
                     <span class="mr-auto bg-brand text-white  text-[15px]  p-[6px] py-[4px] rounded-full leading-none">{{ member_global_stats.jobs_count }}</span>
                 </a>
 
-                <a href="{% url 'members:job_applications'%}" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200">
-                    <i class="fas fa-file-alt w-5 text-center text-[13px]"></i>
+                <a href="{% url 'members:job_applications'%}" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[15px] text-fg-sub hover:bg-elevated transition-all duration-200">
+                     <i data-lucide="file"  class="w-5 text-center text-[13px]"></i>
                     <span> طلبات التوظيف المقدمة</span>
 <!--                    <span class="mr-auto bg-brand text-white  text-[15px]  p-[6px] py-[4px] rounded-full leading-none">{{ member_global_stats.jobs_count }}</span>-->
                 </a>
 
 
 
-                <div class="px-5 mt-5 mb-2 text-[10px] font-semibold text-fg-muted uppercase tracking-wider">إدارة التوظيف</div>
+<!--                <div class="px-5 mt-5 mb-2 text-[10px] font-semibold text-fg-muted uppercase tracking-wider">إدارة التوظيف</div>-->
 
 
 
-                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">
-                    <i class="fas fa-calendar-check w-5 text-center text-[13px]"></i>
-                    <span>المقابلات</span>
-                </a>
+<!--                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">-->
+<!--                    <i class="fas fa-calendar-check w-5 text-center text-[13px]"></i>-->
+<!--                    <span>المقابلات</span>-->
+<!--                </a>-->
 
-                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">
-                    <i class="fas fa-tasks w-5 text-center text-[13px]"></i>
-                    <span>لوحة التقييم</span>
-                </a>
+<!--                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">-->
+<!--                    <i class="fas fa-tasks w-5 text-center text-[13px]"></i>-->
+<!--                    <span>لوحة التقييم</span>-->
+<!--                </a>-->
 
 <!--                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">-->
 <!--                    <i class="fas fa-handshake w-5 text-center text-[13px]"></i>-->
 <!--                    <span>العروض المقدمة</span>-->
 <!--                </a>-->
 
-                <div class="px-5 mt-5 mb-2 text-[10px] font-semibold text-fg-muted uppercase tracking-wider">الحساب</div>
+                <div class="px-5 mt-5 mb-2 text-[17px] font-semibold text-fg-muted uppercase tracking-wider">الحساب</div>
 
 <!--                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">-->
 <!--                    <i class="fas fa-building w-5 text-center text-[13px]"></i>-->
 <!--                    <span>ملف الشركة</span>-->
 <!--                </a>-->
 
-                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">
-                    <i class="fas fa-users-cog w-5 text-center text-[13px]"></i>
-                    <span>فريق العمل</span>
+
+
+                <a href="{{ user.profile.get_url }}"
+                   class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[15px] text-fg-sub hover:bg-elevated transition-all duration-200"
+                   onclick="switchNav(this,event)">
+                     <i data-lucide="user"  class="w-5 text-center text-[15px]"></i>
+                    <span>الملف الشخصي</span>
                 </a>
 
-                <a href="#" class="nav-link flex items-center gap-3 mx-3 px-4 py-2.5 rounded-xl text-[13px] text-fg-sub hover:bg-elevated transition-all duration-200" onclick="switchNav(this,event)">
-                    <i class="fas fa-cog w-5 text-center text-[13px]"></i>
-                    <span>الإعدادات</span>
-                </a>
+                <a href="{% url 'account_email' %}"
+                    class="nav-link flex gap-3 mx-3 px-4 py-2.5 rounded-xl text-[15px] text-fg-sub hover:bg-elevated transition-all duration-200">
+
+                      <i data-lucide="mail"  class="w-5 text-center text-[15px]"></i>
+                      <span>{% trans "Email" %}</span>
+                 </a>
+
+
+                <div class="mt-2">
+                     <a href="{% url 'account_change_password' %}"
+                    class="nav-link flex gap-3 mx-3 px-4 py-2.5 rounded-xl text-[15px] text-fg-sub hover:bg-elevated transition-all duration-200">
+                    <i data-lucide="lock"  class="w-5 text-center text-[15px]"></i>
+                      <span>{% trans "Change Password" %}</span>
+                 </a>
+                </div>
+
 
             </nav>
 
             <!-- باقة الاستضافة -->
-            <div class="mx-3 mb-4 p-4 rounded-2xl bg-gradient-to-br from-brand/[0.06] to-coral/[0.03] ">
-                <div class="flex items-center justify-between mb-1.5">
-                    <span class="text-[12px] font-semibold">الخطة الاحترافية</span>
-                    <span class="text-[10px] font-semibold text-brand bg-brand-light px-2 py-0.5 rounded-md">نشطة</span>
-                </div>
-                <div class="text-[10px] text-fg-muted mb-2.5">متبقي 18 وظيفة من 25</div>
-                <div class="h-1.5 bg-line rounded-full overflow-hidden mb-3">
-                    <div class="h-full bg-brand rounded-full transition-all duration-1000" style="width:0%" id="planBar"></div>
-                </div>
-                <button onclick="showToast('سيتم التواصل معك لترقية الباقة','info')" class="w-full text-[11px] font-semibold text-brand border border-brand/20 bg-surface rounded-lg py-2 hover:bg-brand hover:text-white transition-all duration-200 cursor-pointer">
-                    ترقية الباقة
-                </button>
-            </div>
+<!--            <div class="mx-3 mb-4 p-4 rounded-2xl bg-gradient-to-br from-brand/[0.06] to-coral/[0.03] ">-->
+<!--                <div class="flex items-center justify-between mb-1.5">-->
+<!--                    <span class="text-[12px] font-semibold">الخطة الاحترافية</span>-->
+<!--                    <span class="text-[10px] font-semibold text-brand bg-brand-light px-2 py-0.5 rounded-md">نشطة</span>-->
+<!--                </div>-->
+<!--                <div class="text-[10px] text-fg-muted mb-2.5">متبقي 18 وظيفة من 25</div>-->
+<!--                <div class="h-1.5 bg-line rounded-full overflow-hidden mb-3">-->
+<!--                    <div class="h-full bg-brand rounded-full transition-all duration-1000" style="width:0%" id="planBar"></div>-->
+<!--                </div>-->
+<!--                <button onclick="showToast('سيتم التواصل معك لترقية الباقة','info')" class="w-full text-[11px] font-semibold text-brand border border-brand/20 bg-surface rounded-lg py-2 hover:bg-brand hover:text-white transition-all duration-200 cursor-pointer">-->
+<!--                    ترقية الباقة-->
+<!--                </button>-->
+<!--            </div>-->
                <br>
                <br>
         </aside>
 
         <!-- ===== عمود المحتوى الرئيسي ===== -->
-        <div class="flex-1 min-w-0 flex flex-col h-screen overflow-hidden">
+        <div class="flex-1 min-w-0 flex flex-col">
 
             <!-- الشريط العلوي: لاصق داخل التدفق -->
             <header class="sticky  top-0 z-30 bg-page/80 backdrop-blur-xl  px-5 lg:px-7 py-3 flex items-center gap-3">
@@ -169,28 +182,36 @@
 
 
                     <button onclick="refreshData()" class="w-9 h-9 rounded-xl  bg-surface text-fg-sub flex items-center justify-center hover:text-fg hover:border-fg-muted transition-all shadow-sm cursor-pointer" aria-label="تحديث">
-                        <i class="fas fa-sync-alt text-xs" id="refreshIcon"></i>
+<!--                        <i class="fas fa-sync-alt text-xs" id="refreshIcon"></i>-->
+                        <i data-lucide="rotate-ccw"  class="w-5 text-center text-[15px]"></i>
                     </button>
 
                     <!-- الإشعارات -->
                     <div class="relative">
                         <button onclick="toggleDrop('notifDrop')" class="w-9 h-9 rounded-xl  bg-surface text-fg-sub flex items-center justify-center hover:text-fg transition-all shadow-sm relative cursor-pointer" aria-label="الإشعارات">
-                            <i class="fas fa-bell text-xs"></i>
+                            <i data-lucide="bell"  class="w-5 text-center text-[15px]"></i>
                             <span class="absolute -top-0.5 -right-0.5 w-[9px] h-[9px] bg-coral rounded-full border-2 border-surface animate-pulse-soft"></span>
                         </button>
                         <div id="notifDrop" class="absolute top-full left-0 mt-2 w-72 bg-surface  rounded-2xl shadow-xl shadow-fg/[0.04] p-1.5 opacity-0 -translate-y-2 pointer-events-none transition-all duration-200 z-50">
                             <div class="px-3 py-2 text-[13px] font-semibold border-b border-line-sub mb-1">الإشعارات</div>
                             <button onclick="showToast('تم الاطلاع على الإشعار','info')" class="w-full flex items-start gap-2.5 px-3 py-2.5 rounded-xl hover:bg-raised transition-colors text-right cursor-pointer">
-                                <div class="w-8 h-8 rounded-lg bg-brand-light text-brand flex items-center justify-center text-[11px] shrink-0 mt-0.5"><i class="fas fa-user-plus"></i></div>
+                                <div class="w-8 h-8 rounded-lg bg-brand-light text-brand flex items-center justify-center text-[11px] shrink-0 mt-0.5">
+                                     <i data-lucide="user-plus"  class="w-5 text-center text-[15px]"></i>
+                                </div>
                                 <div><div class="text-[12px]">متقدم جديد على وظيفة مطور Frontend</div><div class="text-[10px] text-fg-muted mt-0.5">منذ 5 دقائق</div></div>
                             </button>
                             <button onclick="showToast('تم الاطلاع على الإشعار','info')" class="w-full flex items-start gap-2.5 px-3 py-2.5 rounded-xl hover:bg-raised transition-colors text-right cursor-pointer">
-                                <div class="w-8 h-8 rounded-lg bg-amber-light text-amber flex items-center justify-center text-[11px] shrink-0 mt-0.5"><i class="fas fa-calendar"></i></div>
+                                <div class="w-8 h-8 rounded-lg bg-amber-light text-amber flex items-center justify-center text-[11px] shrink-0 mt-0.5">
+                                     <i data-lucide="calendar"  class="w-5 text-center text-[15px]"></i>
+                                </div>
                                 <div><div class="text-[12px]">مقابلة مع ليلى أحمد بعد ساعة</div><div class="text-[10px] text-fg-muted mt-0.5">منذ 15 دقيقة</div></div>
                             </button>
                             <button onclick="showToast('تم الاطلاع على الإشعار','info')" class="w-full flex items-start gap-2.5 px-3 py-2.5 rounded-xl hover:bg-raised transition-colors text-right cursor-pointer">
-                                <div class="w-8 h-8 rounded-lg bg-coral-light text-coral flex items-center justify-center text-[11px] shrink-0 mt-0.5"><i class="fas fa-star"></i></div>
-                                <div><div class="text-[12px]">تقييم جديد 4.8 نجوم من متقدم</div><div class="text-[10px] text-fg-muted mt-0.5">منذ ساعة</div></div>
+                                <div class="w-8 h-8 rounded-lg bg-coral-light text-coral flex items-center justify-center text-[11px] shrink-0 mt-0.5">
+                                   <i data-lucide="view"  class="w-5 text-center text-[15px]"></i>
+                                </div>
+                                <div><div class="text-[12px]">تقييم جديد 4.8 نجوم من متقدم</div>
+                                    <div class="text-[10px] text-fg-muted mt-0.5">منذ ساعة</div></div>
                             </button>
                         </div>
                     </div>

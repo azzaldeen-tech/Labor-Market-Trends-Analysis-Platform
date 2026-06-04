@@ -32,16 +32,19 @@
                         </p>
                     </div>
                 </div>
-                <div class="bg-white/10 backdrop-blur-lg shadow-sm rounded-2xl p-4 text-center min-w-[120px]">
-                    <span class="mb-2 block text-xl text-content-muted uppercase font-semibold">درجة المطابقة</span>
-                    <span class="text-3xl  font-black ">{{ job_app.match }}%</span>
-                </div>
+<!--                <div class="bg-white/10 backdrop-blur-lg shadow-sm rounded-2xl p-4 text-center min-w-[120px]">-->
+<!--                    <span class="mb-2 block text-xl text-content-muted uppercase font-semibold">درجة المطابقة</span>-->
+<!--                    <span class="text-3xl  font-black ">{{ job_app.match }}%</span>-->
+<!--                </div>-->
             </div>
             <div>
                 <h3 class="text-lg font-bold mt-8 mb-4">مهارات المتقدم</h3>
                 <div class="flex-wrap mt-2  bg-surface p-4 border border-stroke rounded-xl pr-5 space-y-2">
                     {% for skill in job_app.user_skills.all %}
+
                         {% tag_card skill.name %}
+
+
                     {% endfor %}
                 </div>
             </div>

@@ -9,6 +9,7 @@ class AppLinks:
         LOGIN = 'account_login'
         LOGOUT = 'account_logout'
 
+
     class Dashboards:
         GENERAL = 'dashboard'
         COMPANY = 'companies:dashboard'
@@ -16,6 +17,6 @@ class AppLinks:
 
 
     # Others
-    WAITING_APPROVAL = 'waiting_approval'
+    WAITING_APPROVAL = 'core:waiting_approval'
 
 

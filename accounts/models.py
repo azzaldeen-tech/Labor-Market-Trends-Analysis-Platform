@@ -49,9 +49,6 @@ class Role(BaseRole):
         """جلب الصلاحيات المرتبطة بموديل معين فقط"""
         return self.permissions.filter(content_type__model=model_name)
 
-
-
-
 class CustomUserManager(BaseUserManager):
 
     def create_user(self, email, password=None, **extra_fields):
@@ -81,12 +78,6 @@ class CustomUser(BaseCustomUser):
         verbose_name="Identity type",
         related_name="identity_users"
     )
-
-    # def get_display_name(self):
-    #     if self.profile:
-    #         return self.profile.name
-    #     return self.email
-
 
 
     @property
@@ -143,26 +134,7 @@ class CustomUser(BaseCustomUser):
             return False
         return getattr(self.identity, 'is_identity', False)
 
-    @property
-    def is_fully_active(self):
-        """
-        التحقق من التفعيل بناءً على الهوية الواحدة (Identity) والبروفايل:
-        """
-        # 1. إذا لم يكن للمستخدم هوية أصلاً
-        if not self.identity:
-            return False
 
-        # 2. إذا كانت الهوية لا تتطلب موافقة (مثل طالب) -> مفعل فوراً
-        if not self.identity.requires_approval:
-            return True
-
-        # 3. إذا كانت تتطلب موافقة (مثل شركة) -> نتحقق من البروفايل المرتبط
-        # نستخدم self.profile الذي يعمل عبر GenericForeignKey
-        if self.profile and hasattr(self.profile, 'is_verified'):
-            return self.profile.is_verified
-
-        # الافتراضي: غير مفعل حتى يثبت العكس
-        return False
 
     @property
     def get_app_name(self):

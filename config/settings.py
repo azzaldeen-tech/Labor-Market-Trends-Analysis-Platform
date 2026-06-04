@@ -96,6 +96,7 @@ INSTALLED_APPS = [
     'django_browser_reload',
     "django_htmx",
     'widget_tweaks',
+    'django.contrib.humanize',
 
 ]
 
@@ -127,17 +128,18 @@ SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
+
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-
     'allauth.account.middleware.AccountMiddleware',
-
     'django_browser_reload.middleware.BrowserReloadMiddleware',
     "django_htmx.middleware.HtmxMiddleware",
+
+    'core.middleware.ApprovalCompanyMiddleware',
 ]
 
 
@@ -215,14 +217,14 @@ USE_TZ = True
 # قائمة الغات  المتاحة لترجمة
 LANGUAGES = [
     ('ar', _('Arabic')),
-    ('en', _('English')),
+    # ('en', _('English')),
 ]
 
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),
 ]
-
-
+LANGUAGE_SELECT_FROM_BROWSER = False
+LANGUAGE_COOKIE_NAME = 'django_language'
 # ====================================================================================
 # << Static Files >>
 # =====================================================================================
