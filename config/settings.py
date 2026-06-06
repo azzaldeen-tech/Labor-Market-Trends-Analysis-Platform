@@ -43,7 +43,7 @@ ALLOWED_HOSTS = []
 NPM_BIN_PATH = shutil.which("npm") or shutil.which("npm.cmd")
 
 # إذا لم يجده (في حالات نادرة على ويندوز)، نضع المسار الاحتياطي
-if not NPM_BIN_PATH:
+if DEBUG and not NPM_BIN_PATH:
     NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 
 # =====================================================================
@@ -216,7 +216,7 @@ USE_TZ = True
 # قائمة الغات  المتاحة لترجمة
 LANGUAGES = [
     ('ar', _('Arabic')),
-    # ('en', _('English')),
+    ('en', _('English')),
 ]
 
 LOCALE_PATHS = [
