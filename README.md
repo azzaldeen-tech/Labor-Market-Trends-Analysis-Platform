@@ -29,6 +29,7 @@ python.exe -m pip install --upgrade pip
 ### . تثبيت المكتبات المطلوبة 
 
 ```bash 
+pip freeze > requirements.txt
 pip install -r requirements.txt
 ```
 
@@ -83,7 +84,7 @@ cd theme
 
 # Install UI components
 npm install daisyui
-npm install
+npm install 
 
 # Install Tailwind CSS 4 and PostCSS tooling
 npm install tailwindcss @tailwindcss/postcss postcss postcss-cli autoprefixer postcss-simple-vars postcss-nested
@@ -109,7 +110,7 @@ python manage.py makemessages -l ar
 التفعيل: تحويل الترجمات إلى صيغة ثنائية سريعة وعند تحديث ملف الترجمة :
 
 ```Bash
-python manage.py compilemessages
+python manage.py compilemessages # run after update language file 
 ```
 ### . 📂 تنظيم الملفات الساكنة (Static Files) 
 

@@ -354,6 +354,9 @@ msgstr "تسجيل خروج"
 msgid "Register Now"
 msgstr "اشترك الآن"
 
+msgid "Register"
+msgstr "إنشاء حساب"
+
 #: .\venv\Lib\site-packages\django\contrib\messages\apps.py:16
 msgid "Messages"
 msgstr "الرسائل"
