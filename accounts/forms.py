@@ -11,6 +11,8 @@ from .models import *
 from allauth.account.forms import SignupForm
 from django.utils.text import slugify
 from django.contrib.auth import get_user_model
+from django.utils.text import slugify
+import uuid
 
 class BaseStyledForm(forms.Form):  # وراثة مباشرة من forms.Form
     base_classes = (
@@ -32,54 +34,27 @@ class BaseStyledForm(forms.Form):  # وراثة مباشرة من forms.Form
             field.widget.attrs['class'] = f"{existing} {current_classes}".strip()
 
 
-
 class BaseAccountSignupForm(SignupForm, BaseStyledForm):
-
     email = forms.EmailField(
         label="Email Address",
-        widget=forms.EmailInput(attrs={
-            'autocomplete': 'email'
-        })
+        widget=forms.EmailInput(attrs={'autocomplete': 'email'})
     )
-
     identity = forms.ModelChoiceField(
         queryset=Role.objects.filter(view_in_register=True, is_identity=True),
         widget=forms.HiddenInput(),
         required=False
     )
 
-
-
-    def clean_username(self):
-        email = self.cleaned_data.get('email')
-        if not email:
-            return None
-
-        base_username = email.split('@')
-        username = slugify(base_username)
-
-        User = get_user_model()  # الطريقة الصحيحة لجلب موديل المستخدم
-
-        if User.objects.filter(username=username).exists():
-            import uuid
-            username = f"{username}_{uuid.uuid4().hex[:4]}"
-
-        return username
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-
-        # منطق إخفاء اليوزرنيم المشترك
+        # إخفاء اليوزرنيم وجعله غير مطلوب في الـ HTML
         if 'username' in self.fields:
             self.fields['username'].widget = forms.HiddenInput()
             self.fields['username'].required = False
 
-        # تعيين الـ Identity بناءً على role_code المعرف في الكلاسات الفرعية
         role_code = getattr(self, 'role_code', None)
-
         if role_code:
-            # تحديث الـ placeholder ديناميكياً
             if 'email' in self.fields:
                 domain = get_identity_domain(role_code)
                 domain = 'gmail' if not domain else domain
@@ -92,6 +67,32 @@ class BaseAccountSignupForm(SignupForm, BaseStyledForm):
                 self.fields['identity'].initial = role.id
 
         self.apply_tailwind_styles()
+
+    # استخدام clean الشاملة لضمان توليد اسم المستخدم بشكل صحيح تماماً
+    def clean(self):
+        cleaned_data = super().clean()
+        email = cleaned_data.get('email')
+
+        if email:
+            # 1. أخذ الجزء الأول فقط من الإيميل وتحويله لنص مناسب (Slug)
+            base_username = email.split('@')[0]
+            username = slugify(base_username)
+
+            # إذا كان الـ slug فارغاً لأي سبب (مثلاً الإيميل بلغة تسبب مسح الحروف)
+            if not username:
+                username = "user"
+
+            User = get_user_model()
+
+            # 2. التأكد من عدم تكرار اليوزرنيم
+            while User.objects.filter(username=username).exists():
+                username = f"{slugify(base_username)}_{uuid.uuid4().hex[:4]}"
+
+            # 3. حقن اليوزرنيم داخل البيانات التي تم التحقق منها
+            cleaned_data['username'] = username
+            self.errors.pop('username', None)  # حذف أي خطأ سابق يخص اليوزرنيم
+
+        return cleaned_data
 
 
 # الآن تصبح الكلاسات الفرعية بسيطة جداً وممركزة
@@ -184,7 +185,7 @@ class CompanySignupForm(BaseAccountSignupForm):
         # }
 
     def save(self, request):
-        self.cleaned_data['username'] = self.clean_username()
+        # القيمة تم توليدها وتجهيزها مسبقاً في دالة clean الشاملة
         user = super().save(request)
         user.name = self.cleaned_data.get('name')
         user.identity = Role.objects.filter(code=self.role_code).first()
@@ -194,10 +195,25 @@ class CompanySignupForm(BaseAccountSignupForm):
             user=user,
             name=self.cleaned_data.get('name'),
             location=self.cleaned_data.get('location'),
-            # registration_number=self.cleaned_data.get('registration_number'),
             bio=self.cleaned_data.get('bio')
         )
         return user
+
+    # def save(self, request):
+    #     self.cleaned_data['username'] = self.clean_username()
+    #     user = super().save(request)
+    #     user.name = self.cleaned_data.get('name')
+    #     user.identity = Role.objects.filter(code=self.role_code).first()
+    #     user.save()
+    #
+    #     CompanyProfile.objects.create(
+    #         user=user,
+    #         name=self.cleaned_data.get('name'),
+    #         location=self.cleaned_data.get('location'),
+    #         # registration_number=self.cleaned_data.get('registration_number'),
+    #         bio=self.cleaned_data.get('bio')
+    #     )
+    #     return user
 
 
 

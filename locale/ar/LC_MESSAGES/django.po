@@ -357,6 +357,21 @@ msgstr "اشترك الآن"
 msgid "Register"
 msgstr "إنشاء حساب"
 
+msgid "Account Under Review"
+msgstr "الحساب قيد المراجعة"
+
+msgid "Thank you for completing your profile! Our team is currently reviewing your information. You will receive an email once your account is activated."
+msgstr "شكرًا لك على إكمال ملفك الشخصي! يقوم فريقنا حاليًا بمراجعة معلوماتك. ستتلقى بريدًا إلكترونيًا بمجرد تفعيل حسابك."
+
+msgid "Reload"
+msgstr "إعادة تحميل الصفحة"
+
+msgid "Contact Support"
+msgstr "التواصل مع الدعم"
+
+msgid "Standard review time: 24-48 hours."
+msgstr "مدة المراجعة المعتادة: ٢٤-٤٨ ساعة."
+
 #: .\venv\Lib\site-packages\django\contrib\messages\apps.py:16
 msgid "Messages"
 msgstr "الرسائل"

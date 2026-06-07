@@ -64,7 +64,9 @@ def select_account_type(request):
 def signup_company(request):
     if request.method == 'POST':
         form = CompanySignupForm(request.POST, request.FILES)
+        print("Register::")
         if form.is_valid():
+            print("Register2::")
             user = form.save(request)
             login(request, user)
             return redirect(AppLinks.Dashboards.COMPANY)

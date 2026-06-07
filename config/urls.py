@@ -13,28 +13,6 @@ admin.site.site_header = _("Labor Market Trends Analysis")
 admin.site.site_title = _("Dashboard")
 admin.site.index_title = _("Welcome to the Dashboard")
 
-# urlpatterns = [
-#     # رابط تغيير اللغة
-#     path('i18n/', include('django.conf.urls.i18n')),
-#     path('admin/', admin.site.urls),
-#
-#     # نظام المصادقة (Allauth)
-#     path('accounts/account/', include('allauth.urls')),
-#
-#     # روابط تطبيق الحسابات المخصص
-#     path('accounts/', include('accounts.urls')),
-#     # روابط تطبيق core (يجب أن يكون في الأسفل غالباً لأنه يحتوي على الصفحة الرئيسية)
-#     path('', include('core.urls')),
-#
-#     # أداة التحديث التلقائي للمتصفح أثناء التطوير
-#     path("__reload__/", include("django_browser_reload.urls")),
-#
-#     # === [AUTO_GENERATED_URLS_START] ===
-#     path('companies/', include('companies.urls')),
-#
-#     path('members/', include('members.urls')),
-#     # === [AUTO_GENERATED_URLS_END] ===
-# ]
 
 
 urlpatterns = [
