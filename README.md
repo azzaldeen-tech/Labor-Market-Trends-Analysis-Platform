@@ -301,9 +301,9 @@ python manage.py runserver
 *Python / Django Architect*
 
 **GitHub:** [azzaldeen-tech](https://github.com/azzaldeen-tech)
-**LinkedIn:** [azzaldeen_eng](https://www.linkedin.com/in/azzaldeen_eng)
+**LinkedIn:** [azzaldeen-al-qashaei](https://www.linkedin.com/in/azzaldeen-al-qashaei-0a6928206)
 
-</td>
+
 </tr>
 </table>
 
