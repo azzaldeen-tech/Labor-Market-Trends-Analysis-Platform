@@ -1,11 +1,9 @@
 import os
 import sys
+
 import django
-from django.contrib.auth.hashers import make_password
 
 
-
-# إعداد البيئة
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
@@ -13,8 +11,6 @@ django.setup()
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
-from django.utils.translation import gettext_lazy as _
-from accounts.models import Role
 from companies.models import CompanyProfile
 from accounts.models import Role
 

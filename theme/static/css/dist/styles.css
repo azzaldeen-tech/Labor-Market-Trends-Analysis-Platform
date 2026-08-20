@@ -165,7 +165,6 @@
     --radius-xl: 0.75rem;
     --radius-2xl: 1rem;
     --radius-3xl: 1.5rem;
-    --ease-in: cubic-bezier(0.4, 0, 1, 1);
     --ease-out: cubic-bezier(0, 0, 0.2, 1);
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --animate-spin: spin 1s linear infinite;
@@ -203,14 +202,9 @@
     --color-amber-light: #fef9ec;
     --color-sky: #2a8fc7;
     --color-sky-light: #ecf6fc;
-    --color-violet: #7c5cbf;
-    --color-violet-light: #f3eff9;
     --font-display: 'Space Grotesk', sans-serif;
     --font-body: 'DM Sans', sans-serif;
     --animate-slide-up: slide-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-    --animate-fade: fade 0.4s ease both;
-    --animate-toast-in: toast-in 0.35s ease-out;
-    --animate-toast-out: toast-out 0.25s ease-in forwards;
     --animate-pulse-soft: pulse-soft 3s ease-in-out infinite;
     --color-btn: var(--button);
     --color-btn-text: var(--button-text);
@@ -767,91 +761,6 @@
     }
     .menu .dropdown-content:before {
       display: none;
-    }
-  }
-  @layer daisyui.l1.l2.l3 {
-    .dropdown {
-      position: relative;
-      display: inline-block;
-      position-area: var(--anchor-v, bottom) var(--anchor-h, span-right);
-    }
-    .dropdown > *:not(:has(~ [class*="dropdown-content"])):focus {
-      --tw-outline-style: none;
-      outline-style: none;
-    }
-    @media (forced-colors: active) {
-      .dropdown > *:not(:has(~ [class*="dropdown-content"])):focus {
-        outline: 2px solid transparent;
-        outline-offset: 2px;
-      }
-    }
-    .dropdown .dropdown-content {
-      position: absolute;
-    }
-    .dropdown.dropdown-close .dropdown-content, .dropdown:not(details, .dropdown-open, .dropdown-hover:hover, :focus-within) .dropdown-content, .dropdown.dropdown-hover:not(:hover) [tabindex]:first-child:focus:not(:focus-visible) ~ .dropdown-content {
-      display: none;
-      transform-origin: top;
-      opacity: 0%;
-      scale: 95%;
-    }
-    .dropdown[popover], .dropdown .dropdown-content {
-      z-index: 999;
-    }
-    @media (prefers-reduced-motion: no-preference) {
-      .dropdown[popover], .dropdown .dropdown-content {
-        animation: dropdown 0.2s;
-        transition-property: opacity, scale, display;
-        transition-behavior: allow-discrete;
-        transition-duration: 0.2s;
-        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-      }
-    }
-    @starting-style {
-      .dropdown[popover], .dropdown .dropdown-content {
-        scale: 95%;
-        opacity: 0;
-      }
-    }
-    .dropdown:not(.dropdown-close).dropdown-open > [tabindex]:first-child, .dropdown:not(.dropdown-close):not(.dropdown-hover):focus > [tabindex]:first-child, .dropdown:not(.dropdown-close):focus-within > [tabindex]:first-child {
-      pointer-events: none;
-    }
-    .dropdown:not(.dropdown-close).dropdown-open .dropdown-content, .dropdown:not(.dropdown-close):not(.dropdown-hover):focus .dropdown-content, .dropdown:not(.dropdown-close):focus-within .dropdown-content {
-      opacity: 100%;
-      scale: 100%;
-    }
-    .dropdown:not(.dropdown-close).dropdown-hover:hover .dropdown-content {
-      opacity: 100%;
-      scale: 100%;
-    }
-    .dropdown:is(details) summary::-webkit-details-marker {
-      display: none;
-    }
-    .dropdown:where([popover]) {
-      background: #0000;
-    }
-    .dropdown[popover] {
-      position: fixed;
-      color: inherit;
-    }
-    @supports not (position-area: bottom) {
-      .dropdown[popover] {
-        margin: auto;
-      }
-      .dropdown[popover].dropdown-close, .dropdown[popover].dropdown-open:not(:popover-open) {
-        display: none;
-        transform-origin: top;
-        opacity: 0%;
-        scale: 95%;
-      }
-      .dropdown[popover]::backdrop {
-        background-color: color-mix(in oklab, #000 30%, #0000);
-      }
-    }
-    .dropdown[popover].dropdown-close, .dropdown[popover]:not(.dropdown-open, :popover-open) {
-      display: none;
-      transform-origin: top;
-      opacity: 0%;
-      scale: 95%;
     }
   }
   @layer daisyui.l1.l2.l3 {
@@ -2467,14 +2376,6 @@
   .col-span-full {
     grid-column: 1 / -1;
   }
-  @layer daisyui.l1.l2.l3 {
-    .stat-value {
-      grid-column-start: 1;
-      white-space: nowrap;
-      font-size: 2rem;
-      font-weight: 800;
-    }
-  }
   .container {
     width: 100%;
   }
@@ -3042,9 +2943,6 @@
   .h-\[9px\] {
     height: 9px;
   }
-  .h-\[280px\] {
-    height: 280px;
-  }
   .h-\[350px\] {
     height: 350px;
   }
@@ -3260,9 +3158,6 @@
   .grow {
     flex-grow: 1;
   }
-  .border-collapse {
-    border-collapse: collapse;
-  }
   .-translate-x-1\/2 {
     --tw-translate-x: calc(calc(1 / 2 * 100%) * -1);
     translate: var(--tw-translate-x) var(--tw-translate-y);
@@ -3366,9 +3261,6 @@
   }
   .cursor-pointer {
     cursor: pointer;
-  }
-  .resize {
-    resize: both;
   }
   .resize-none {
     resize: none;
@@ -4418,9 +4310,6 @@
   .py-24 {
     padding-block: calc(var(--spacing) * 24);
   }
-  .py-\[1px\] {
-    padding-block: 1px;
-  }
   .py-\[4px\] {
     padding-block: 4px;
   }
@@ -4477,9 +4366,6 @@
   }
   .pb-8 {
     padding-bottom: calc(var(--spacing) * 8);
-  }
-  .pb-16 {
-    padding-bottom: calc(var(--spacing) * 16);
   }
   .pl-3 {
     padding-left: calc(var(--spacing) * 3);
@@ -5192,10 +5078,6 @@
   .duration-1000 {
     --tw-duration: 1000ms;
     transition-duration: 1000ms;
-  }
-  .ease-in {
-    --tw-ease: var(--ease-in);
-    transition-timing-function: var(--ease-in);
   }
   .ease-in-out {
     --tw-ease: var(--ease-in-out);
@@ -6269,11 +6151,6 @@
     }
   }
   @media (width >= 64rem) {
-    .lg\:mr-\[260px\] {
-      margin-right: 260px;
-    }
-  }
-  @media (width >= 64rem) {
     .lg\:ml-0 {
       margin-left: calc(var(--spacing) * 0);
     }
@@ -6383,12 +6260,6 @@
   @media (width >= 64rem) {
     .lg\:text-\[28px\] {
       font-size: 28px;
-    }
-  }
-  @media (width >= 64rem) {
-    .lg\:shadow-none {
-      --tw-shadow: 0 0 #0000;
-      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     }
   }
   @media (width >= 80rem) {
