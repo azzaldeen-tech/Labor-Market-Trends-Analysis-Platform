@@ -6,7 +6,7 @@
 
 *Visualize trends · Track in-demand skills · Forecast career paths*
 
-<img src="static/img/{477C61EB-4EAE-4B95-A913-0ED59B076ADF}.png" alt="Labor Market Analytics Home" width="800"/>
+<img src="static/img/solider.png" alt="Labor Market Analytics Home" width="800"/>
 
 *Labor Market Analytics*
 <img src="static/img/img2.png" alt="Labor Market Analytics " width="800"/>
