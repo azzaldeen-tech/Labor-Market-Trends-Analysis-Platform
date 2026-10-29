@@ -272,15 +272,16 @@ python Seeds\seed_jobs.py
 ```
 
 ### 7️⃣ Build Styles & Run the Server
-
+Development — watch & compile Tailwind (separate terminal)
 ```bash
-# Development — watch & compile Tailwind (separate terminal)
 python manage.py tailwind start
-
-# Production build
+```
+Production build
+```bash
 python manage.py tailwind build
-
-# Launch Django
+```
+Launch Django
+```bash
 python manage.py runserver
 ```
 
