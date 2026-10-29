@@ -297,7 +297,7 @@ python manage.py runserver
 <tr>
 <td align="center" width="50%">
 
-### Ezzeldin Al-Qashai
+### Azzaldeen Al-Qashaei
 *Python / Django Architect*
 
 **GitHub:** [azzaldeen-tech](https://github.com/azzaldeen-tech)
